@@ -73,7 +73,7 @@
       <div class="row">
         <table data-toggle="table" data-search="true"
                data-pagination="true" data-mobile-responsive="true"
-               data-show-toggle="false" data-page-size=10
+               data-show-toggle="false" data-page-size=20
                data-striped="true">
           <thead>
           <tr>
@@ -87,7 +87,7 @@
             <th data-sortable="false">积分抵扣金额</th>
             <th data-sortable="false">电子券抵扣金额</th>
             <th data-sortable="false">交易类型</th>
-            <th data-sortable="true">交易方式</th>
+            <th data-sortable="false">交易方式</th>
           </tr>
           </thead>
           <tbody>
@@ -111,5 +111,41 @@
     {% endif %}
 
   </div>
+
+  <script type="text/javascript">
+      $(document).ready(function () {
+          {#console.log('ok!');#}
+          var now = new Date();
+          var yesterday = new Date();
+          yesterday.setDate(now.getDate() - 1);
+
+          var orderDownloadDatePicker = $('#orderDownloadDate');
+          orderDownloadDatePicker.datepicker({
+              minView: "day", //  选择时间时，最小可以选择到那层；默认是‘hour’也可用0表示
+              language: "zh-CN", // 语言
+              autoclose: true, //  true:选择时间后窗口自动关闭
+              format: 'yyyy-mm-dd', // 文本框时间格式，设置为0,最后时间格式为2017-03-23 17:00:00
+              todayBtn: "linked", // 如果此值为true 或 "linked"，则在日期时间选择器组件的底部显示一个 "Today" 按钮用以选择当前日期。
+              endDate: now, // 窗口可选时间从今天开始
+              orientation: "bottom",    //方向
+              todayHighlight: true,
+              weekStart: 0
+          });
+
+          {% if not download_date %}
+              // 第一次初始化未设置时，默认选择昨日
+              orderDownloadDatePicker.datepicker("update", yesterday);
+          {% else %}
+              // if (!orderDownloadDatePicker.val()) {
+              //     orderDownloadDatePicker.datepicker("setDate", yesterday);
+              // }
+              if (!orderDownloadDatePicker.val()) {
+                  orderDownloadDatePicker.datepicker("update", {{ download_date | tojson | safe }});
+              }
+          {% endif %}
+
+      });
+
+  </script>
 
 {% endblock %}

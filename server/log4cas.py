@@ -8,7 +8,7 @@ Could just use get_predefined_main_logger to get a pre-defined logger.
 
 Or use get_main_logger_or_predefined in both situation.
 
-@author: borrowed from ace_luo by karl_zhou
+@Author: karl(i@karlzhou.com)
 """
 
 import logging

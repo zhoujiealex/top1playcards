@@ -1,4 +1,11 @@
 # coding:utf-8
+
+"""
+ICBC订单查询
+
+Author: karl(i@karlzhou.com)
+"""
+
 import requests
 import json
 from log4cas import LOGGER
@@ -10,7 +17,7 @@ ICBC_HOST = "https://biz.elife.icbc.com.cn/"
 
 # TODO: 暂不考虑多门店情况，先处理一个登陆账号只有一个门店的场景
 
-def download_order_detail(session_id, order_download_date):
+def query_order_detail(session_id, order_download_date):
     LOGGER.info(u"准备下载商户订单数据，session_id:[%s], date:[%s]", session_id, order_download_date)
 
     error = None

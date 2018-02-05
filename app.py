@@ -32,10 +32,10 @@ def download_order():
     session_id = request.form['sessionId']
 
     # for test:
-    session_id = "0000R65hdcaOyn89LEZAg5I_vGh:-1"
+    # session_id = "0000si4l8ahug9VnJ9nlgD3seLD:-1"
     # order_download_date = '2018-02-03'
 
-    error, merchant_summary, order_detail_datas = download_order_detail(session_id, order_download_date)
+    error, merchant_summary, order_detail_datas = query_order_detail(session_id, order_download_date)
 
     context = {
         'error': error,
@@ -43,7 +43,6 @@ def download_order():
         'download_date': order_download_date,
         'merchant_summary': merchant_summary,
         'order_details': order_detail_datas
-        # 'order_details': {}
     }
 
     return render_template('main/order.html', **context)

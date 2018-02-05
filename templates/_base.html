@@ -15,6 +15,7 @@
         media="screen">
   <link href="{{ url_for('static', filename='bootstrap-table/bootstrap-table.min.css') }}" rel="stylesheet"
         media="screen">
+  <script src="{{ url_for('static', filename='jquery.min.js') }}" type="text/javascript" media="screen"></script>
   {% block css %}{% endblock %}
 
 </head>
@@ -50,9 +51,9 @@
     <br>
 
     <!-- errors -->
-{#    {% if error %}#}
-{#      <div class="alert alertdanger-success" role="alert"><b>错误:</b> {{ error }}</div>#}
-{#    {% endif %}#}
+    {#    {% if error %}#}
+    {#      <div class="alert alertdanger-success" role="alert"><b>错误:</b> {{ error }}</div>#}
+    {#    {% endif %}#}
 
   </div>
 </div>
@@ -62,7 +63,6 @@
 {% include 'footer.html' %}
 
 <!-- scripts -->
-<script src="{{ url_for('static', filename='jquery.min.js') }}" type="text/javascript" media="screen"></script>
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}" type="text/javascript" media="screen"></script>
 <script src="{{ url_for('static', filename='main.js') }}" type="text/javascript" media="screen"></script>
 <script src="{{ url_for('static', filename='datepicker/bootstrap-datepicker.min.js') }}" type="text/javascript"

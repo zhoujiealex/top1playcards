@@ -1,5 +1,11 @@
 # coding:utf-8
 
+"""
+ICBC模型
+
+Author: karl(i@karlzhou.com)
+"""
+
 import datetime
 from log4cas import LOGGER
 
