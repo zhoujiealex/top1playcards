@@ -18,10 +18,11 @@
         <div class="">
           <div class="input-group">
             <input id="sessionId" name="sessionId" type="text" style="width: 400px" class="form-control"
-                   placeholder="请输入登录后的JSESSIONID">
+                   placeholder="请输入登录后的JSESSIONID" value="{{ session_id or '' }}">
             <input id="orderDownloadDate" name="orderDownloadDate" class="form-control"
                    style="padding-left: 10px; width: 100px;" data-provide="datepicker">
-            <button class="btn btn-info" type="submit" style="width: auto">下载详细订单</button>
+            <button class="btn btn-info" type="submit" style="width: auto">下载详细订单
+            </button>
           </div>
           <div><i>例子： 0000hde2j_6BiuIVhbHZSv4EEQb:-1</i></div>
           <div><i>下载指定日期: 如2018-01-03</i></div>
