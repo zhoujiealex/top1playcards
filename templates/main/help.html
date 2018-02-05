@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+  <div class="body-content">
+
+    <h1>获取cookie说明</h1>
+    <div class="row">
+      <h3>
+        1.登录后，右击页面，检查元素，定位到"网络"
+      </h3>
+      <img src="{{ url_for('static', filename='img/tool.jpg') }}"/>
+    </div>
+
+    <div class="row">
+      <h3>
+        2.任意action请求，找到cookie页面，复制出cookie值，如： "0000Zcjjat8QPAI0eJ8y_9JiWje:-1"
+      </h3>
+      <img src="{{ url_for('static', filename='img/cookie.jpg') }}"/>
+    </div>
+
+  </div>
+
+{% endblock %}

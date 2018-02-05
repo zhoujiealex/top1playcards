@@ -1,0 +1,33 @@
+{
+  "endRow": 1,
+  "firstPage": 1,
+  "hasNextPage": false,
+  "hasPreviousPage": false,
+  "isFirstPage": true,
+  "isLastPage": true,
+  "lastPage": 1,
+  "list": [
+    {
+      "order_date": 1517328000000,
+      "shop_id": "16050004354",
+      "store_name": "薛城区尚得利家用电器经营部",
+      "total_amount": 1461100.0,
+      "total_dis_amt": 0.0,
+      "total_ecoupon_amt": 0.0,
+      "total_money": 1461100.0,
+      "total_point_amt": 0.0
+    }
+  ],
+  "navigatePages": 8,
+  "navigatepageNums": [
+    1
+  ],
+  "nextPage": 0,
+  "pageNum": 1,
+  "pageSize": 100,
+  "pages": 1,
+  "prePage": 0,
+  "size": 1,
+  "startRow": 1,
+  "total": 1
+}

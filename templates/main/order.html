@@ -1,0 +1,114 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+  <div class="body-content">
+
+    <div class="row">
+      <h2>登录工行网站</h1>
+        <h3>
+          <a href="https://biz.elife.icbc.com.cn/businessHomeLogin/loginPage.action" target="_blank">工银商户之家登录</a>
+        </h3>
+    </div>
+
+    <div class="row">
+      <h2>下载商户订单数据</h2>
+
+      <form class="form-inline" action="/order" method="post">
+        <div class="">
+          <div class="input-group">
+            <input id="sessionId" name="sessionId" type="text" style="width: 400px" class="form-control"
+                   placeholder="请输入登录后的JSESSIONID">
+            <input id="orderDownloadDate" name="orderDownloadDate" class="form-control"
+                   style="padding-left: 10px; width: 100px;" data-provide="datepicker">
+            <button class="btn btn-info" type="submit" style="width: auto">下载详细订单</button>
+          </div>
+          <div><i>例子： 0000hde2j_6BiuIVhbHZSv4EEQb:-1</i></div>
+          <div><i>下载指定日期: 如2018-01-03</i></div>
+        </div>
+      </form>
+
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="alert alert-info" role="alert">
+        <span>本次请求输入的session：<b>{{ session_id }}</b></span>
+      </div>
+      {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+      {% endif %}
+    </div>
+
+    {% if merchant_summary %}
+      <div class="row">
+        <table data-toggle="table">
+          <thead>
+          <tr>
+            <th>门店名称</th>
+            <th>交易日期</th>
+            <th>总订单金额</th>
+            <th>总消费立减金额</th>
+            <th>总积分抵扣金额</th>
+            <th>总电子券抵扣金额</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{ merchant_summary.store_name  or '' }}</td>
+            <td>{{ merchant_summary.order_date  or '' }}</td>
+            <td>{{ merchant_summary.total_amount  or '' }}</td>
+            <td>{{ merchant_summary.total_dis_amt  or '' }}</td>
+            <td>{{ merchant_summary.total_point_amt  or '' }}</td>
+            <td>{{ merchant_summary.total_ecoupon_amt  or '' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+
+    {# http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/#%E8%A1%A8%E6%A0%BC%E5%8F%82%E6%95%B0 #}
+    {% if order_details %}
+      <div class="row">
+        <table data-toggle="table" data-search="true"
+               data-pagination="true" data-mobile-responsive="true"
+               data-show-toggle="false" data-page-size=10
+               data-striped="true">
+          <thead>
+          <tr>
+            <th data-sortable="false">订单编号</th>
+            <th data-sortable="false">交易日期</th>
+            <th data-sortable="true">交易时间</th>
+            <th data-sortable="true">交易卡号</th>
+            <th data-sortable="true">订单金额</th>
+            <th data-sortable="false">消费立减金额</th>
+            {#            <th>净收金额</th>#}
+            <th data-sortable="false">积分抵扣金额</th>
+            <th data-sortable="false">电子券抵扣金额</th>
+            <th data-sortable="false">交易类型</th>
+            <th data-sortable="true">交易方式</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for order_detail in order_details %}
+            <tr>
+              <td>{{ order_detail.order_id  or '' }}</td>
+              <td>{{ order_detail.order_date or '' }}</td>
+              <td>{{ order_detail.order_time  or '' }}</td>
+              <td>{{ order_detail.card_no or '' }}</td>
+              <td>{{ order_detail.order_amt  or '' }}</td>
+              <td>{{ order_detail.dis_amt  or '' }}</td>
+              <td>{{ order_detail.point_amt  or '' }}</td>
+              <td>{{ order_detail.ecoupon_amt  or '' }}</td>
+              <td>{{ order_detail.tran_type  or '' }}</td>
+              <td>{{ order_detail.tran_way  or '' }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+
+  </div>
+
+{% endblock %}
