@@ -79,13 +79,7 @@ class TradeSummary(object):
     @order_date.setter
     def order_date(self, order_date):
         # 只取日期yyyy-mm-dd
-        try:
-            order_date_obj = convert_timestamp_to_date(order_date)
-            self._order_date = datetime.datetime.strftime(order_date_obj, "%Y-%m-%d")
-        except Exception:
-            # ignore
-            LOGGER.error(u"日期转换出错，输入order_date=" + order_date)
-            self._order_date = order_date
+        self._order_date = format_date(order_date, "%Y-%m-%d")
 
     @property
     def shop_id(self):
@@ -159,6 +153,8 @@ class TradeDetail(object):
         self._order_date = None
         # 3.交易时间
         self._order_time = None
+        # 用于页面显示的时间，不需要拆成两列
+        self._order_time_full = None
         # 4.订单号
         self._order_id = None
         # 5.交易卡号
@@ -178,6 +174,25 @@ class TradeDetail(object):
         # 12.交易方式
         self._tran_way = None
 
+        # # 为了使用语法['store_name']来取值，保存下key
+        # self._raw_value_containers = {
+        #     'store_name': self._store_name,
+        #     'order_date': self._order_date,
+        #     'order_time': self._order_time,
+        #     'order_id': self._order_id,
+        #     'card_no': self._card_no,
+        #     'order_amt': self._order_amt,
+        #     'dis_amt': self._dis_amt,
+        #     'total_amount': self._total_amount,
+        #     'point_amt': self._point_amt,
+        #     'ecoupon_amt': self._ecoupon_amt,
+        #     'tran_type': self._tran_type,
+        #     'tran_way': self._tran_way
+        # }
+
+    # def __getitem__(self, key):
+    #     return self._raw_value_containers.get(key, "")
+
     @property
     def store_name(self):
         return self._store_name
@@ -193,13 +208,7 @@ class TradeDetail(object):
     @order_date.setter
     def order_date(self, order_date):
         # 只取日期yyyy-mm-dd
-        try:
-            order_date_obj = convert_timestamp_to_date(order_date)
-            self._order_date = datetime.datetime.strftime(order_date_obj, "%Y-%m-%d")
-        except Exception:
-            # ignore
-            LOGGER.error(u"日期转换出错，输入order_date=" + order_date)
-            self._order_date = order_date
+        self._order_date = format_date(order_date, "%Y-%m-%d")
 
     @property
     def order_time(self):
@@ -208,13 +217,16 @@ class TradeDetail(object):
     @order_time.setter
     def order_time(self, order_time):
         # 只取时间hh:mm:ss
-        try:
-            order_time_obj = convert_timestamp_to_date(order_time)
-            self._order_time = datetime.datetime.strftime(order_time_obj, "%H:%M:%S")
-        except Exception:
-            # ignore
-            LOGGER.error(u"日期转换出错，输入order_time=" + order_time)
-            self._order_time = order_time
+        self._order_time = format_date(order_time, "%H:%M:%S")
+
+    @property
+    def order_time_full(self):
+        return self._order_time_full
+
+    @order_time_full.setter
+    def order_time_full(self, order_time):
+        # 只取时间hh:mm:ss
+        self._order_time_full = format_date(order_time, "%Y-%m-%d %H:%M:%S")
 
     @property
     def order_id(self):
@@ -305,3 +317,13 @@ def convert_timestamp_to_date(timestamp):
         return datetime.datetime.fromtimestamp(timestamp / 1e3)
     else:
         return None
+
+
+def format_date(timestamp, format_str):
+    try:
+        date_obj = convert_timestamp_to_date(timestamp)
+        return datetime.datetime.strftime(date_obj, format_str)
+    except Exception:
+        # ignore
+        LOGGER.error(u"日期转换出错，输入timestamp=" + timestamp)
+        return timestamp

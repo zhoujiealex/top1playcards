@@ -171,8 +171,10 @@ def get_merchant_order_summary(session, shop_id, date, sel_type='p'):
 
     # 正常只有个店，无分店，也只有一页
     total = json_data['total']
-    if total != 1:
+    if total > 1:
         return tip + u",门店个数不等于1,total=" + str(total), None
+    elif total == 0:
+        return tip + date + u"无数据，请重新选择日期", None
 
     trade_json_data = json_data.get('list')[0]
     # 组装trade summary对象
@@ -328,7 +330,10 @@ def convert_raw_detail_order_to_model(order_detail):
     # FIXME: 有两个mername和mercname
     trade_deatil_model.store_name = order_detail.get('mercname')
     trade_deatil_model.order_date = order_detail.get('orderDate')
-    trade_deatil_model.order_time = order_detail.get('orderTime')
+    # FIXME: time和excel里下载的交易日期对不上，感觉是icbc的bug，先不管了，保持和excel一致
+    # trade_deatil_model.order_time = order_detail.get('orderTime')
+    trade_deatil_model.order_time = order_detail.get('orderDate')
+    trade_deatil_model.order_time_full = order_detail.get('orderDate')
     trade_deatil_model.order_id = order_detail.get("orderId")
     trade_deatil_model.card_no = order_detail.get('cardNo')
     trade_deatil_model.order_amt = order_detail.get('orderAmt')

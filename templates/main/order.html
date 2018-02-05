@@ -79,11 +79,11 @@
           <tr>
             <th data-sortable="false">订单编号</th>
             <th data-sortable="false">交易日期</th>
-            <th data-sortable="true">交易时间</th>
+            {#<th data-sortable="true">交易时间</th>#}
             <th data-sortable="true">交易卡号</th>
             <th data-sortable="true">订单金额</th>
             <th data-sortable="false">消费立减金额</th>
-            {#            <th>净收金额</th>#}
+            {#<th>净收金额</th>#}
             <th data-sortable="false">积分抵扣金额</th>
             <th data-sortable="false">电子券抵扣金额</th>
             <th data-sortable="false">交易类型</th>
@@ -94,8 +94,8 @@
           {% for order_detail in order_details %}
             <tr>
               <td>{{ order_detail.order_id  or '' }}</td>
-              <td>{{ order_detail.order_date or '' }}</td>
-              <td>{{ order_detail.order_time  or '' }}</td>
+              {#<td>{{ order_detail.order_date or '' }}</td>#}
+              <td>{{ order_detail.order_time_full or '' }}</td>
               <td>{{ order_detail.card_no or '' }}</td>
               <td>{{ order_detail.order_amt  or '' }}</td>
               <td>{{ order_detail.dis_amt  or '' }}</td>

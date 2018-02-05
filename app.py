@@ -1,12 +1,14 @@
 # coding:utf-8
 
-import datetime
-import logging
-import logging.handlers
+import sys
 
-from flask import Flask, render_template, flash, request
+from flask import Flask, render_template, request
 from server.order import *
 from server.log4cas import LOGGER
+from server.excel import save_order_data_to_excel
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 app = Flask(
     __name__,
@@ -34,16 +36,26 @@ def download_order():
     # for test:
     # session_id = "0000si4l8ahug9VnJ9nlgD3seLD:-1"
     # order_download_date = '2018-02-03'
+    context = dict()
+    merchant_summary = None
+    order_detail_datas = None
+    try:
+        error, merchant_summary, order_detail_datas = query_order_detail(session_id, order_download_date)
+        context = {
+            'error': error,
+            'session_id': session_id,
+            'download_date': order_download_date,
+            'merchant_summary': merchant_summary,
+            'order_details': order_detail_datas
+        }
 
-    error, merchant_summary, order_detail_datas = query_order_detail(session_id, order_download_date)
+    except Exception as ex:
+        LOGGER.exception("查询商户订单信息异常，Exception:%s", ex)
 
-    context = {
-        'error': error,
-        'session_id': session_id,
-        'download_date': order_download_date,
-        'merchant_summary': merchant_summary,
-        'order_details': order_detail_datas
-    }
+    try:
+        save_order_data_to_excel(merchant_summary, order_detail_datas)
+    except Exception as ex:
+        LOGGER.exception("保存excel失败， Exception:%s", ex)
 
     return render_template('main/order.html', **context)
 
@@ -53,8 +65,10 @@ def help():
     return render_template('main/help.html')
 
 
-def log_on(session_id, orderDownloadDate):
-    return "1"
+@app.route('/test')
+def test():
+    # 测试生成excel
+    return "test"
 
 
 if __name__ == '__main__':
