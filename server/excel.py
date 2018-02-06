@@ -10,10 +10,16 @@
 Author: karl(i@karlzhou.com)
 """
 import os
+import sys
 
+import xlrd
 import xlwt
+from xlutils.copy import copy as xl_copy
 
 from model import *
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 ###############################################################################
 # Fix Python 3.5, there's no unicode function in python3
@@ -27,18 +33,18 @@ except NameError:
 # 配置
 # excel 列名映射
 COLUMN_MAPS = {
-    "store_name": "门店名称",
-    "order_date": "交易日期",
-    "order_time": "交易时间",
-    "order_id": "订单号",
-    "card_no": "交易卡号",
-    "order_amt": "原交易金额",
-    'dis_amt': "消费立减金额",
-    "total_amount": "净收金额(含积分及电子券抵扣金额)",
-    "point_amt": "积分抵扣金额",
-    "ecoupon_amt": "电子券抵扣金额",
-    "tran_type": "交易类型",
-    "tran_way": "交易方式"
+    "store_name": u"门店名称",
+    "order_date": u"交易日期",
+    "order_time": u"交易时间",
+    "order_id": u"订单号",
+    "card_no": u"交易卡号",
+    "order_amt": u"原交易金额",
+    'dis_amt': u"消费立减金额",
+    "total_amount": u"净收金额(含积分及电子券抵扣金额)",
+    "point_amt": u"积分抵扣金额",
+    "ecoupon_amt": u"电子券抵扣金额",
+    "tran_type": u"交易类型",
+    "tran_way": u"交易方式"
 }
 
 # excel 列顺序
@@ -81,8 +87,45 @@ COLUMN_KEYS_WIDTH = {
 
 ###############################################################################
 # 业务逻辑 -- 保存订单信息未本地文件
+def save_order_data_to_excel(date, merchant_trade_summary, order_detail_datas, save_path=None):
+    """
+     保存信息到本地excel
+     修改生成邮件的方式，同一日期的保存在一起，每个sheet一个商户，需要查看是否已有xls文件
+     有则打开，根据门店名称找到对应sheet文件，更新 or 新建。
 
-def save_order_data_to_excel(merchant_trade_summary, order_detail_datas, save_path=None):
+     :param date
+     :param merchant_trade_summary: `TradeSummary`
+     :param order_detail_datas: `TradeDetail`
+     :param save_path: 保存文件路径
+     :return:
+     """
+    if not merchant_trade_summary or not order_detail_datas:
+        return None
+
+    excel_file_name = get_excel_name(date)
+    sheet_name = get_sheet_name(merchant_trade_summary)
+    if not save_path:
+        save_path = os.path.join(os.path.dirname(__file__), '../', 'excels')
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
+
+    # 获取excel全路径
+    file_full_path = os.path.join(save_path, excel_file_name)
+    wb = get_workbook(file_full_path)
+
+    ws_info = None
+    try:
+        ws_index = wb.sheet_index(sheet_name)
+        ws_info = wb.get_sheet(ws_index)
+    except Exception:
+        # 不存在，则新建
+        wb_info = init_workbook(sheet_name, parent_wb=wb, frozen=False)
+        ws_info = wb_info['sheets'].get(sheet_name)
+    write_sheet(ws_info, order_detail_datas)
+    save_excel(wb, excel_file_name, save_path)
+
+
+def save_order_data_to_excel_bak(merchant_trade_summary, order_detail_datas, save_path=None):
     """
     保存信息到本地excel
     修改生成邮件的方式，同一日期的保存在一起，每个sheet一个商户，需要查看是否已有xls文件
@@ -97,8 +140,9 @@ def save_order_data_to_excel(merchant_trade_summary, order_detail_datas, save_pa
         return None
 
     file_name = get_file_name(merchant_trade_summary)
+
     sheet_name = u"e生活商户交易明细"
-    wb = get_workbook()
+    wb = get_workbook(None)
     wb_info = init_workbook(sheet_name, parent_wb=wb, frozen=False)
     ws_info = wb_info['sheets'].get(sheet_name)
 
@@ -127,6 +171,34 @@ def write_sheet(ws, order_detail_datas, rowx=1, column_keys=COLUMN_KEYS):
     for order_detail_data in order_detail_datas:
         add_row(ws, order_detail_data, rowx, column_keys=column_keys)
         rowx += 1
+
+
+def get_excel_name(date):
+    """
+      保存文件名称：<日期>.xls， 如: 2018-02-06.xls
+      :param date
+      :return:
+      """
+    now = datetime.datetime.now()
+    post_fix = '.xls'
+    if not date:
+        return now.strftime("%Y-%m-%d_%H-%M-%S") + post_fix
+    else:
+        return u"商户交易订单" + date + post_fix
+
+
+def get_sheet_name(merchant_trade_summary):
+    """
+    保存文件名称：<门店名>
+    :param merchant_trade_summary: `TradeSummary`
+    :return:
+    """
+    if isinstance(merchant_trade_summary, TradeSummary):
+        return unicode(merchant_trade_summary.store_name)
+    else:
+        # sheetname不能重复，加上时间
+        now = datetime.datetime.now()
+        return "e生活商户交易明细" + now.strftime("%Y-%m-%d_%H-%M-%S")
 
 
 def get_file_name(merchant_trade_summary):
@@ -170,13 +242,23 @@ WARNING = 'warning'
 DANGER = 'danger'
 
 
-def get_workbook():
+def get_workbook(file_path):
     """为了向同一个wb对象里添加sheet，
     另一种做法更tricky：打开生成的host_info_xxxx.xls, xlutil.copy 一份，然后往里加入新的sheet
     http://stackoverflow.com/questions/38081658/adding-a-sheet-to-an-existing-excel-worksheet-without-deleting-other-sheet
     这里为了简单，但是会耦合严重。
     """
-    return xlwt.Workbook(encoding="utf-8")
+    if not os.path.exists(file_path):
+        # 路径不存在，重新创建一个
+        return xlwt.Workbook(encoding="utf-8")
+    else:
+        try:
+            rb = xlrd.open_workbook(file_path, formatting_info=True)
+            return xl_copy(rb)
+        except Exception as ex:
+            # 如果读取失败需要记录
+            LOGGER.exception("打开excel文件[%s]失败,尝试重新创建全新的. Exception: %s", file_path, ex)
+            # raise ex
 
 
 # 生成excel内容
@@ -210,8 +292,7 @@ def init_workbook(sheets, parent_wb=None, cell_overwrite=True,
     if not isinstance(sheets, list):
         sheets = [sheets]
     for sheet in sheets:
-        ws = parent_wb.add_sheet(unicode(sheet),
-                                 cell_overwrite_ok=cell_overwrite)
+        ws = parent_wb.add_sheet(unicode(sheet), cell_overwrite_ok=cell_overwrite)
         # 暂时不调整宽度
         # ws = FitSheetWrapper(ws)
         add_header(ws, column_keys, column_maps=column_maps,
@@ -311,7 +392,7 @@ def add_row(ws, order_detail_data, row, style=BODY_XF, column_keys=COLUMN_KEYS):
     for idx, key in enumerate(column_keys):
         val = getattr(order_detail_data, key)
         if val is not None:
-            label = val
+            label = unicode(val)
             if isinstance(val, dict):
                 label = val.get('msg', '')
                 level = val.get('level', 'default')
@@ -341,7 +422,7 @@ def save_excel(wb, file_name, path):
         wb.save(os.path.join(path, file_name))
         LOGGER.info("Excel %s saved!", file_name)
     except Exception as ex:
-        LOGGER.error("Save failed. Exception: %s", ex)
+        LOGGER.exception("Save failed. Exception: %s", ex)
         raise ex
 
 

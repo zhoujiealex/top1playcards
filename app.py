@@ -53,7 +53,7 @@ def download_order():
         LOGGER.exception("查询商户订单信息异常，Exception:%s", ex)
 
     try:
-        save_order_data_to_excel(merchant_summary, order_detail_datas)
+        save_order_data_to_excel(order_download_date, merchant_summary, order_detail_datas)
     except Exception as ex:
         LOGGER.exception("保存excel失败， Exception:%s", ex)
 

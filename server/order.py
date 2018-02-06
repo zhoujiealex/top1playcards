@@ -124,11 +124,10 @@ def get_merchant_shop_id(session):
         return error, None
 
     soup = BeautifulSoup(res.text, 'html.parser')
-    shop_id = None
     try:
         shop_id = soup.find('input', {'id': 'merserialno'}).get('value')
         return error, shop_id
-    except:
+    except Exception:
         return "shop_id获取非法,请检查html网页格式", None
 
 

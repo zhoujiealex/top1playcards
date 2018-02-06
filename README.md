@@ -35,7 +35,7 @@
 3. 运行 `run.bat`，默认运行端口8888，访问： http://localhost:8888/
 4. 输入正确session值后，保存的excel位于当前目录的`excels`文件下
 
-    > 默认文件名称：<门店名称><日期yyyy-mm-dd>.xls
+    > 默认文件名称：<商户交易订单yyy-mm-dd>.xls
 
 
 

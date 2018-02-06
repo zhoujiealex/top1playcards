@@ -312,19 +312,11 @@ def convert_cent_to_yuan(cent):
         return cent
 
 
-def convert_timestamp_to_date(timestamp):
-    # 把ms的时间戳转换为date
-    if isinstance(timestamp, int):
-        return datetime.datetime.fromtimestamp(timestamp / 1e3)
-    else:
-        return None
-
-
 def format_date(timestamp, format_str):
     try:
-        date_obj = convert_timestamp_to_date(timestamp)
-        return datetime.datetime.strftime(date_obj, format_str)
-    except Exception:
+        date_obj = datetime.datetime.fromtimestamp(timestamp / 1e3)
+        return datetime.datetime.strftime(date_obj, unicode(format_str))
+    except Exception as ex:
         # ignore
-        LOGGER.error(u"日期转换出错，输入timestamp=" + timestamp)
-        return timestamp
+        LOGGER.error(u"日期转换出错，输入timestamp=%s, Exception:%s", timestamp, ex)
+        return unicode(timestamp)
