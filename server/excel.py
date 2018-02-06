@@ -9,9 +9,11 @@
 
 Author: karl(i@karlzhou.com)
 """
-from model import *
-import xlwt
 import os
+
+import xlwt
+
+from model import *
 
 ###############################################################################
 # Fix Python 3.5, there's no unicode function in python3
@@ -55,10 +57,23 @@ COLUMN_KEYS = [
     'tran_way'
 ]
 
-# excel 列顺序
-COLUMN_KEYS1 = [
-    'tran_type'
-]
+# excel 列宽带设置
+
+BASE_CHAR_WIDTH = 400
+COLUMN_KEYS_WIDTH = {
+    "store_name": 18 * BASE_CHAR_WIDTH,
+    "order_date": 7 * BASE_CHAR_WIDTH,
+    "order_time": 6 * BASE_CHAR_WIDTH,
+    "order_id": 16 * BASE_CHAR_WIDTH,
+    "card_no": 10 * BASE_CHAR_WIDTH,
+    "order_amt": 6 * BASE_CHAR_WIDTH,
+    'dis_amt': 6 * BASE_CHAR_WIDTH,
+    "total_amount": 6 * BASE_CHAR_WIDTH,
+    "point_amt": 6 * BASE_CHAR_WIDTH,
+    "ecoupon_amt": 6 * BASE_CHAR_WIDTH,
+    "tran_type": 5 * BASE_CHAR_WIDTH,
+    "tran_way": 12 * BASE_CHAR_WIDTH
+}
 
 
 ###############################################################################
@@ -70,6 +85,9 @@ COLUMN_KEYS1 = [
 def save_order_data_to_excel(merchant_trade_summary, order_detail_datas, save_path=None):
     """
     保存信息到本地excel
+    修改生成邮件的方式，同一日期的保存在一起，每个sheet一个商户，需要查看是否已有xls文件
+    有则打开，根据门店名称找到对应sheet文件，更新 or 新建。
+
     :param merchant_trade_summary: `TradeSummary`
     :param order_detail_datas: `TradeDetail`
     :param save_path: 保存文件路径
@@ -135,8 +153,8 @@ WARNING_XF = xlwt.easyxf(
     'font: bold off; align: wrap on, vert center, horiz left; pattern: pattern solid, fore-colour yellow')
 DANGER_XF = xlwt.easyxf(
     'font: bold off; align: wrap on, vert center, horiz left; pattern: pattern solid, fore-colour red')
-HEADING_XF = BODY_XF
-# HEADING_XF = xlwt.easyxf('font: name SimSun, bold on;')
+# HEADING_XF = BODY_XF
+HEADING_XF = xlwt.easyxf('font: name SimSun, bold on;')
 
 STYLE_MAPS = {
     "info": BODY_XF,
@@ -225,6 +243,7 @@ def add_header(ws, headers, rowx=0, column_maps=COLUMN_MAPS, style=HEADING_XF,
 
     for idx, head in enumerate(headers):
         head_str = column_maps.get(head, unicode(head))
+        ws.col(idx).width = COLUMN_KEYS_WIDTH.get(head, 10 * BASE_CHAR_WIDTH)
         ws.write(rowx, idx, head_str, style)
 
     if frozen:

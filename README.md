@@ -32,7 +32,7 @@
 ](https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001374738150500472fd5785c194ebea336061163a8a974000)
 
 2. 安装依赖包， 执行程序目录下的 `install.bat`
-3. 运行 `run.bat`，默认运行端口8888，访问： http://l27.0.0.1:8888/
+3. 运行 `run.bat`，默认运行端口8888，访问： http://localhost:8888/
 4. 输入正确session值后，保存的excel位于当前目录的`excels`文件下
 
     > 默认文件名称：<门店名称><日期yyyy-mm-dd>.xls

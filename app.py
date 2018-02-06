@@ -3,9 +3,9 @@
 import sys
 
 from flask import Flask, render_template, request
-from server.order import *
-from server.log4cas import LOGGER
+
 from server.excel import save_order_data_to_excel
+from server.order import *
 
 reload(sys)
 sys.setdefaultencoding('utf-8')

@@ -6,9 +6,11 @@ ICBC订单查询
 Author: karl(i@karlzhou.com)
 """
 
-import requests
 import json
-from log4cas import LOGGER
+
+import requests
+from bs4 import BeautifulSoup
+
 from model import *
 
 # https://biz.elife.icbc.com.cn/businessHomeLogin/receiveCommon.action
@@ -32,14 +34,11 @@ def query_order_detail(session_id, order_download_date):
     if error:
         return error, None, None
 
-    # 2.获取操作员id
-    error, op_id = get_operator_id(session)
+    # 2.获取商户id
+    error, shop_id = get_merchant_shop_id(session)
     if error:
         return error, None, None
-
-    # 3.获取商户门店id
-    shop_id = op_id[:-3]
-    LOGGER.info(u"session_id:[%s]对应的操作员登陆账号为[%s],门店id:[%s]", session_id, op_id, shop_id)
+    LOGGER.info(u"session_id:[%s]对应的门店id:[%s]", session_id, shop_id)
     if error:
         return error, None, None
 
@@ -111,9 +110,32 @@ def check_session_validation(session):
     return None
 
 
+def get_merchant_shop_id(session):
+    """
+    访问链接https://biz.elife.icbc.com.cn/trade/findTradeDetail.action
+    读取元素 <input id="merserialno" type="hidden" value="16050005980">
+    :param session:
+    :return:
+    """
+    error = None
+    res = session.get(build_icbc_url("trade/findTradeDetail.action"))
+    if not res.ok or res.status_code != 200:
+        LOGGER.error(u"获取商户门店id失败" + res.reason)
+        return error, None
+
+    soup = BeautifulSoup(res.text, 'html.parser')
+    shop_id = None
+    try:
+        shop_id = soup.find('input', {'id': 'merserialno'}).get('value')
+        return error, shop_id
+    except:
+        return "shop_id获取非法,请检查html网页格式", None
+
+
 def get_operator_id(session):
     """
     登陆账号是操作员id,获取操作员id后，去掉末尾三位得到商户id
+        -- 不正确，会出现和不一样的场景，如宾客来的登录id和门店id是不一样
 
     :param session: `requests`
     :return:
