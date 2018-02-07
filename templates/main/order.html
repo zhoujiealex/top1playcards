@@ -5,10 +5,8 @@
   <div class="body-content">
 
     <div class="row">
-      <h2>登录工行网站</h1>
-        <h3>
-          <a href="https://biz.elife.icbc.com.cn/businessHomeLogin/loginPage.action" target="_blank">工银商户之家登录</a>
-        </h3>
+      <h2>登录工行网站</h2>
+      <button id="loginIcbc" class="btn btn-info" onclick="loginIcbc()">工银商户之家登录</button>
     </div>
 
     <div class="row">
@@ -157,6 +155,26 @@
       {% endif %}
     {% endif %}
 
+
+    <div class="modal fade" id="icbcModal">
+      <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            {#            <button type="button" class="close" onclick="window.history.go(-1);">×</button>#}
+            <h4 class="modal-title" style="color: red;">工银商户之家登录</h4>
+          </div>
+          <div class="modal-body">
+            <iframe id="icbcFrame" width="100%" height="500px" frameborder="0"></iframe>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">关 闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
   <script type="text/javascript">
@@ -197,6 +215,13 @@
           document.orderForm.actionType.value = val;
           document.orderForm.submit();
       }
+
+      function loginIcbc() {
+          var frameSrc = "https://biz.elife.icbc.com.cn/businessHomeLogin/loginPage.action";
+          $("#icbcFrame").attr("src", frameSrc);
+          $('#icbcModal').modal({show: true, backdrop: 'static'});
+      }
+
 
   </script>
 
