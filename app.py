@@ -4,7 +4,7 @@ import sys
 
 from flask import Flask, render_template, request
 
-from server.excel import save_order_data_to_excel
+from server.excel import save_order_data_to_excel, merge_excel_helper
 from server.order import *
 
 reload(sys)
@@ -22,40 +22,43 @@ merchants = dict()
 
 
 @app.route('/')
-@app.route('/home')
+@app.route('/order')
 def home():
     return render_template('main/order.html')
 
 
 # 下载商户订单详细信息，入参：指定日期，默认昨天
 @app.route('/order', methods=['POST'])
-def download_order():
+def order():
     order_download_date = request.form['orderDownloadDate']
     session_id = request.form['sessionId']
+    action_type = request.form['actionType']
 
-    # for test:
-    # session_id = "0000si4l8ahug9VnJ9nlgD3seLD:-1"
-    # order_download_date = '2018-02-03'
-    context = dict()
-    merchant_summary = None
-    order_detail_datas = None
-    try:
-        error, merchant_summary, order_detail_datas = query_order_detail(session_id, order_download_date)
-        context = {
-            'error': error,
-            'session_id': session_id,
-            'download_date': order_download_date,
-            'merchant_summary': merchant_summary,
-            'order_details': order_detail_datas
-        }
+    context = {'session_id': session_id, 'download_date': order_download_date, 'action_type': action_type}
+    if action_type == 'download':
+        # for test:
+        # session_id = "0000si4l8ahug9VnJ9nlgD3seLD:-1"
+        # order_download_date = '2018-02-03'
 
-    except Exception as ex:
-        LOGGER.exception("查询商户订单信息异常，Exception:%s", ex)
+        merchant_summary = None
+        order_detail_datas = None
+        try:
+            error, merchant_summary, order_detail_datas = query_order_detail(session_id, order_download_date)
+            context['error'] = error
+            context['merchant_summary'] = merchant_summary
+            context['order_details'] = order_detail_datas
 
-    try:
-        save_order_data_to_excel(order_download_date, merchant_summary, order_detail_datas)
-    except Exception as ex:
-        LOGGER.exception("保存excel失败， Exception:%s", ex)
+        except Exception as ex:
+            LOGGER.exception("查询商户订单信息异常，Exception:%s", ex)
+
+        try:
+            save_order_data_to_excel(order_download_date, merchant_summary, order_detail_datas)
+        except Exception as ex:
+            LOGGER.exception("保存excel失败， Exception:%s", ex)
+    elif action_type == 'merge':
+        merge_res = merge_excel_helper(order_download_date)
+        context['merge_res'] = merge_res
+        context['error'] = merge_res.get('error', None)
 
     return render_template('main/order.html', **context)
 

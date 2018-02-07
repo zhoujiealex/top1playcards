@@ -17,6 +17,7 @@ import xlwt
 from xlutils.copy import copy as xl_copy
 
 from model import *
+from utils import read_excel_cfg
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -128,8 +129,6 @@ def save_order_data_to_excel(date, merchant_trade_summary, order_detail_datas, s
 def save_order_data_to_excel_bak(merchant_trade_summary, order_detail_datas, save_path=None):
     """
     保存信息到本地excel
-    修改生成邮件的方式，同一日期的保存在一起，每个sheet一个商户，需要查看是否已有xls文件
-    有则打开，根据门店名称找到对应sheet文件，更新 or 新建。
 
     :param merchant_trade_summary: `TradeSummary`
     :param order_detail_datas: `TradeDetail`
@@ -184,7 +183,12 @@ def get_excel_name(date):
     if not date:
         return now.strftime("%Y-%m-%d_%H-%M-%S") + post_fix
     else:
-        return u"商户交易订单" + date + post_fix
+        file_name = "商户交易订单"
+        try:
+            file_name = read_excel_cfg("file_name")
+        except Exception:
+            pass
+        return file_name + date + post_fix
 
 
 def get_sheet_name(merchant_trade_summary):
@@ -213,6 +217,91 @@ def get_file_name(merchant_trade_summary):
         return unicode(merchant_trade_summary.store_name + merchant_trade_summary.order_date + post_fix)
     else:
         return now.strftime("%Y-%m-%d_%H-%M-%S") + post_fix
+
+
+def merge_excel_helper(date):
+    excel_saved_path = os.path.join(os.path.dirname(__file__), '../', 'excels')
+    src = os.path.normpath(os.path.join(excel_saved_path, read_excel_cfg("file_name") + date + ".xls"))
+    dst = os.path.normpath(os.path.join(excel_saved_path, read_excel_cfg("file_name") + date + "-合并.xls"))
+    return merge_excel(src, dst, read_excel_cfg("merged_sheet_name"))
+
+
+def merge_excel(src, dst, merged_sheet_name):
+    """
+    合并src中所有sheet到同一个sheet里，要求表头一样，默认表头是一行。
+    合并多个sheet到同一个excel里， 原文参考： https://gist.github.com/anderser/1276531
+    做了部分定制，去掉了第一列的sheet名称
+
+    :param src: 源文件
+    :param dst: 目标保存文件
+    :param merged_sheet_name: 合并后的sheet名称
+    :return: `dict`: 统计信息，共多少商户，分别多少数据，总共多少数据
+    """
+    res = dict()
+    res['error'] = ''
+    if not os.path.exists(src):
+        error = u"源文件不存在,请先下载商户订单后再合并。 请检查:[%s]" % src
+        res['error'] = error
+        LOGGER.error(error)
+        return res
+
+    try:
+        book = xlrd.open_workbook(src, formatting_info=True)
+    except Exception as ex:
+        error = u"打开excel文件失败:[%s]. Exception:%s " % (src, ex)
+        LOGGER.exception(error, ex)
+        res['error'] = error
+        return res
+
+    res['src'] = src
+    res['dst'] = dst
+    res['detail'] = dict()
+    res['total_count'] = 0
+
+    merged_book = xlwt.Workbook()
+    ws = merged_book.add_sheet(unicode(merged_sheet_name), cell_overwrite_ok=True)
+    # 添加固定表头
+    add_header(ws, COLUMN_KEYS, column_maps=COLUMN_MAPS, frozen=False)
+
+    rowcount = 1
+    datestyle = xlwt.XFStyle()
+    datestyle.num_format_str = "YYYY-MM-DD"  # 暂时用不到date格式，保留
+    for sheetx in range(book.nsheets):
+        sheet = book.sheet_by_index(sheetx)
+        if sheet:
+            res['detail'][sheet.name] = sheet.nrows - 1  # 去掉表头
+            res['total_count'] += sheet.nrows - 1
+        for rx in range(sheet.nrows):
+            if rx > 0:  # 排除第一行表头
+                for cx in range(sheet.ncols):
+                    value = sheet.cell_value(rx, cx)
+
+                    # datetime check lifted from the great Everyblock ebdata excel.py code
+                    # http://code.google.com/p/ebcode/
+
+                    if sheet.cell_type(rx, cx) == 3:
+                        try:
+                            value = datetime.datetime(*xlrd.xldate_as_tuple(value, book.datemode))
+
+                            ws.write(rowcount, cx, sheet.cell_value(rx, cx), datestyle)
+                        except ValueError:
+                            # The datetime module raises ValueError for invalid
+                            # dates, like the year 0. Rather than skipping the
+                            # value (which would lose data), we just keep it as
+                            # a string.
+                            pass
+                    else:
+                        ws.write(rowcount, cx, sheet.cell_value(rx, cx))
+
+                rowcount += 1
+
+    try:
+        merged_book.save(dst)
+    except Exception as ex:
+        error = u"保存excel[%s]文件失败" % dst
+        LOGGER.exception("%s,Exception:%s", error, ex)
+        res['error'] = error
+    return res
 
 
 ############ 公共函数 #########################################################
@@ -591,4 +680,14 @@ class FitSheetWrapper(object):
 
     def __getattr__(self, attr):
         return getattr(self.sheet, attr)
+
+
 ###############################################################################
+
+if __name__ == '__main__':
+    # For test
+    save_path = os.path.join(os.path.dirname(__file__), '../', 'excels')
+    excel_file_name = u"商户交易订单2018-02-05.xls"
+    merged_sheet_name = read_excel_cfg("merged_sheet_name")
+    res = merge_excel(os.path.join(save_path, excel_file_name),
+                      os.path.join(save_path, merged_sheet_name), merged_sheet_name)

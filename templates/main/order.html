@@ -14,14 +14,19 @@
     <div class="row">
       <h2>下载商户订单数据</h2>
 
-      <form class="form-inline" action="/order" method="post">
+      <form name="orderForm" class="form-inline" action="/order" method="post">
         <div class="">
           <div class="input-group">
+            <input type="hidden" name="actionType" value="download">
             <input id="sessionId" name="sessionId" type="text" style="width: 400px" class="form-control"
                    placeholder="请输入登录后的JSESSIONID" value="{{ session_id or '' }}">
             <input id="orderDownloadDate" name="orderDownloadDate" class="form-control"
                    style="padding-left: 10px; width: 100px;" data-provide="datepicker">
-            <button class="btn btn-info" type="submit" style="width: auto">下载详细订单
+            <button class="btn btn-info" type="button" style="width: auto;"
+                    onclick="order_form_button_click('download')">下载详细订单
+            </button>
+            <button class="btn btn-success" type="button" style="width: auto; margin-left: 10px"
+                    onclick="order_form_button_click('merge')">合并商户订单
             </button>
           </div>
           <div><i>例子： 0000hde2j_6BiuIVhbHZSv4EEQb:-1</i></div>
@@ -31,83 +36,125 @@
 
     </div>
     <br>
-
     <div class="row">
-      <div class="alert alert-info" role="alert">
-        <span>本次请求输入的session：<b>{{ session_id }}</b></span>
-      </div>
       {% if error %}
         <div class="alert alert-danger" role="alert">{{ error }}</div>
       {% endif %}
     </div>
 
-    {% if merchant_summary %}
+    {% if action_type == 'download' %}
       <div class="row">
-        <table data-toggle="table">
-          <thead>
-          <tr>
-            <th>门店名称</th>
-            <th>交易日期</th>
-            <th>总订单金额</th>
-            <th>总消费立减金额</th>
-            <th>总积分抵扣金额</th>
-            <th>总电子券抵扣金额</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{ merchant_summary.store_name  or '' }}</td>
-            <td>{{ merchant_summary.order_date  or '' }}</td>
-            <td>{{ merchant_summary.total_amount  or '' }}</td>
-            <td>{{ merchant_summary.total_dis_amt  or '' }}</td>
-            <td>{{ merchant_summary.total_point_amt  or '' }}</td>
-            <td>{{ merchant_summary.total_ecoupon_amt  or '' }}</td>
-          </tr>
-          </tbody>
-        </table>
+        {% if session_id %}
+          <div class="alert alert-info" role="alert">
+            <span>本次请求输入的session：<b>{{ session_id }}</b></span>
+          </div>
+        {% endif %}
       </div>
+
+      {% if merchant_summary %}
+        <div class="row">
+          <table data-toggle="table">
+            <thead>
+            <tr>
+              <th>门店名称</th>
+              <th>交易日期</th>
+              <th>总订单金额</th>
+              <th>总消费立减金额</th>
+              <th>总积分抵扣金额</th>
+              <th>总电子券抵扣金额</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{ merchant_summary.store_name  or '' }}</td>
+              <td>{{ merchant_summary.order_date  or '' }}</td>
+              <td>{{ merchant_summary.total_amount  or '' }}</td>
+              <td>{{ merchant_summary.total_dis_amt  or '' }}</td>
+              <td>{{ merchant_summary.total_point_amt  or '' }}</td>
+              <td>{{ merchant_summary.total_ecoupon_amt  or '' }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+
+      {# http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/#%E8%A1%A8%E6%A0%BC%E5%8F%82%E6%95%B0 #}
+      {% if order_details %}
+        <div class="row">
+          <table data-toggle="table" data-search="true"
+                 data-pagination="true" data-mobile-responsive="true"
+                 data-show-toggle="false" data-page-size=20
+                 data-striped="true">
+            <thead>
+            <tr>
+              <th data-sortable="false">订单编号</th>
+              <th data-sortable="false">交易日期</th>
+              {#<th data-sortable="true">交易时间</th>#}
+              <th data-sortable="true">交易卡号</th>
+              <th data-sortable="true">订单金额</th>
+              <th data-sortable="false">消费立减金额</th>
+              {#<th>净收金额</th>#}
+              <th data-sortable="false">积分抵扣金额</th>
+              <th data-sortable="false">电子券抵扣金额</th>
+              <th data-sortable="false">交易类型</th>
+              <th data-sortable="false">交易方式</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order_detail in order_details %}
+              <tr>
+                <td>{{ order_detail.order_id  or '' }}</td>
+                {#<td>{{ order_detail.order_date or '' }}</td>#}
+                <td>{{ order_detail.order_time_full or '' }}</td>
+                <td>{{ order_detail.card_no or '' }}</td>
+                <td>{{ order_detail.order_amt  or '' }}</td>
+                <td>{{ order_detail.dis_amt  or '' }}</td>
+                <td>{{ order_detail.point_amt  or '' }}</td>
+                <td>{{ order_detail.ecoupon_amt  or '' }}</td>
+                <td>{{ order_detail.tran_type  or '' }}</td>
+                <td>{{ order_detail.tran_way  or '' }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
     {% endif %}
 
-    {# http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/#%E8%A1%A8%E6%A0%BC%E5%8F%82%E6%95%B0 #}
-    {% if order_details %}
-      <div class="row">
-        <table data-toggle="table" data-search="true"
-               data-pagination="true" data-mobile-responsive="true"
-               data-show-toggle="false" data-page-size=20
-               data-striped="true">
-          <thead>
-          <tr>
-            <th data-sortable="false">订单编号</th>
-            <th data-sortable="false">交易日期</th>
-            {#<th data-sortable="true">交易时间</th>#}
-            <th data-sortable="true">交易卡号</th>
-            <th data-sortable="true">订单金额</th>
-            <th data-sortable="false">消费立减金额</th>
-            {#<th>净收金额</th>#}
-            <th data-sortable="false">积分抵扣金额</th>
-            <th data-sortable="false">电子券抵扣金额</th>
-            <th data-sortable="false">交易类型</th>
-            <th data-sortable="false">交易方式</th>
-          </tr>
-          </thead>
-          <tbody>
-          {% for order_detail in order_details %}
+    {% if action_type == 'merge' %}
+      {% if merge_res and not merge_res.error and merge_res.detail %}
+        <div class="row">
+          {% if merge_res.src %}
+            <div class="alert alert-info" role="alert">
+              <span>源文件：<b>{{ merge_res.src }}</b></span>
+            </div>
+          {% endif %}
+          {% if merge_res.dst %}
+            <div class="alert alert-success" role="alert">
+              <span>总订单数据共{{ merge_res.total_count }}条。 合并文件：<b>{{ merge_res.dst }}</b></span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="row">
+          <table data-toggle="table" data-pagination="true" data-mobile-responsive="true"
+                 data-show-toggle="false" data-page-size=20 data-striped="true">
+            <thead>
             <tr>
-              <td>{{ order_detail.order_id  or '' }}</td>
-              {#<td>{{ order_detail.order_date or '' }}</td>#}
-              <td>{{ order_detail.order_time_full or '' }}</td>
-              <td>{{ order_detail.card_no or '' }}</td>
-              <td>{{ order_detail.order_amt  or '' }}</td>
-              <td>{{ order_detail.dis_amt  or '' }}</td>
-              <td>{{ order_detail.point_amt  or '' }}</td>
-              <td>{{ order_detail.ecoupon_amt  or '' }}</td>
-              <td>{{ order_detail.tran_type  or '' }}</td>
-              <td>{{ order_detail.tran_way  or '' }}</td>
+              <th data-sortable="false" data-width="40%">商户名称</th>
+              <th data-sortable="true">订单数</th>
             </tr>
-          {% endfor %}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+            {% for merchant_name in merge_res.detail %}
+              <tr>
+                <td>{{ merchant_name  or '' }}</td>
+                <td>{{ merge_res.detail[merchant_name]  or '' }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
     {% endif %}
 
   </div>
@@ -145,6 +192,11 @@
           {% endif %}
 
       });
+
+      function order_form_button_click(val) {
+          document.orderForm.actionType.value = val;
+          document.orderForm.submit();
+      }
 
   </script>
 
