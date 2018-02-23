@@ -14,12 +14,33 @@ from log4cas import LOGGER
 class MerchantInfo(object):
 
     def __init__(self):
-        # 商家门店id
+        # 商家门店id, 需要解析html获取，前台不感知
         self._shop_id = None
         # 商户门店名称
         self._store_name = None
         # mcc
         self._mcc = None
+        # alias别名
+        self._alias = None
+        # 登录账户
+        self._logon_id = None
+        # session
+        self._session_id = None
+        # status 状态, 不直接设置，登录成功后更新为True
+        self._status = False
+        # errors
+        self._errors = list()
+
+    def to_dict(self):
+        res = dict()
+        res['alias'] = self.alias
+        res['logonId'] = self.logon_id
+        res['mcc'] = self.mcc
+        res['storeName'] = self.store_name
+        res['sessionId'] = self.session_id
+        res['shopId'] = self.shop_id
+        res['status'] = self.status
+        return res
 
     @property
     def shop_id(self):
@@ -44,6 +65,46 @@ class MerchantInfo(object):
     @mcc.setter
     def mcc(self, mcc):
         self._mcc = mcc
+
+    @property
+    def alias(self):
+        return self._alias
+
+    @alias.setter
+    def alias(self, alias):
+        self._alias = alias
+
+    @property
+    def logon_id(self):
+        return self._logon_id
+
+    @logon_id.setter
+    def logon_id(self, logon_id):
+        self._logon_id = logon_id
+
+    @property
+    def session_id(self):
+        return self._session_id
+
+    @session_id.setter
+    def session_id(self, session_id):
+        self._session_id = session_id
+
+    @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        self._status = status
+
+    @property
+    def errors(self):
+        return self._errors
+
+    @errors.setter
+    def errors(self, errors):
+        self._errors.append(errors)
 
 
 class TradeSummary(object):

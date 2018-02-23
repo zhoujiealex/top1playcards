@@ -87,6 +87,21 @@ def get_session(session_id):
     return s
 
 
+def check_session_valid(session_id):
+    """
+    检查session是否有效
+    :param session_id:
+    :return:
+    """
+    session_id = format_session_id(session_id)
+    session = get_session(session_id)
+    error = check_session_validation(session)
+    if error:
+        return False, error
+    else:
+        return True, None
+
+
 # 检查session_id是否合法
 def check_session_validation(session):
     """

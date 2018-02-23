@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import ConfigParser
+import json
 import os
 
 
@@ -22,3 +23,20 @@ def read_cfg(section, key, cfg_file_name):
 
 def read_excel_cfg(key):
     return read_cfg("excel", key, "config.ini")
+
+
+def read_merchant_cfg():
+    """
+    读取商户json配置，返回dict
+    :return: `dict`
+    """
+    cfg_file = os.path.join(os.path.dirname(__file__), '../', 'conf', 'merchants.json')
+    if not os.path.exists(cfg_file):
+        raise Exception(u"商户配置json文件不存在，请检查,cfg_file=%s" % cfg_file)
+    res = None
+    with open(cfg_file) as data:
+        try:
+            res = json.load(data)
+        except Exception:
+            raise Exception(u"商户配置json文件格式不合法，请检查")
+    return res

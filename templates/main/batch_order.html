@@ -1,0 +1,222 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+  <div class="body-content">
+
+    <div id="error" class="row"></div>
+    <div id="tip" class="row"></div>
+
+    <div class="row">
+
+      <div>
+        <h2>商户配置数据</h2>
+        <div>
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+        </div>
+      </div>
+
+      <table id="merchantCfgData" data-toggle="table" data-pagination="true" data-mobile-responsive="true"
+             data-show-toggle="false" data-page-size=25 data-striped="true">
+        <thead>
+        <tr>
+          <th data-sortable="true">简称</th>
+          <th data-sortable="false">登录账户</th>
+          <th data-sortable="true">MCC</th>
+          <th data-sortable="false">全称</th>
+          <th data-sortable="false">SessionId</th>
+          <th data-sortable="true">状态</th>
+          <th data-sortable="false">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <h2>统计数据</h2>
+      <table data-toggle="table">
+        <thead>
+        <tr>
+          <th>门店名称</th>
+          <th>交易日期</th>
+          <th>总订单金额</th>
+          <th>总消费立减金额</th>
+          <th>总积分抵扣金额</th>
+          <th>总电子券抵扣金额</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <h2>订单详细数据</h2>
+      <table data-toggle="table" data-search="true"
+             data-pagination="true" data-mobile-responsive="true"
+             data-show-toggle="false" data-page-size=20
+             data-striped="true">
+        <thead>
+        <tr>
+          <th data-sortable="false">订单编号</th>
+          <th data-sortable="false">交易日期</th>
+          {#<th data-sortable="true">交易时间</th>#}
+          <th data-sortable="true">交易卡号</th>
+          <th data-sortable="true">订单金额</th>
+          <th data-sortable="false">消费立减金额</th>
+          {#<th>净收金额</th>#}
+          <th data-sortable="false">积分抵扣金额</th>
+          <th data-sortable="false">电子券抵扣金额</th>
+          <th data-sortable="false">交易类型</th>
+          <th data-sortable="false">交易方式</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+      var merchantCfgDataTable = $('#merchantCfgData');
+
+      function initMerchantCfgData() {
+          merchantCfgDataTable.bootstrapTable('destroy');
+          merchantCfgDataTable.bootstrapTable({
+              method: 'get',
+              url: '/merchant_info',
+              dataType: 'json',
+              clickToSelect: true,
+              uniqueId: 'logonId',
+              sidePagination: 'client', // 客户端分页
+              columns: [{
+                  field: 'alias',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'logonId',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'mcc',
+                  align: 'center',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'storeName',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'sessionId',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'status',
+                  align: 'center',
+                  formatter: statusFormatter,
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'operate',
+                  align: 'center',
+                  valign: 'middle',
+                  formatter: operateFormatter,
+                  events: window.operateEvents
+              }],
+              onLoadSuccess: function () {
+                  console.info("加载商户配置数据成功");
+              },
+              onLoadError: function () {
+                  alert("加载商户配置数据失败");
+              }
+          })
+      }
+
+      function thinTdStyle(value, row, index) {
+          return {
+              css: {
+                  "padding-right": "2px",
+                  "padding-left": "2px"
+              }
+          }
+      }
+
+      function statusFormatter(value, row, index) {
+          // FIXME: 换成图标
+          if (row['status']) {
+              return 'Ok';
+          } else {
+              return 'Bad';
+          }
+      }
+
+      function operateFormatter(value, row, index) {
+          return ['<div><a class="login" href="javascript:void(0)">',
+              '<button class="btn btn-info" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">登录</button></a>',
+              '<a class="download" href="javascript:void(0)">',
+              '<button class="btn btn-success" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">下载</button></a>',
+              '</div>'
+          ].join('');
+      }
+
+      function showError(error) {
+          if (error) {
+              var errorEle = $('#error');
+              var errorHtml = errorEle.html() +
+                  ['<div class="alert alert-danger alert-dismissable">',
+                      '<button type="button" class="close" title="Close" href="#" data-dismiss="alert">&times;</button>',
+                      error,
+                      '</div>'].join('');
+              errorEle.html(errorHtml);
+          }
+      }
+
+      function showTip(tip) {
+          if (tip) {
+              var tipEle = $('#tip');
+              var tipHtml = tipEle.html() +
+                  ['<div class="alert alert-success alert-dismissable">',
+                      '<button type="button" class="close" title="Close" href="#" data-dismiss="alert">&times;</button>',
+                      tip,
+                      '</div>'].join('');
+              tipEle.html(tipHtml);
+          }
+      }
+
+      window.operateEvents = {
+          'click .login': function (e, value, row, index) {
+              var logonId = row['logonId'];
+              var alias = row['alias'];
+              $.ajax({
+                  type: 'POST',
+                  url: '/batch_order/manual_login',
+                  data: {
+                      logonId: logonId
+                  },
+                  dataType: 'json',
+                  success: function (data) {
+                      console.info("登录" + logonId + "成功");
+                      showTip("我是测试error" + logonId);
+                      if (!data['status']) {
+                          showError(data['error']);
+                      }
+                  },
+                  error: function (e) {
+                      console.error("手动登录" + logonId + "失败", e);
+                      showError("手动登录失败[" + alias + logonId + "]" + e);
+                  }
+              });
+
+          },
+          'click .download': function (e, value, row, index) {
+              alert(row['logonId']);
+          }
+      };
+
+      $(document).ready(function () {
+          initMerchantCfgData();
+      });
+
+  </script>
+
+{% endblock %}

@@ -2,8 +2,10 @@
 
 import sys
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, flash
 
+from server.batch_order import refresh_merchant_config, get_merchant
+from server.browser import *
 from server.excel import save_order_data_to_excel, merge_excel_helper
 from server.order import *
 
@@ -61,6 +63,41 @@ def order():
         context['error'] = merge_res.get('error', None)
 
     return render_template('main/order.html', **context)
+
+
+@app.route('/batch_order')
+def batch_order():
+    return render_template('main/batch_order.html')
+
+
+@app.route('/batch_order/manual_login', methods=['POST'])
+def manual_login():
+    logon_id = request.form.get('logonId')
+    res = {'status': False, 'error': ''}
+    try:
+        merchant = get_merchant(logon_id)
+        if merchant:
+            res['status'] = login(merchant)
+        else:
+            res['error'] = logon_id + "对应的商户数据未查询到, 请刷新页面重新加载商户配置数据"
+    except Exception as ex:
+        res['error'] = ex.message
+    return jsonify(res)
+
+
+@app.route('/batch_order/close_all_drivers')
+def close_all_drivers():
+    try:
+        close_all()
+    except Exception as ex:
+        LOGGER.error("关闭页面异常", ex)
+    return 'ok'
+
+
+@app.route('/merchant_info')
+def get_merchant_info():
+    res = refresh_merchant_config()
+    return jsonify(res)
 
 
 @app.route('/help')
