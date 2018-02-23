@@ -5,11 +5,19 @@ ICBC批量订单下载
 
 Author: karl(i@karlzhou.com)
 """
+from gevent import monkey
+
+from log4cas import LOGGER
 from model import MerchantInfo
 from utils import read_merchant_cfg
 
+monkey.patch_all()
+from gevent.pool import Pool
+from order import check_session_valid
+
 # 商户缓存数据，以登录账户为key
 MERCHANTS_DATA = dict()
+MERCHANTS_DATA_REFRESH_POOL = Pool(20)
 
 
 def refresh_merchant_config():
@@ -50,6 +58,7 @@ def get_merchant_config():
             merchant_data.logon_id = merchant_info.logon_id
             merchant_data.mcc = merchant_info.mcc
             if not merchant_data.session_id:
+                # TODO: 后续再考虑增加导入session覆盖的功能
                 # 缓存里为空才更新
                 merchant_data.session_id = merchant_info.session_id
             merchant_data.store_name = merchant_info.store_name
@@ -74,12 +83,18 @@ def check_status(cfgs):
     :param cfgs: list of `MerchantInfo`
     :return:
     """
-    # FIXME: gevent并发检查session有效性
+    # gevent并发检查session有效性
+    merchants = list()
     for cfg in cfgs:
         if isinstance(cfg, MerchantInfo):
-            pass
-    pass
+            merchants.append(cfg)
+    MERCHANTS_DATA_REFRESH_POOL.map(check_status_merchant, merchants)
 
 
-if __name__ == '__main__':
-    get_merchant_config()
+def check_status_merchant(merchant_info):
+    if not isinstance(merchant_info, MerchantInfo):
+        return False
+    res, error = check_session_valid(merchant_info.session_id)
+    LOGGER.info(u"商户(%s)的session有效性=%s", merchant_info.alias, res)
+    merchant_info.status = res
+    return res

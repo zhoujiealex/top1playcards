@@ -2,7 +2,8 @@
 
 import sys
 
-from flask import Flask, render_template, request, jsonify, flash
+from flask import Flask, render_template, request, jsonify
+from flask_apscheduler import APScheduler
 
 from server.batch_order import refresh_merchant_config, get_merchant
 from server.browser import *
@@ -12,15 +13,26 @@ from server.order import *
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
+class Config(object):
+    JOBS = [
+        {
+            'id': 'checkSessionValidation',
+            'func': 'server.batch_order:refresh_merchant_config',
+            'args': (),
+            'trigger': 'interval',
+            'seconds': 2 * 60
+        }
+    ]
+
+
 app = Flask(
     __name__,
     template_folder='templates',
     static_folder='static'
 )
 app.secret_key = 'top_1_play_cards'
-
-# 商户登录成功后的缓存，包括session
-merchants = dict()
+app.config.from_object(Config)
 
 
 @app.route('/')
@@ -112,4 +124,14 @@ def test():
 
 
 if __name__ == '__main__':
+
+    # 启动定时
+    scheduler = APScheduler()
+    scheduler.init_app(app)
+    try:
+        scheduler.start()
+        LOGGER.info("定时刷新session任务启动，2min运行一次")
+    except (KeyboardInterrupt, SystemExit):
+        pass
+
     app.run(port=8888)
