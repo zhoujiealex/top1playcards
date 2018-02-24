@@ -35,7 +35,6 @@ app.secret_key = 'top_1_play_cards'
 app.config.from_object(Config)
 
 
-@app.route('/')
 @app.route('/order')
 def home():
     return render_template('main/order.html')
@@ -77,6 +76,7 @@ def order():
     return render_template('main/order.html', **context)
 
 
+@app.route('/')
 @app.route('/batch_order')
 def batch_order():
     return render_template('main/batch_order.html')
@@ -99,17 +99,29 @@ def manual_login():
 
 @app.route('/batch_order/close_all_drivers')
 def close_all_drivers():
+    count = 0
     try:
-        close_all()
+        count = close_all()
     except Exception as ex:
         LOGGER.error("关闭页面异常", ex)
-    return 'ok'
+    return jsonify(count)
+
+
+@app.route('/batch_order/batch_login')
+def batch_login():
+    merchant_names = batch_fresh_login()
+    return build_res(True, merchant_names)
 
 
 @app.route('/merchant_info')
 def get_merchant_info():
     res = refresh_merchant_config()
     return jsonify(res)
+
+
+@app.route('/batch_order/download_order')
+def download_order():
+    pass
 
 
 @app.route('/help')
@@ -121,6 +133,14 @@ def help():
 def test():
     # 测试生成excel
     return "test"
+
+
+def build_res(success, data=None, error=None):
+    res = dict()
+    res['status'] = success
+    res['data'] = data
+    res['error'] = error
+    return jsonify(res)
 
 
 if __name__ == '__main__':

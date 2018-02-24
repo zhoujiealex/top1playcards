@@ -5,6 +5,7 @@
   <div class="body-content">
 
     <div id="error" class="row"></div>
+    <div id="warning" class="row"></div>
     <div id="tip" class="row"></div>
 
     <div class="row">
@@ -15,18 +16,31 @@
 
       <div id="merchantCfgDataToolbar">
         <div class="form-inline" role="form">
-          <button id="batchDownload" type="button" class="btn btn-default">批量登录</button>
-          <div class="form-group">
+          <button id="batchLogin" type="button" class="btn btn-info" onclick="batchLogin()">批量登录</button>
+          <button id="closeAll" type="button" class="btn btn-danger" onclick="closeAll()">关闭窗口</button>
+
+          <div class="form-group input-group" style="padding-left: 150px">
             <span>下载日期：</span>
-            <input name="offset" class="form-control w70" type="number" value="0">
+            <div class="input-group">
+              <div class="input-icon-group">
+                <div class="input-group" style="width:100%">
+                  <input id="orderDownloadDate" name="orderDownloadDate" class="form-control"
+                         style="width: 100px;" data-provide="datepicker">
+                  <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar" style="display: inline;"></span>
+                </span>
+                </div>
+              </div>
+            </div>
+            <button id="batchDownload" type="button" class="btn btn-warning" onclick="batchDownload()">一键下载</button>
+            <button class="btn btn-success" type="button" style="width: auto; margin-left: 5px"
+                    onclick="mergeOrderDatas()">合并商户订单
+            </button>
           </div>
-          <div class="form-group">
-            <span>Limit: </span>
-            <input name="limit" class="form-control w70" type="number" value="5">
-          </div>
-          <div class="form-group">
-            <input name="search" class="form-control" type="text" placeholder="Search">
-          </div>
+          {#          <div class="form-group">#}
+          {#            <span>Limit: </span>#}
+          {#            <input name="limit" class="form-control w70" type="number" value="5">#}
+          {#          </div>#}
         </div>
       </div>
 
@@ -192,7 +206,14 @@
           ].join('');
       }
 
-      function showError(error) {
+      function closeAlert() {
+          $(".alert-dismissable").fadeTo(2000, 500).slideUp(1000, function () {
+              $(".alert-dismissable").slideUp(500);
+              $(".alert").alert("close");
+          });
+      }
+
+      function showError(error, close) {
           if (error) {
               var errorEle = $('#error');
               var errorHtml = errorEle.html() +
@@ -202,9 +223,28 @@
                       '</div>'].join('');
               errorEle.html(errorHtml);
           }
+          if (close) {
+              closeAlert();
+          }
       }
 
-      function showTip(tip) {
+      function showWarning(msg, close) {
+          if (msg) {
+              var warningEle = $('#warning');
+              var errorHtml = warningEle.html() +
+                  ['<div class="alert alert-warning alert-dismissable">',
+                      '<button type="button" class="close" title="Close" href="#" data-dismiss="alert">&times;</button>',
+                      msg,
+                      '</div>'].join('');
+              warningEle.html(errorHtml);
+              if (close) {
+                  closeAlert();
+              }
+          }
+
+      }
+
+      function showTip(tip, close) {
           if (tip) {
               var tipEle = $('#tip');
               var tipHtml = tipEle.html() +
@@ -213,7 +253,11 @@
                       tip,
                       '</div>'].join('');
               tipEle.html(tipHtml);
+              if (close) {
+                  closeAlert();
+              }
           }
+
       }
 
       window.operateEvents = {
@@ -229,7 +273,6 @@
                   dataType: 'json',
                   success: function (data) {
                       console.info("登录" + logonId + "成功");
-                      showTip("我是测试error" + logonId);
                       if (!data['status']) {
                           showError(data['error']);
                       }
@@ -246,8 +289,79 @@
           }
       };
 
+      function batchLogin() {
+          $.ajax({
+              type: 'GET',
+              url: '/batch_order/batch_login',
+              success: function (data) {
+                  if (data.status) {
+                      console.info("批量登录成功，登录id为" + data);
+                      if (data.data.length > 0) {
+                          showTip("批量打开[" + data.data + "],请手动到弹出的网页输入密码+验证码，登录完成后，请手动刷新！");
+                      } else {
+                          showWarning("所有商户均已登录，无需登录，忽略！")
+                      }
+                  } else {
+                      console.error("批量登录失败" + data);
+                      showError("批量登录失败，请重试！" + data);
+                  }
+              },
+              error: function (e) {
+                  console.error("批量登录失败" + data);
+                  showError("批量登录失败，请重试！");
+              }
+          });
+      }
+
+      function closeAll() {
+          $.ajax({
+              type: 'GET',
+              url: '/batch_order/close_all_drivers',
+              success: function (data) {
+                  if (data > 0) {
+                      console.info("关闭成功" + data);
+                      showTip("成功关闭了" + data + "个由selenium打开的页面", true);
+                  }
+                  // 测试用方便关闭所有通知
+                  closeAlert();
+              },
+              error: function (e) {
+                  showWarning("尝试关闭所有selenium打开的页面失败，可以手动关闭剩余页面!");
+              }
+          });
+      }
+
+      function batchDownload() {
+          console.info("一键下载，只会下载session生效的");
+      }
+
+      function mergeOrderDatas() {
+          console.info("合并商户订单")
+      }
+
       $(document).ready(function () {
           initMerchantCfgData();
+
+          var now = new Date();
+          var yesterday = new Date();
+          yesterday.setDate(now.getDate() - 1);
+
+          var orderDownloadDatePicker = $('#orderDownloadDate');
+          orderDownloadDatePicker.datepicker({
+              minView: "day", //  选择时间时，最小可以选择到那层；默认是‘hour’也可用0表示
+              language: "zh-CN", // 语言
+              autoclose: true, //  true:选择时间后窗口自动关闭
+              format: 'yyyy-mm-dd', // 文本框时间格式，设置为0,最后时间格式为2017-03-23 17:00:00
+              todayBtn: "linked", // 如果此值为true 或 "linked"，则在日期时间选择器组件的底部显示一个 "Today" 按钮用以选择当前日期。
+              endDate: now, // 窗口可选时间从今天开始
+              orientation: "bottom",    //方向
+              todayHighlight: true,
+              weekStart: 0
+          });
+
+          orderDownloadDatePicker.datepicker("update", yesterday);
+
+
       });
 
   </script>

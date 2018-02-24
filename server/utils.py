@@ -40,3 +40,7 @@ def read_merchant_cfg():
         except Exception:
             raise Exception(u"商户配置json文件格式不合法，请检查")
     return res
+
+
+def get_merchant_login_cfg(key):
+    return read_cfg("merchant_login", key, "config.ini")

@@ -3,20 +3,20 @@
     "alias": "宾客来",
     "logonId": "160507010084001",
     "mcc": "5411",
-    "sessionId": "0000C9K2sKor5LIRGr5UJGpPhnE:-1",
+    "sessionId": "0000CYp1Jb4VC6zmlD8NykhfsUR:-1",
     "storeName": "枣庄高新区宾客来旅馆"
   },
   {
     "alias": "尚得利家电",
     "logonId": "16050004354001",
     "mcc": "5412",
-    "sessionId": "0000cnMNHBOiiBXnPPEVN-9pOYU:-1",
+    "sessionId": "000006fnyJYGmWvd8L5-gAxbj46:-1",
     "storeName": "枣庄市薛城区尚得利家用电器经营部"
   },
   {
     "alias": "我是测试",
     "logonId": "16050004354001-123",
     "mcc": "7011",
-    "sessionId": "0000nmOxyvWKZF2owrqiypqX-X_1:-1"
+    "sessionId": "000006fnyJYGmWvd8L5-gAxbj46:-1"
   }
 ]
