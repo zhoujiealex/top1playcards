@@ -95,6 +95,7 @@ def check_status_merchant(merchant_info):
     if not isinstance(merchant_info, MerchantInfo):
         return False
     res, error = check_session_valid(merchant_info.session_id)
-    LOGGER.info(u"商户(%s)的session有效性=%s", merchant_info.alias, res)
+    if res:
+        LOGGER.debug(u"商户(%s)的session有效性=%s", merchant_info.alias, res)
     merchant_info.status = res
     return res

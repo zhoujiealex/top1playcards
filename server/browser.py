@@ -11,11 +11,11 @@ import order
 from log4cas import LOGGER
 from model import MerchantInfo
 
-# LOGIN_URL = "https://biz.elife.icbc.com.cn/businessHomeLogin/loginPage.action')"
-LOGIN_URL = "http://localhost:8887/order"
-# LOGON_ID_INPUT = "storeUserid"
+LOGIN_URL = "https://biz.elife.icbc.com.cn/businessHomeLogin/loginPage.action"
+# LOGIN_URL = "http://localhost:8887/order"
+LOGON_ID_INPUT = "storeUserid"
 # For Test
-LOGON_ID_INPUT = "sessionId"
+# LOGON_ID_INPUT = "sessionId"
 
 DRIVERS = []
 
@@ -69,7 +69,7 @@ def fresh_login(logon_id):
         ele_user_id = driver.find_element_by_id(LOGON_ID_INPUT)
         ele_user_id.clear()
         # driver.find_element_by_id("storeUserid").send_keys(user)
-        driver.execute_script('document.getElementById("' + LOGON_ID_INPUT + '").value = ' + logon_id)
+        driver.execute_script('document.getElementById("' + LOGON_ID_INPUT + '").value = "' + logon_id + '"')
     except Exception as ex:
         LOGGER.warn("在页面" + LOGIN_URL + "上未找到元素#" + LOGON_ID_INPUT)
 
@@ -92,7 +92,8 @@ def re_login(session_id):
     """
     if not session_id:
         return None
-        # driver = webdriver.Ie()
+    # 选择IE 还是 Chrome打开
+    # driver = webdriver.Ie()
     driver = webdriver.Chrome()
     DRIVERS.append(driver)
     driver.get(LOGIN_URL)
@@ -100,7 +101,6 @@ def re_login(session_id):
     # [{u'value': u'0000daj0cacDkAIEeAaGHCyf_bM:-1', u'name': u'JSESSIONID', u'httpOnly': True, u'secure': False}]
     cookie = {'value': session_id, 'name': 'JSESSIONID'}
     driver.add_cookie(cookie)
-    # 是否需要sleep,待定
     driver.refresh()
 
 

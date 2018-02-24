@@ -11,16 +11,26 @@
 
       <div>
         <h2>商户配置数据</h2>
-        <div>
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>4</button>
+      </div>
+
+      <div id="merchantCfgDataToolbar">
+        <div class="form-inline" role="form">
+          <button id="batchDownload" type="button" class="btn btn-default">批量登录</button>
+          <div class="form-group">
+            <span>下载日期：</span>
+            <input name="offset" class="form-control w70" type="number" value="0">
+          </div>
+          <div class="form-group">
+            <span>Limit: </span>
+            <input name="limit" class="form-control w70" type="number" value="5">
+          </div>
+          <div class="form-group">
+            <input name="search" class="form-control" type="text" placeholder="Search">
+          </div>
         </div>
       </div>
 
-      <table id="merchantCfgData" data-toggle="table" data-pagination="true" data-mobile-responsive="true"
-             data-show-toggle="false" data-page-size=25 data-striped="true">
+      <table id="merchantCfgData" data-toggle="table" data-mobile-responsive="true">
         <thead>
         <tr>
           <th data-sortable="true">简称</th>
@@ -86,6 +96,12 @@
   <script type="text/javascript">
       var merchantCfgDataTable = $('#merchantCfgData');
 
+      // 参考： http://blog.csdn.net/ning521513/article/details/60744749
+      var exportOptions = {
+          fileName: 'merchants',
+          jsonScope: 'data'
+      };
+
       function initMerchantCfgData() {
           merchantCfgDataTable.bootstrapTable('destroy');
           merchantCfgDataTable.bootstrapTable({
@@ -93,8 +109,18 @@
               url: '/merchant_info',
               dataType: 'json',
               clickToSelect: true,
+              pagination: true,   //是否分页
               uniqueId: 'logonId',
+              pageSize: 25,
+              striped: true,
+              showRefresh: true,
+              search: true,
               sidePagination: 'client', // 客户端分页
+              showExport: false, // 先不用插件来导出数据了，直接从后台获取
+              exportDataType: 'all',
+              exportTypes: ['json'],  //导出文件类型
+              toolbar: "#merchantCfgDataToolbar",
+              exportOptions: exportOptions,
               columns: [{
                   field: 'alias',
                   cellStyle: thinTdStyle
@@ -142,19 +168,26 @@
       }
 
       function statusFormatter(value, row, index) {
-          // FIXME: 换成图标
           if (row['status']) {
-              return 'Ok';
+              return '<span class="status-ok glyphicon glyphicon-ok-circle" aria-hidden="true"></span>';
           } else {
-              return 'Bad';
+              return '<span class="status-bad glyphicon glyphicon-remove-circle" aria-hidden="true"></span>';
           }
       }
 
       function operateFormatter(value, row, index) {
-          return ['<div><a class="login" href="javascript:void(0)">',
-              '<button class="btn btn-info" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">登录</button></a>',
+
+          var loginTip = ['<a class="login" href="javascript:void(0)">',
+              '<button class="btn btn-info" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">登录</button></a>'].join('');
+          if (row['status']) {
+              loginTip = ['<a class="login" href="javascript:void(0)">',
+                  '<button class="btn btn-success" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">查看</button></a>'].join('');
+          }
+
+          return ['<div>',
+              loginTip,
               '<a class="download" href="javascript:void(0)">',
-              '<button class="btn btn-success" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">下载</button></a>',
+              '<button class="btn btn-warning" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">下载</button></a>',
               '</div>'
           ].join('');
       }

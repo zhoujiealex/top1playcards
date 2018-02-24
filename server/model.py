@@ -106,6 +106,14 @@ class MerchantInfo(object):
     def errors(self, errors):
         self._errors.append(errors)
 
+    def __unicode__(self):
+        return u'alias=[%s] logonId=[%s] mcc=[%s] storeName=[%s] sessionId=[%s] shopId=[%s] status=[%s]' % (
+            self.alias, self.logon_id, self.mcc, self.store_name, self.session_id, self.shop_id, self.status)
+
+    def __str__(self):
+        # it seems there's something wrong when name isn't ascii character.
+        return unicode(self).encode('utf-8')
+
 
 class TradeSummary(object):
     def __init__(self):

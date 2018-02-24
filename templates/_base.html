@@ -9,7 +9,9 @@
   <meta name="author" content="karl.zj">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <!-- styles -->
-  <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" media="screen">
+  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet"
+        media="screen">
   <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" media="screen">
   <link href="{{ url_for('static', filename='datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
         media="screen">
@@ -63,7 +65,8 @@
 {% include 'footer.html' %}
 
 <!-- scripts -->
-<script src="{{ url_for('static', filename='bootstrap.min.js') }}" type="text/javascript" media="screen"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}" type="text/javascript"
+        media="screen"></script>
 <script src="{{ url_for('static', filename='main.js') }}" type="text/javascript" media="screen"></script>
 <script src="{{ url_for('static', filename='datepicker/bootstrap-datepicker.min.js') }}" type="text/javascript"
         media="screen"></script>
@@ -73,6 +76,9 @@
         media="screen"></script>
 <script src="{{ url_for('static', filename='bootstrap-table/bootstrap-table-zh-CN.min.js') }}" type="text/javascript"
         media="screen"></script>
+<script src="{{ url_for('static', filename='bootstrap-table/extensions/export/bootstrap-table-export.min.js') }}"
+        type="text/javascript" media="screen"></script>
+<script src="{{ url_for('static', filename='tableExport.js') }}" type="text/javascript" media="screen"></script>
 
 {% block js %}{% endblock %}
 
