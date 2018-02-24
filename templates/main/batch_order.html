@@ -16,8 +16,13 @@
 
       <div id="merchantCfgDataToolbar">
         <div class="form-inline" role="form">
-          <button id="batchLogin" type="button" class="btn btn-info" onclick="batchLogin()">批量登录</button>
-          <button id="closeAll" type="button" class="btn btn-danger" onclick="closeAll()">关闭窗口</button>
+          <button id="batchLogin" type="button" class="btn btn-info" data-toggle="tooltip"
+                  onclick="batchLogin()"
+                  title="为了避免电脑卡顿，默认一次打开若干个新页面，自动选择未登录的账号，请完成登录后，刷新并重新点击再次打开剩余账号">批量登录
+          </button>
+          <button id="closeAll" type="button" class="btn btn-danger" onclick="closeAll()" data-toggle="tooltip"
+                  title="用来关闭selenium打开的页面，也可以清除页面上的提示框">批量清除
+          </button>
 
           <div class="form-group input-group" style="padding-left: 150px">
             <span>下载日期：</span>
@@ -25,15 +30,18 @@
               <div class="input-icon-group">
                 <div class="input-group" style="width:100%">
                   <input id="orderDownloadDate" name="orderDownloadDate" class="form-control"
-                         style="width: 100px;" data-provide="datepicker">
+                         style="width: 100px;" data-provide="datepicker" data-toggle="tooltip" title="默认选择昨天日期">
                   <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar" style="display: inline;"></span>
                 </span>
                 </div>
               </div>
             </div>
-            <button id="batchDownload" type="button" class="btn btn-warning" onclick="batchDownload()">一键下载</button>
+            <button id="batchDownload" type="button" class="btn btn-warning" onclick="batchDownload()"
+                    data-toggle="tooltip" title="下载当前已登录的所有商户数据，自动跳过session无效的">一键下载
+            </button>
             <button class="btn btn-success" type="button" style="width: auto; margin-left: 5px"
+                    data-toggle="tooltip" title="请下载完需要的商户数据后，再点击合并"
                     onclick="mergeOrderDatas()">合并商户订单
             </button>
           </div>
@@ -202,6 +210,7 @@
               }],
               onLoadSuccess: function () {
                   console.info("加载商户配置数据成功");
+                  $("[data-toggle='tooltip']").tooltip();
               },
               onLoadError: function () {
                   alert("加载商户配置数据失败");
@@ -229,16 +238,16 @@
       function operateFormatter(value, row, index) {
 
           var loginTip = ['<a class="login" href="javascript:void(0)">',
-              '<button class="btn btn-info" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">登录</button></a>'].join('');
+              '<button class="btn btn-info" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;" data-toggle="tooltip" title="当前账号未登录，请在弹出的新页面登录" >登录</button></a>'].join('');
           if (row['status']) {
               loginTip = ['<a class="login" href="javascript:void(0)">',
-                  '<button class="btn btn-success" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">查看</button></a>'].join('');
+                  '<button class="btn btn-success" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;" data-toggle="tooltip" title="该账号已登录，点击查看详情">查看</button></a>'].join('');
           }
 
           return ['<div>',
               loginTip,
               '<a class="download" href="javascript:void(0)">',
-              '<button class="btn btn-warning" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;">下载</button></a>',
+              '<button class="btn btn-warning" style="padding-top:0px; padding-bottom:0px; margin-left: 5px;" data-toggle="tooltip" title="请登录成功后，再下载，此处为下载单个账号">下载</button></a>',
               '</div>'
           ].join('');
       }
@@ -568,6 +577,8 @@
           initOrdersData();
           initMergeResTable();
           initDataPicker();
+          // 启用tooltip
+          $("[data-toggle='tooltip']").tooltip();
       });
 
   </script>
