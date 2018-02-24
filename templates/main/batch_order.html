@@ -63,7 +63,7 @@
 
     <div class="row">
       <h2>统计数据</h2>
-      <table data-toggle="table">
+      <table id="summaryData" data-toggle="table" data-mobile-responsive="true">
         <thead>
         <tr>
           <th>门店名称</th>
@@ -81,14 +81,12 @@
 
     <div class="row">
       <h2>订单详细数据</h2>
-      <table data-toggle="table" data-search="true"
-             data-pagination="true" data-mobile-responsive="true"
-             data-show-toggle="false" data-page-size=20
-             data-striped="true">
+      <table id="ordersData" data-toggle="table" data-mobile-responsive="true">
         <thead>
         <tr>
+          <th data-sortable="false">门店名称</th>
           <th data-sortable="false">订单编号</th>
-          <th data-sortable="false">交易日期</th>
+          <th data-sortable="true">交易日期</th>
           {#<th data-sortable="true">交易时间</th>#}
           <th data-sortable="true">交易卡号</th>
           <th data-sortable="true">订单金额</th>
@@ -97,7 +95,7 @@
           <th data-sortable="false">积分抵扣金额</th>
           <th data-sortable="false">电子券抵扣金额</th>
           <th data-sortable="false">交易类型</th>
-          <th data-sortable="false">交易方式</th>
+          <th data-sortable="true">交易方式</th>
         </tr>
         </thead>
         <tbody>
@@ -105,10 +103,49 @@
       </table>
     </div>
 
+    <div class="modal fade" id="mergeResModal">
+      <div class="modal-dialog" style="width: 60%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            {#            <button type="button" class="close" onclick="window.history.go(-1);">×</button>#}
+            <h4 class="modal-title" style="color: red;">合并商户数据结果统计</h4>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-success" role="alert">
+              <span>总订单数据共<b><span id="mergeTotalCount" style="color: red"></span></b>条。
+                <div>合并后文件：</div>
+                <b><span id="mergeDstPath" style="color: red"></span></b>
+              </span>
+            </div>
+
+            <div>
+              <table id="mergeResData" data-toggle="table" data-mobile-responsive="true">
+                <thead>
+                <tr>
+                  <th data-sortable="false" data-width="40%">商户名称</th>
+                  <th data-sortable="true">订单数</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">关 闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script type="text/javascript">
       var merchantCfgDataTable = $('#merchantCfgData');
+      var summaryDataTable = $('#summaryData');
+      var ordersDataTable = $('#ordersData');
+      var mergeResData = $('#mergeResData');
 
       // 参考： http://blog.csdn.net/ning521513/article/details/60744749
       var exportOptions = {
@@ -285,7 +322,35 @@
 
           },
           'click .download': function (e, value, row, index) {
-              alert(row['logonId']);
+              var logonId = row['logonId'];
+              var orderDownloadDate = getDownloadDate();
+              $.ajax({
+                  type: 'POST',
+                  data: {
+                      'orderDownloadDate': orderDownloadDate,
+                      'logonId': logonId
+                  },
+                  url: '/batch_order/download_order',
+                  success: function (data) {
+                      {#console.info("商户数据下载成功logonId" + logonId + "，data=" + JSON.stringify(data));#}
+                      if (data.status) {
+                          if (data.summary) {
+                              reloadSummaryData(data.summary);
+                          }
+                          if (data.orders) {
+                              reloadOrdersData(data.orders);
+                          }
+                      } else {
+                          showError(data.error);
+                      }
+                      if (data.tip) {
+                          showTip(data.tip);
+                      }
+                  },
+                  error: function (e) {
+                      showWarning("商户数据下载成功logonId错误" + JSON.stringify(e));
+                  }
+              });
           }
       };
 
@@ -333,19 +398,35 @@
 
       function batchDownload() {
           console.info("一键下载，只会下载session生效的");
+
       }
 
       function mergeOrderDatas() {
-          console.info("合并商户订单")
+          console.info("合并商户订单");
+          var orderDownloadDate = getDownloadDate();
+          $.ajax({
+              type: 'POST',
+              url: '/batch_order/merge',
+              data: {
+                  'orderDownloadDate': orderDownloadDate
+              },
+              success: function (data) {
+                  if (data.status) {
+                      showMergeResModal(data.data);
+                  } else {
+                      showError(data.error);
+                  }
+              },
+              error: function (e) {
+                  showError("合并商户数据异常" + JSON.stringify(e));
+              }
+          });
       }
 
-      $(document).ready(function () {
-          initMerchantCfgData();
-
+      function initDataPicker() {
           var now = new Date();
           var yesterday = new Date();
           yesterday.setDate(now.getDate() - 1);
-
           var orderDownloadDatePicker = $('#orderDownloadDate');
           orderDownloadDatePicker.datepicker({
               minView: "day", //  选择时间时，最小可以选择到那层；默认是‘hour’也可用0表示
@@ -358,10 +439,135 @@
               todayHighlight: true,
               weekStart: 0
           });
-
           orderDownloadDatePicker.datepicker("update", yesterday);
+      }
+
+      function initSummaryData() {
+          summaryDataTable.bootstrapTable('destroy');
+          summaryDataTable.bootstrapTable({
+              clickToSelect: true,
+              pagination: true,   //是否分页
+              pageSize: 25,
+              striped: true,
+              sidePagination: 'client', // 客户端分页
+              columns: [{
+                  field: 'storeName',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'orderDate',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'totalAmount',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'totalDisAmt',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'totalPointAmt',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'totalEcouponAmt',
+                  cellStyle: thinTdStyle
+              }]
+          });
+      }
+
+      function initOrdersData() {
+          ordersDataTable.bootstrapTable('destroy');
+          ordersDataTable.bootstrapTable({
+              clickToSelect: true,
+              pagination: true,   //是否分页
+              pageSize: 25,
+              pageList: [10, 25, 100],
+              striped: true,
+              sidePagination: 'client', // 客户端分页
+              search: true,
+              columns: [{
+                  field: 'storeName',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'orderId',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'orderTimeFull',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'cardNo',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'orderAmt',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'disAmt',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'pointAmt',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'ecouponAmt',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'tranType',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'tranWay',
+                  cellStyle: thinTdStyle
+              }]
+          });
+      }
 
 
+      function initMergeResTable() {
+          mergeResData.bootstrapTable('destroy');
+          mergeResData.bootstrapTable({
+              clickToSelect: true,
+              pagination: true,   //是否分页
+              pageSize: 25,
+              pageList: [10, 25, 100],
+              striped: true,
+              sidePagination: 'client', // 客户端分页
+              columns: [{
+                  field: 'storeName',
+                  cellStyle: thinTdStyle
+              }, {
+                  field: 'totalCount',
+                  cellStyle: thinTdStyle
+              }]
+          });
+      }
+
+      function getDownloadDate() {
+          return $('#orderDownloadDate').val();
+      }
+
+      function reloadSummaryData(data) {
+          summaryDataTable.bootstrapTable("load", data);
+      }
+
+      function reloadOrdersData(data) {
+          ordersDataTable.bootstrapTable("load", data);
+      }
+
+      function showMergeResModal(data) {
+          reloadMergeData(data);
+          $('#mergeResModal').modal({show: true, backdrop: 'static'});
+
+      }
+
+      function reloadMergeData(data) {
+          // 路径和总数显示
+          $('#mergeDstPath').html(data.dst);
+          $('#mergeTotalCount').html(data.totalCount);
+          // 表格数据
+          mergeResData.bootstrapTable("load", data.datas);
+      }
+
+      $(document).ready(function () {
+          initMerchantCfgData();
+          initSummaryData();
+          initOrdersData();
+          initMergeResTable();
+          initDataPicker();
       });
 
   </script>

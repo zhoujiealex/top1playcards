@@ -5,7 +5,7 @@ import sys
 from flask import Flask, render_template, request, jsonify
 from flask_apscheduler import APScheduler
 
-from server.batch_order import refresh_merchant_config, get_merchant
+from server.batch_order import refresh_merchant_config, get_merchant, download_order_by_logon_id
 from server.browser import *
 from server.excel import save_order_data_to_excel, merge_excel_helper
 from server.order import *
@@ -21,7 +21,7 @@ class Config(object):
             'func': 'server.batch_order:refresh_merchant_config',
             'args': (),
             'trigger': 'interval',
-            'seconds': 2 * 60
+            'seconds': 4 * 60
         }
     ]
 
@@ -61,7 +61,10 @@ def order():
             context['merchant_summary'] = merchant_summary
             context['order_details'] = order_detail_datas
 
+        except NoDataException as ex:
+            context['error'] = ex.message
         except Exception as ex:
+            context['error'] = ex.message
             LOGGER.exception("查询商户订单信息异常，Exception:%s", ex)
 
         try:
@@ -110,7 +113,30 @@ def close_all_drivers():
 @app.route('/batch_order/batch_login')
 def batch_login():
     merchant_names = batch_fresh_login()
-    return build_res(True, merchant_names)
+    return build_res(merchant_names)
+
+
+@app.route('/batch_order/merge', methods=['POST'])
+def merge_orders():
+    order_download_date = request.form['orderDownloadDate']
+    error = None
+    merge_res = dict()
+    try:
+        merge_res = merge_excel_helper(order_download_date)
+    except Exception as ex:
+        error = ex.message
+    error = merge_res.get('error')
+
+    # 之前数据格式是dict，转换为list
+    detail = merge_res.get('detail')
+    datas = list()
+    if detail:
+        for key in detail:
+            datas.append({'storeName': key, 'totalCount': detail[key]})
+
+    res = {'src': merge_res.get('src'), 'dst': merge_res.get('dst'), 'datas': datas,
+           'totalCount': merge_res.get('total_count')}
+    return build_res(res, error)
 
 
 @app.route('/merchant_info')
@@ -119,9 +145,12 @@ def get_merchant_info():
     return jsonify(res)
 
 
-@app.route('/batch_order/download_order')
+@app.route('/batch_order/download_order', methods=['POST'])
 def download_order():
-    pass
+    logon_id = request.form.get('logonId')
+    order_download_date = request.form['orderDownloadDate']
+    res = download_order_by_logon_id(logon_id, order_download_date, True)
+    return jsonify(res)
 
 
 @app.route('/help')
@@ -135,9 +164,10 @@ def test():
     return "test"
 
 
-def build_res(success, data=None, error=None):
-    res = dict()
-    res['status'] = success
+def build_res(data=None, error=None):
+    res = {'status': True}
+    if error:
+        res['status'] = False
     res['data'] = data
     res['error'] = error
     return jsonify(res)
@@ -150,7 +180,7 @@ if __name__ == '__main__':
     scheduler.init_app(app)
     try:
         scheduler.start()
-        LOGGER.info("定时刷新session任务启动，2min运行一次")
+        LOGGER.info("定时刷新session任务启动，4min运行一次")
     except (KeyboardInterrupt, SystemExit):
         pass
 

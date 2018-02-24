@@ -8,12 +8,14 @@ Author: karl(i@karlzhou.com)
 from gevent import monkey
 
 from log4cas import LOGGER
-from model import MerchantInfo
+from model import MerchantInfo, TradeDetail, TradeSummary
+from model import NoDataException
 from utils import read_merchant_cfg
 
 monkey.patch_all()
 from gevent.pool import Pool
-from order import check_session_valid
+from order import check_session_valid, query_order_detail
+from excel import save_order_data_to_excel
 
 # 商户缓存数据，以登录账户为key
 MERCHANTS_DATA = dict()
@@ -100,3 +102,82 @@ def check_status_merchant(merchant_info):
     merchant_info.status = res
     return res
 
+
+def download_order_by_logon_id(logon_id, order_download_date, need_save=False):
+    error, summary, orders = _download_order_by_logon_id_helper(logon_id, order_download_date)
+
+    res = _format_merchant_data(error, summary, orders)
+
+    if need_save and res.get('status'):
+        try:
+            file_path = save_order_data_to_excel(order_download_date, summary, orders)
+            res['tip'] = "数据保存成功，文件路径：%s" % file_path
+        except Exception as ex:
+            res['error'] += "; %s" % ex.message
+    return res
+
+
+def _download_order_by_logon_id_helper(logon_id, order_download_date):
+    """
+    根据登陆账号下载数据
+    :param logon_id:
+    :param order_download_date:
+    :return: error, `TradeSummary`, `TradeDetail`
+    """
+    error = None
+    if not logon_id:
+        error = "登陆账号为空，请检查"
+        return error, None, None
+    merchant = get_merchant(logon_id)
+    if not merchant:
+        error = "根据%s未查找到合适的商户数据，请检查" % logon_id
+        return error, None, None
+
+    # 检查session有效性
+    session_validation = check_status_merchant(merchant)
+    if not session_validation:
+        error = "商户%s的session无效，请检查后or重新登录" % logon_id
+        return error, None, None
+
+    # 开始下载数据
+    try:
+        return query_order_detail(merchant.session_id, order_download_date)
+    except NoDataException:
+        # 商户无数据
+        return "商户[%s]%s无数据，请重新选择日期下载" % (merchant.alias, order_download_date), None, None
+    except Exception as ex:
+        LOGGER.exception("下载商户订单数据异常")
+        error = "下载商户订单数据发生异常:%s" % ex.message
+        return error, None, None
+
+
+def _format_merchant_data(error, summary, orders, tip=None):
+    """
+    格式商户数据
+    :param error:
+    :param summary:
+    :param orders:
+    :param path: 文件保存路径
+    :return: `dict`
+    """
+    res = {'status': False, 'summary': [], 'orders': [], 'error': None, 'tip': tip}
+    try:
+        summary_data = dict()
+        orders_data = list()
+        if error:
+            res['status'] = False
+            res['error'] = error
+        else:
+            res['status'] = True
+            if isinstance(summary, TradeSummary):
+                summary_data = summary.to_dict()
+            if isinstance(orders, list):
+                for order in orders:
+                    if isinstance(order, TradeDetail):
+                        orders_data.append(order.to_dict())
+            res['summary'].append(summary_data)
+            res['orders'] = orders_data
+    except Exception as ex:
+        LOGGER.exception("下载商户订单数据异常")
+        res['error'] = "下载商户订单数据发生异常:%s" % ex.message
+    return res

@@ -106,7 +106,7 @@ def save_order_data_to_excel(date, merchant_trade_summary, order_detail_datas, s
     excel_file_name = get_excel_name(date)
     sheet_name = get_sheet_name(merchant_trade_summary)
     if not save_path:
-        save_path = os.path.join(os.path.dirname(__file__), '../', 'excels')
+        save_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '../', 'excels'))
     if not os.path.exists(save_path):
         os.mkdir(save_path)
 
@@ -124,6 +124,7 @@ def save_order_data_to_excel(date, merchant_trade_summary, order_detail_datas, s
         ws_info = wb_info['sheets'].get(sheet_name)
     write_sheet(ws_info, order_detail_datas)
     save_excel(wb, excel_file_name, save_path)
+    return file_full_path
 
 
 def save_order_data_to_excel_bak(merchant_trade_summary, order_detail_datas, save_path=None):
@@ -148,7 +149,7 @@ def save_order_data_to_excel_bak(merchant_trade_summary, order_detail_datas, sav
     write_sheet(ws_info, order_detail_datas)
 
     if not save_path:
-        save_path = os.path.join(os.path.dirname(__file__), '../', 'excels')
+        save_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '../', 'excels'))
     if not os.path.exists(save_path):
         os.mkdir(save_path)
     save_excel(wb, file_name, save_path)
@@ -220,7 +221,7 @@ def get_file_name(merchant_trade_summary):
 
 
 def merge_excel_helper(date):
-    excel_saved_path = os.path.join(os.path.dirname(__file__), '../', 'excels')
+    excel_saved_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '../', 'excels'))
     src = os.path.normpath(os.path.join(excel_saved_path, read_excel_cfg("file_name") + date + ".xls"))
     dst = os.path.normpath(os.path.join(excel_saved_path, read_excel_cfg("file_name") + date + "-合并.xls"))
     return merge_excel(src, dst, read_excel_cfg("merged_sheet_name"))
@@ -294,6 +295,12 @@ def merge_excel(src, dst, merged_sheet_name):
                         ws.write(rowcount, cx, sheet.cell_value(rx, cx))
 
                 rowcount += 1
+    try:
+        os.remove(dst)
+    except Exception:
+        # 尝试删除旧文件，失败也会覆盖
+        # 有一种情况：新数据比老数据少，则会出现新老混合
+        pass
 
     try:
         merged_book.save(dst)

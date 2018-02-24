@@ -11,6 +11,13 @@ import datetime
 from log4cas import LOGGER
 
 
+class NoDataException(Exception):
+    """
+    无数据-业务异常，不中断处理
+    """
+    pass
+
+
 class MerchantInfo(object):
 
     def __init__(self):
@@ -134,6 +141,18 @@ class TradeSummary(object):
         # 总积分抵扣金额
         self._total_point_amt = 0
 
+    def to_dict(self):
+        res = dict()
+        res['orderDate'] = self._order_date
+        res['shopId'] = self._shop_id
+        res['storeName'] = self._store_name
+        res['totalAmount'] = self._total_amount
+        res['totalDisAmt'] = self._total_dis_amt
+        res['totalEcouponAmt'] = self._total_ecoupon_amt
+        res['totalMoney'] = self._total_money
+        res['totalPointAmt'] = self._total_point_amt
+        return res
+
     def __unicode__(self):
         return u'order_date=[%s] shop_id=[%s] store_name=[%s] total_amount=[%s]' % (
             self._order_date, self._shop_id, self._store_name, self._total_amount)
@@ -244,24 +263,22 @@ class TradeDetail(object):
         # 12.交易方式
         self._tran_way = None
 
-        # # 为了使用语法['store_name']来取值，保存下key
-        # self._raw_value_containers = {
-        #     'store_name': self._store_name,
-        #     'order_date': self._order_date,
-        #     'order_time': self._order_time,
-        #     'order_id': self._order_id,
-        #     'card_no': self._card_no,
-        #     'order_amt': self._order_amt,
-        #     'dis_amt': self._dis_amt,
-        #     'total_amount': self._total_amount,
-        #     'point_amt': self._point_amt,
-        #     'ecoupon_amt': self._ecoupon_amt,
-        #     'tran_type': self._tran_type,
-        #     'tran_way': self._tran_way
-        # }
-
-    # def __getitem__(self, key):
-    #     return self._raw_value_containers.get(key, "")
+    def to_dict(self):
+        res = dict()
+        res['storeName'] = self._store_name
+        res['orderDate'] = self._order_date
+        res['orderTime'] = self._order_time
+        res['orderTimeFull'] = self._order_time_full
+        res['orderId'] = self._order_id
+        res['cardNo'] = self._card_no
+        res['orderAmt'] = self._order_amt
+        res['disAmt'] = self._dis_amt
+        res['totalAmount'] = self._total_amount
+        res['pointAmt'] = self._point_amt
+        res['ecouponAmt'] = self._ecoupon_amt
+        res['tranType'] = self._tran_type
+        res['tranWay'] = self._tran_way
+        return res
 
     @property
     def store_name(self):

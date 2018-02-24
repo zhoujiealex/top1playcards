@@ -210,7 +210,8 @@ def get_merchant_order_summary(session, shop_id, date, sel_type='p'):
     if total > 1:
         return tip + u",门店个数不等于1,total=" + str(total), None
     elif total == 0:
-        return tip + date + u"无数据，请重新选择日期", None
+        LOGGER.info(u"%s %s 无数据，请重新选择日期", tip, date)
+        raise NoDataException(u"%s %s 无数据，请重新选择日期" % (tip, date))
 
     trade_json_data = json_data.get('list')[0]
     # 组装trade summary对象
