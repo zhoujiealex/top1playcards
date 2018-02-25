@@ -38,6 +38,11 @@
     > 默认文件名称：<商户交易订单yyy-mm-dd>.xls
 
 
+# Selenium配置
+
+本地模式运行，才支持用selenium控制浏览器IE。
+IE配置方式参考： http://blog.csdn.net/zyl26/article/details/51011073
+
 
 # Know Issues
 1. xlwt生成的excel文件，版本在新的excel2010以上，第一次打开会报不兼容，不影响使用

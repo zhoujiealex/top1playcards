@@ -126,7 +126,7 @@
             <div class="alert alert-success" role="alert">
               <span>总订单数据共<b><span id="mergeTotalCount" style="color: red"></span></b>条。
                 <div>合并后文件：</div>
-                <b><span id="mergeDstPath" style="color: red"></span></b>
+                <b><span id="mergeDstPath" style="color: red">目标文件</span></b>
               </span>
             </div>
 
@@ -144,6 +144,10 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button class="btn btn-success" type="button" style="width: auto; margin-left: 5px"
+                    data-toggle="tooltip" title="检查没问题后，再按需导出已合并好的excel文件"
+                    onclick="exportExcel()"><span class="glyphicon glyphicon-export"></span>导出合并后的文件
+            </button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">关 闭</button>
           </div>
         </div>
@@ -471,6 +475,14 @@
           });
       }
 
+      function exportExcel() {
+          var orderDownloadDate = getDownloadDate();
+          var exportTmpForm = $("<form method='get'></form>");
+          exportTmpForm.attr("action", "/batch_order/export/" + orderDownloadDate);
+          $(document.body).append(exportTmpForm);
+          exportTmpForm.submit();
+      }
+
       function initDataPicker() {
           var now = new Date();
           var yesterday = new Date();
@@ -608,6 +620,7 @@
 
       function reloadMergeData(data) {
           // 路径和总数显示
+          console.info(data);
           $('#mergeDstPath').html(data.dst);
           $('#mergeTotalCount').html(data.totalCount);
           // 表格数据

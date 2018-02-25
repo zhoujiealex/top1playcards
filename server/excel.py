@@ -250,10 +250,17 @@ def get_file_name(merchant_trade_summary):
 
 
 def merge_excel_helper(date):
-    excel_saved_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '../', 'excels'))
-    src = os.path.normpath(os.path.join(excel_saved_path, read_excel_cfg("file_name") + date + ".xls"))
-    dst = os.path.normpath(os.path.join(excel_saved_path, read_excel_cfg("file_name") + date + "-合并.xls"))
+    src, dst, dst_file_name, excel_saved_path = get_excel_path(date)
     return merge_excel(src, dst, read_excel_cfg("merged_sheet_name"))
+
+
+def get_excel_path(date):
+    excel_saved_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '../', 'excels'))
+    src_file_name = read_excel_cfg("file_name") + date + ".xls"
+    dst_file_name = read_excel_cfg("file_name") + date + "-合并.xls"
+    src = os.path.realpath(os.path.join(excel_saved_path, src_file_name))
+    dst = os.path.realpath(os.path.join(excel_saved_path, dst_file_name))
+    return src, dst, dst_file_name, excel_saved_path
 
 
 def merge_excel(src, dst, merged_sheet_name):

@@ -2,13 +2,15 @@
 
 import sys
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_apscheduler import APScheduler
+from werkzeug import exceptions
 
 from server.batch_order import refresh_merchant_config, get_merchant, download_order_by_logon_id, download_all_orders
 from server.browser import *
-from server.excel import save_order_data_to_excel, merge_excel_helper
+from server.excel import save_order_data_to_excel, merge_excel_helper, get_excel_path
 from server.order import *
+from server.utils import get_merchant_login_cfg
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -89,6 +91,11 @@ def batch_order():
 def manual_login():
     logon_id = request.form.get('logonId')
     res = {'status': False, 'error': ''}
+
+    if not is_local_run_mode():
+        # 不是本地模式跳过
+        res['error'] = "服务器运行模式不支持登录，请在本地运行"
+        return jsonify(res)
     try:
         merchant = get_merchant(logon_id)
         if merchant:
@@ -104,7 +111,8 @@ def manual_login():
 def close_all_drivers():
     count = 0
     try:
-        count = close_all()
+        if is_local_run_mode():
+            count = close_all()
     except Exception as ex:
         LOGGER.error("关闭页面异常", ex)
     return jsonify(count)
@@ -112,6 +120,9 @@ def close_all_drivers():
 
 @app.route('/batch_order/batch_login')
 def batch_login():
+    if not is_local_run_mode():
+        # 不是本地模式跳过
+        return build_res("[服务器运行模式不支持登录，请在本地运行]")
     merchant_names = batch_fresh_login()
     return build_res(merchant_names)
 
@@ -160,6 +171,19 @@ def download_all():
     return jsonify(res)
 
 
+@app.route('/batch_order/export/<date>')
+def export_file(date):
+    # order_download_date = request.form['orderDownloadDate']
+    src, dst, dst_file_name, excel_saved_path = get_excel_path(date)
+    try:
+        return send_from_directory(excel_saved_path, dst_file_name, as_attachment=True)
+    except exceptions.NotFound as ex:
+        return "%s的文件不存在，请检查日期" % date
+    except Exception as ex:
+        LOGGER.exception("导出文件异常%s", ex)
+        return "导出失败: %s" % ex.message
+
+
 @app.route('/help')
 def help():
     return render_template('main/help.html')
@@ -169,6 +193,17 @@ def help():
 def test():
     # 测试生成excel
     return "test"
+
+
+def is_local_run_mode():
+    try:
+        run_mode = get_merchant_login_cfg('run_mode')
+        if 'LOCAL' in run_mode:
+            return True
+        else:
+            return False
+    except Exception:
+        return False
 
 
 def build_res(data=None, error=None):

@@ -2,6 +2,7 @@
 
 """
 利用selenium来操作浏览器
+IE配置方式参考 http://blog.csdn.net/zyl26/article/details/51011073
 
 Author: karl(i@karlzhou.com)
 """
@@ -62,8 +63,11 @@ def fresh_login(logon_id):
     """
     if not logon_id:
         return None
-    driver = webdriver.Ie()
-    # driver = webdriver.Chrome()
+
+    if is_ie():
+        driver = webdriver.Ie()
+    else:
+        driver = webdriver.Chrome()
     gevent.sleep(0)
     driver.implicitly_wait(10)
     DRIVERS.append(driver)
@@ -120,20 +124,27 @@ def re_login(session_id):
     :param session_id:
     :return:
     """
+    print("relogin")
     if not session_id:
         return None
     # 选择IE 还是 Chrome打开
-    driver = webdriver.Ie()
-    # driver = webdriver.Chrome()
+    if is_ie():
+        driver = webdriver.Ie()
+    else:
+        driver = webdriver.Chrome()
     driver.implicitly_wait(2)
     gevent.sleep(0)
     DRIVERS.append(driver)
+    print("1-%s" % driver.get_cookies())
     driver.get(_get_login_url())
+    print("2-%s" % driver.get_cookies())
     # 把有效的sessionId更新到cookie里，覆盖新开页面的cookie值
     # [{u'value': u'0000daj0cacDkAIEeAaGHCyf_bM:-1', u'name': u'JSESSIONID', u'httpOnly': True, u'secure': False}]
     cookie = {'value': session_id, 'name': 'JSESSIONID'}
     driver.add_cookie(cookie)
+    time.sleep(1000)
     driver.refresh()
+    print("3-%s" % driver.get_cookies())
 
 
 def close_all():
@@ -204,3 +215,20 @@ def _get_merchant_login_cfg(key, default=None):
     except Exception:
         pass
     return res
+
+
+def is_ie():
+    return 'ie' in get_browser_type()
+
+
+def is_chrome():
+    return 'chrome' in get_browser_type()
+
+
+def get_browser_type():
+    browser = 'ie'
+    try:
+        browser = utils.get_merchant_login_cfg('browser')
+    except Exception:
+        pass
+    return browser
