@@ -93,6 +93,8 @@ def check_session_valid(session_id):
     :param session_id:
     :return:
     """
+    if not session_id:
+        return False, "session为空"
     session_id = format_session_id(session_id)
     session = get_session(session_id)
     error = check_session_validation(session)
