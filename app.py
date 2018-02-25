@@ -5,7 +5,7 @@ import sys
 from flask import Flask, render_template, request, jsonify
 from flask_apscheduler import APScheduler
 
-from server.batch_order import refresh_merchant_config, get_merchant, download_order_by_logon_id
+from server.batch_order import refresh_merchant_config, get_merchant, download_order_by_logon_id, download_all_orders
 from server.browser import *
 from server.excel import save_order_data_to_excel, merge_excel_helper
 from server.order import *
@@ -21,7 +21,7 @@ class Config(object):
             'func': 'server.batch_order:refresh_merchant_config',
             'args': (),
             'trigger': 'interval',
-            'seconds': 4 * 60
+            'seconds': 5 * 60
         }
     ]
 
@@ -153,6 +153,13 @@ def download_order():
     return jsonify(res)
 
 
+@app.route('/batch_order/download_all', methods=['POST'])
+def download_all():
+    order_download_date = request.form['orderDownloadDate']
+    res = download_all_orders(order_download_date)
+    return jsonify(res)
+
+
 @app.route('/help')
 def help():
     return render_template('main/help.html')
@@ -180,7 +187,7 @@ if __name__ == '__main__':
     scheduler.init_app(app)
     try:
         scheduler.start()
-        LOGGER.info("定时刷新session任务启动，4min运行一次")
+        LOGGER.info("定时刷新session任务启动，5min运行一次")
     except (KeyboardInterrupt, SystemExit):
         pass
 

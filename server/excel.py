@@ -104,7 +104,7 @@ def save_order_data_to_excel(date, merchant_trade_summary, order_detail_datas, s
         return None
 
     excel_file_name = get_excel_name(date)
-    sheet_name = get_sheet_name(merchant_trade_summary)
+
     if not save_path:
         save_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '../', 'excels'))
     if not os.path.exists(save_path):
@@ -115,6 +115,7 @@ def save_order_data_to_excel(date, merchant_trade_summary, order_detail_datas, s
     wb = get_workbook(file_full_path)
 
     ws_info = None
+    sheet_name = get_sheet_name(merchant_trade_summary)
     try:
         ws_index = wb.sheet_index(sheet_name)
         ws_info = wb.get_sheet(ws_index)
@@ -123,6 +124,34 @@ def save_order_data_to_excel(date, merchant_trade_summary, order_detail_datas, s
         wb_info = init_workbook(sheet_name, parent_wb=wb, frozen=False)
         ws_info = wb_info['sheets'].get(sheet_name)
     write_sheet(ws_info, order_detail_datas)
+    save_excel(wb, excel_file_name, save_path)
+    return file_full_path
+
+
+def batch_save_order_data_to_excel(date, logon_ids, summary_dict, orders_dict, save_path=None):
+    if not logon_ids or not summary_dict or not orders_dict:
+        return None
+    excel_file_name = get_excel_name(date)
+    if not save_path:
+        save_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '../', 'excels'))
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
+
+    # 获取excel全路径
+    file_full_path = os.path.join(save_path, excel_file_name)
+    wb = get_workbook(file_full_path)
+
+    for logon_id in logon_ids:
+        ws_info = None
+        try:
+            sheet_name = get_sheet_name(summary_dict.get(logon_id))
+            ws_index = wb.sheet_index(sheet_name)
+            ws_info = wb.get_sheet(ws_index)
+        except Exception:
+            # 不存在，则新建
+            wb_info = init_workbook(sheet_name, parent_wb=wb, frozen=False)
+            ws_info = wb_info['sheets'].get(sheet_name)
+        write_sheet(ws_info, orders_dict.get(logon_id))
     save_excel(wb, excel_file_name, save_path)
     return file_full_path
 

@@ -74,12 +74,12 @@
       <table id="summaryData" data-toggle="table" data-mobile-responsive="true">
         <thead>
         <tr>
-          <th>门店名称</th>
-          <th>交易日期</th>
-          <th>总订单金额</th>
-          <th>总消费立减金额</th>
-          <th>总积分抵扣金额</th>
-          <th>总电子券抵扣金额</th>
+          <th data-sortable="true">门店名称</th>
+          <th data-sortable="true">交易日期</th>
+          <th data-sortable="true">总订单金额</th>
+          <th data-sortable="true">总消费立减金额</th>
+          <th data-sortable="true">总积分抵扣金额</th>
+          <th data-sortable="true">总电子券抵扣金额</th>
         </tr>
         </thead>
         <tbody>
@@ -322,6 +322,7 @@
                       if (!data['status']) {
                           showError(data['error']);
                       }
+                      refreshMerchntCfgTable();
                   },
                   error: function (e) {
                       console.error("手动登录" + logonId + "失败", e);
@@ -349,6 +350,7 @@
                           if (data.orders) {
                               reloadOrdersData(data.orders);
                           }
+                          refreshMerchntCfgTable();
                       } else {
                           showError(data.error);
                       }
@@ -371,7 +373,8 @@
                   if (data.status) {
                       console.info("批量登录成功，登录id为" + data);
                       if (data.data.length > 0) {
-                          showTip("批量打开[" + data.data + "],请手动到弹出的网页输入密码+验证码，登录完成后，请手动刷新！");
+                          showTip("批量打开[" + data.data + "],请手动到弹出的网页输入密码,验证码");
+                          refreshMerchntCfgTable();
                       } else {
                           showWarning("所有商户均已登录，无需登录，忽略！")
                       }
@@ -407,7 +410,40 @@
 
       function batchDownload() {
           console.info("一键下载，只会下载session生效的");
+          var orderDownloadDate = getDownloadDate();
+          $.ajax({
+              type: 'POST',
+              url: '/batch_order/download_all',
+              data: {
+                  'orderDownloadDate': orderDownloadDate
+              },
+              success: function (data) {
+                  if (data.status) {
+                      if (data.summary) {
+                          reloadSummaryData(data.summary);
+                      }
+                      if (data.orders) {
+                          reloadOrdersData(data.orders);
+                      }
+                      refreshMerchntCfgTable();
+                  } else {
+                      showError(data.error);
+                  }
 
+                  if (data.warnings.length > 0) {
+                      showWarning(data.warnings.join('；<br>'));
+                  }
+                  if (data.tip) {
+                      showTip(data.tip);
+                  }
+                  if (data.errors.length > 0) {
+                      showError(data.errors.join('；<br>'));
+                  }
+              },
+              error: function (e) {
+                  showError("合并商户数据异常" + JSON.stringify(e));
+              }
+          });
       }
 
       function mergeOrderDatas() {
@@ -561,6 +597,10 @@
           reloadMergeData(data);
           $('#mergeResModal').modal({show: true, backdrop: 'static'});
 
+      }
+
+      function refreshMerchntCfgTable() {
+          merchantCfgDataTable.bootstrapTable('refresh');
       }
 
       function reloadMergeData(data) {
