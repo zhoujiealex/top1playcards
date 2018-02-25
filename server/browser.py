@@ -62,8 +62,8 @@ def fresh_login(logon_id):
     """
     if not logon_id:
         return None
-    # driver = webdriver.Ie()
-    driver = webdriver.Chrome()
+    driver = webdriver.Ie()
+    # driver = webdriver.Chrome()
     gevent.sleep(0)
     driver.implicitly_wait(10)
     DRIVERS.append(driver)
@@ -123,8 +123,8 @@ def re_login(session_id):
     if not session_id:
         return None
     # 选择IE 还是 Chrome打开
-    # driver = webdriver.Ie()
-    driver = webdriver.Chrome()
+    driver = webdriver.Ie()
+    # driver = webdriver.Chrome()
     driver.implicitly_wait(2)
     gevent.sleep(0)
     DRIVERS.append(driver)
