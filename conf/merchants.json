@@ -1,20 +1,29 @@
 [
   {
-    "alias": "宾客来",
+    "status": true,
     "logonId": "160507010084001",
+    "storeName": null,
     "mcc": "5411",
+    "shopId": null,
+    "alias": "宾客来",
     "sessionId": "0000MmedQV5TlVsjGMmO6tvRQFV:-1"
   },
   {
-    "alias": "尚得利家电",
+    "status": true,
     "logonId": "16050004354001",
+    "storeName": null,
     "mcc": "5412",
-    "sessionId": "0000gaHZ2piUJRgG3e6Rp0UfzJX:-1"
+    "shopId": null,
+    "alias": "尚得利家电",
+    "sessionId": "000026P1_UhGlO9NDNAbKiZEaeq:-1"
   },
   {
-    "alias": "我是测试",
+    "status": false,
     "logonId": "16050004354001-123",
+    "storeName": null,
     "mcc": "7011",
+    "shopId": null,
+    "alias": "我是测试",
     "sessionId": "000006fnyJYGmWvd8L5-gAxbj46:-1"
   }
 ]

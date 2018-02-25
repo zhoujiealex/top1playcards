@@ -113,9 +113,9 @@ def set_logon_id(driver, logon_id):
     for cookie in cookies:
         if cookie.get('name') == 'JSESSIONID':
             session_id = cookie.get('value')
-    # return session_id
+    return session_id
     # For test
-    return "aaabbbcccddd"
+    # return "aaabbbcccddd"
 
 
 def re_login(session_id):

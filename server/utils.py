@@ -30,7 +30,7 @@ def read_merchant_cfg():
     读取商户json配置，返回dict
     :return: `dict`
     """
-    cfg_file = os.path.join(os.path.dirname(__file__), '../', 'conf', 'merchants.json')
+    cfg_file = get_merchant_cfg_file()
     if not os.path.exists(cfg_file):
         raise Exception(u"商户配置json文件不存在，请检查,cfg_file=%s" % cfg_file)
     res = None
@@ -40,6 +40,11 @@ def read_merchant_cfg():
         except Exception:
             raise Exception(u"商户配置json文件格式不合法，请检查")
     return res
+
+
+def get_merchant_cfg_file():
+    cfg_file = os.path.join(os.path.dirname(__file__), '../', 'conf', 'merchants.json')
+    return cfg_file
 
 
 def get_merchant_login_cfg(key):

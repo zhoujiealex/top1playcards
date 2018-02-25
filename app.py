@@ -99,7 +99,6 @@ def manual_login():
         return jsonify(res)
     try:
         merchant = get_merchant(logon_id)
-        print(merchant)
         if merchant:
             res['status'] = login(merchant)
         else:
@@ -198,6 +197,26 @@ def export_file(date):
         return "导出失败: %s" % ex.message
 
 
+@app.route('/batch_order/savecfg')
+def save_cfg():
+    """
+    保存当前页面的配置文件到本地配置文件中
+    :return:
+    """
+    try:
+        cfg = utils.get_merchant_cfg_file()
+        datas = list()
+        for key in MERCHANTS_DATA:
+            datas.append(MERCHANTS_DATA.get(key).to_dict())
+        if len(datas) == 0:
+            return "无数据，忽略"
+        with open(cfg, 'w') as json_file:
+            json.dump(datas, json_file, ensure_ascii=False, indent=2)
+            return "保存成功！"
+    except Exception as ex:
+        return build_res(error=ex.message)
+
+
 @app.route('/help')
 def help():
     return render_template('main/help.html')
@@ -240,7 +259,7 @@ if __name__ == '__main__':
     scheduler.init_app(app)
     try:
         scheduler.start()
-        LOGGER.info("定时刷新session任务启动，5min运行一次")
+        LOGGER.info(u"定时刷新session任务启动，5min运行一次")
     except (KeyboardInterrupt, SystemExit):
         pass
 

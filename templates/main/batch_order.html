@@ -330,7 +330,6 @@
                       if (!data['status']) {
                           showError(data['error']);
                       }
-                      refreshMerchntCfgTable();
                   },
                   error: function (e) {
                       console.error("手动登录" + logonId + "失败", e);
@@ -382,7 +381,6 @@
                       console.info("批量登录成功，登录id为" + data);
                       if (data.data.length > 0) {
                           showTip("批量打开[" + data.data + "],请手动到弹出的网页输入密码,验证码");
-                          refreshMerchntCfgTable();
                       } else {
                           showWarning("所有商户均已登录，无需登录，忽略！")
                       }
@@ -433,7 +431,6 @@
                       if (data.orders) {
                           reloadOrdersData(data.orders);
                       }
-                      refreshMerchntCfgTable();
                   } else {
                       showError(data.error);
                   }
