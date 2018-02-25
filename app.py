@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import sys
+from urllib import quote
 
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_apscheduler import APScheduler
@@ -173,10 +174,22 @@ def download_all():
 
 @app.route('/batch_order/export/<date>')
 def export_file(date):
+    """
+    中文名称IE乱码问题：
+    https://stackoverflow.com/questions/21818855/flask-handling-unicode-text-with-werkzeug
+    https://github.com/pallets/flask/issues/1286
+
+    :param date:
+    :return:
+    """
     # order_download_date = request.form['orderDownloadDate']
     src, dst, dst_file_name, excel_saved_path = get_excel_path(date)
+    filename = quote(dst_file_name.encode('utf-8'))
     try:
-        return send_from_directory(excel_saved_path, dst_file_name, as_attachment=True)
+        res = send_from_directory(excel_saved_path, dst_file_name, as_attachment=True, attachment_filename=filename)
+        res.headers['Content-Disposition'] += "; filename*=utf-8''{}".format(filename)
+        return res
+        # return send_from_directory(excel_saved_path, dst_file_name, as_attachment=True)
     except exceptions.NotFound as ex:
         return "%s的文件不存在，请检查日期" % date
     except Exception as ex:
