@@ -18,10 +18,12 @@
         <div class="form-inline" role="form">
           <button id="batchLogin" type="button" class="btn btn-info" data-toggle="tooltip"
                   onclick="batchLogin()"
-                  title="为了避免电脑卡顿，默认一次打开若干个新页面，自动选择未登录的账号，请完成登录后，刷新并重新点击再次打开剩余账号">批量登录
+                  title="为了避免电脑卡顿，默认一次打开若干个新页面，自动选择未登录的账号，请完成登录后，刷新并重新点击再次打开剩余账号">
+            <span class="glyphicon glyphicon-user"></span>批量登录
           </button>
           <button id="closeAll" type="button" class="btn btn-danger" onclick="closeAll()" data-toggle="tooltip"
-                  title="用来关闭selenium打开的页面，也可以清除页面上的提示框">批量清除
+                  title="用来关闭selenium打开的页面，也可以清除页面上的提示框">
+            <span class="glyphicon glyphicon-trash"></span>批量清除
           </button>
 
           <div class="form-group input-group" style="padding-left: 150px">
@@ -38,11 +40,12 @@
               </div>
             </div>
             <button id="batchDownload" type="button" class="btn btn-warning" onclick="batchDownload()"
-                    data-toggle="tooltip" title="下载当前已登录的所有商户数据，自动跳过session无效的">一键下载
+                    data-toggle="tooltip" title="下载当前已登录的所有商户数据，自动跳过session无效的">
+              <span class="glyphicon glyphicon-download-alt"></span> 一键下载
             </button>
             <button class="btn btn-success" type="button" style="width: auto; margin-left: 5px"
                     data-toggle="tooltip" title="请下载完需要的商户数据后，再点击合并"
-                    onclick="mergeOrderDatas()">合并商户订单
+                    onclick="mergeOrderDatas()"><span class="glyphicon glyphicon-screenshot"></span>合并商户订单
             </button>
           </div>
           {#          <div class="form-group">#}
