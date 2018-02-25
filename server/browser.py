@@ -124,7 +124,6 @@ def re_login(session_id):
     :param session_id:
     :return:
     """
-    print("relogin")
     if not session_id:
         return None
     # 选择IE 还是 Chrome打开
@@ -134,17 +133,16 @@ def re_login(session_id):
         driver = webdriver.Chrome()
     driver.implicitly_wait(2)
     gevent.sleep(0)
-    DRIVERS.append(driver)
-    print("1-%s" % driver.get_cookies())
-    driver.get(_get_login_url())
-    print("2-%s" % driver.get_cookies())
+    url = _get_login_url()
+    driver.get(url)
     # 把有效的sessionId更新到cookie里，覆盖新开页面的cookie值
     # [{u'value': u'0000daj0cacDkAIEeAaGHCyf_bM:-1', u'name': u'JSESSIONID', u'httpOnly': True, u'secure': False}]
     cookie = {'value': session_id, 'name': 'JSESSIONID'}
+    driver.delete_all_cookies()
     driver.add_cookie(cookie)
-    time.sleep(1000)
-    driver.refresh()
-    print("3-%s" % driver.get_cookies())
+    # driver.refresh()
+    driver.get(url)
+    DRIVERS.append(driver)
 
 
 def close_all():

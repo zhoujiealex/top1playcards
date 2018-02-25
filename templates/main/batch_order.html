@@ -176,6 +176,7 @@
               dataType: 'json',
               clickToSelect: true,
               pagination: true,   //是否分页
+              cache: false,
               uniqueId: 'logonId',
               pageSize: 25,
               striped: true,
@@ -215,8 +216,8 @@
                   formatter: operateFormatter,
                   events: window.operateEvents
               }],
-              onLoadSuccess: function () {
-                  console.info("加载商户配置数据成功");
+              onLoadSuccess: function (data) {
+                  console.info("加载商户配置数据成功" + JSON.stringify(data));
                   $("[data-toggle='tooltip']").tooltip();
               },
               onLoadError: function () {
@@ -510,6 +511,7 @@
               pageSize: 25,
               striped: true,
               sidePagination: 'client', // 客户端分页
+              cache: false,
               columns: [{
                   field: 'storeName',
                   cellStyle: thinTdStyle
@@ -542,6 +544,7 @@
               striped: true,
               sidePagination: 'client', // 客户端分页
               search: true,
+              cache: false,
               columns: [{
                   field: 'storeName',
                   cellStyle: thinTdStyle
@@ -586,6 +589,7 @@
               pageList: [10, 25, 100],
               striped: true,
               sidePagination: 'client', // 客户端分页
+              cache: false,
               columns: [{
                   field: 'storeName',
                   cellStyle: thinTdStyle
@@ -628,6 +632,10 @@
       }
 
       $(document).ready(function () {
+          $.ajaxSetup({
+              cache: false //关闭AJAX缓存
+          });
+
           initMerchantCfgData();
           initSummaryData();
           initOrdersData();

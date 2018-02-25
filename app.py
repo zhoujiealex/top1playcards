@@ -99,6 +99,7 @@ def manual_login():
         return jsonify(res)
     try:
         merchant = get_merchant(logon_id)
+        print(merchant)
         if merchant:
             res['status'] = login(merchant)
         else:
@@ -208,13 +209,17 @@ def test():
     return "test"
 
 
+# @app.after_request
+def set_response_headers(response):
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
+
 def is_local_run_mode():
     try:
-        run_mode = get_merchant_login_cfg('run_mode')
-        if 'LOCAL' in run_mode:
-            return True
-        else:
-            return False
+        return 'LOCAL' in get_merchant_login_cfg('run_mode')
     except Exception:
         return False
 

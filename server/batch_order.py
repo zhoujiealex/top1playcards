@@ -37,6 +37,7 @@ def refresh_merchant_config():
 
 
 def get_merchant_config():
+    global MERCHANTS_DATA
     merchant_cfg_datas = read_merchant_cfg()
     res = list()
     for merchant in merchant_cfg_datas:
@@ -87,6 +88,7 @@ def get_merchant(logon_id):
     :param logon_id:
     :return:
     """
+    global MERCHANTS_DATA
     return MERCHANTS_DATA.get(logon_id)
 
 
