@@ -1,29 +1,101 @@
 [
   {
-    "status": true,
-    "logonId": "160507010084001",
-    "storeName": null,
-    "mcc": "5411",
-    "shopId": null,
-    "alias": "宾客来",
-    "sessionId": "0000MmedQV5TlVsjGMmO6tvRQFV:-1"
-  },
+    "status": true, 
+    "logonId": "160579970011001", 
+    "storeName": null, 
+    "mcc": "7997", 
+    "shopId": null, 
+    "alias": "豪华台球馆", 
+    "sessionId": "0000dUX8llqcXxah_HTH9XLfnYW:-1"
+  }, 
   {
-    "status": true,
-    "logonId": "16050004354001",
-    "storeName": null,
-    "mcc": "5412",
-    "shopId": null,
-    "alias": "尚得利家电",
-    "sessionId": "000026P1_UhGlO9NDNAbKiZEaeq:-1"
-  },
+    "status": true, 
+    "logonId": "160504990179001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "心梦超市", 
+    "sessionId": "0000WxrSaWAMo08jxFaywZQRPSp:-1"
+  }, 
   {
-    "status": false,
-    "logonId": "16050004354001-123",
-    "storeName": null,
-    "mcc": "7011",
-    "shopId": null,
-    "alias": "我是测试",
-    "sessionId": "000006fnyJYGmWvd8L5-gAxbj46:-1"
+    "status": true, 
+    "logonId": "160506010092001", 
+    "storeName": "枣庄市薛城区光大特色鱼馆", 
+    "mcc": "5814", 
+    "shopId": "16050002503", 
+    "alias": "光大鱼馆", 
+    "sessionId": "0000GikOAV6C4OxsXhx_8anvRyb:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504040274001", 
+    "storeName": "枣庄市薛城区东升百货超市", 
+    "mcc": "5311", 
+    "shopId": "16050006112", 
+    "alias": "东升百货C", 
+    "sessionId": "0000HSs71sm8PIbQazEiiTAFkG6:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "16050003114001", 
+    "storeName": null, 
+    "mcc": "5814", 
+    "shopId": null, 
+    "alias": "飞亚餐馆", 
+    "sessionId": "0000BvO6Gp8xaD5rOAl0rSTHCb-:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "16050004354001", 
+    "storeName": "薛城区尚得利家用电器经营部", 
+    "mcc": "5812", 
+    "shopId": "16050004354", 
+    "alias": "无饿不坐土菜馆", 
+    "sessionId": "0000-oAv1Q1Tpo0oYyG4_FTLDho:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160557320082001", 
+    "storeName": null, 
+    "mcc": "5732", 
+    "shopId": null, 
+    "alias": "得利家用B", 
+    "sessionId": "0000ukYaDjVXS0Edvi_iMB62lum:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160501160091001", 
+    "storeName": null, 
+    "mcc": "5998", 
+    "shopId": null, 
+    "alias": "方芳家电", 
+    "sessionId": "0000Yk9fZmsZFgNDATHWEJshNJn:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504040325001", 
+    "storeName": null, 
+    "mcc": "5311", 
+    "shopId": null, 
+    "alias": "东升百货B", 
+    "sessionId": "0000swTsr3HO65H7tWlUVvsEuB2:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504070052001", 
+    "storeName": "东升百货超市", 
+    "mcc": "5399", 
+    "shopId": "16050001067", 
+    "alias": "东升百货A", 
+    "sessionId": "0000O0Axh4W7tpHln4tO5mUgre0:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160506020160001", 
+    "storeName": "薛城区无饿不坐土菜馆", 
+    "mcc": "5722", 
+    "shopId": "16050006989", 
+    "alias": "得利家用A", 
+    "sessionId": "0000wIfQJEUyoNjM0gHLDtw5pJD:-1"
   }
 ]
