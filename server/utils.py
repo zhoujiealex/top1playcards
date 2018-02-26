@@ -1,8 +1,11 @@
 # coding:utf-8
 
 import ConfigParser
+import codecs
 import json
 import os
+
+from log4cas import LOGGER
 
 
 def read_cfg(section, key, cfg_file_name):
@@ -34,10 +37,14 @@ def read_merchant_cfg():
     if not os.path.exists(cfg_file):
         raise Exception(u"商户配置json文件不存在，请检查,cfg_file=%s" % cfg_file)
     res = None
-    with open(cfg_file) as data:
+    with open(cfg_file, 'r') as data:
         try:
-            res = json.load(data)
-        except Exception:
+            content = data.read()
+            if content.startswith(codecs.BOM_UTF8):
+                content = content.decode('utf-8-sig')
+            res = json.loads(content)
+        except Exception as ex:
+            LOGGER.exception(u"商户配置json文件格式不合法，请检查%s", ex)
             raise Exception(u"商户配置json文件格式不合法，请检查")
     return res
 
