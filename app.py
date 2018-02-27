@@ -21,6 +21,8 @@ from server.utils import get_merchant_login_cfg
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+RUN_MIN = 5
+
 
 class Config(object):
     JOBS = [
@@ -29,7 +31,7 @@ class Config(object):
             'func': 'server.batch_order:refresh_merchant_config',
             'args': (),
             'trigger': 'interval',
-            'seconds': 5 * 60
+            'seconds': RUN_MIN * 60
         }
     ]
 
@@ -41,6 +43,15 @@ app = Flask(
 )
 app.secret_key = 'top_1_play_cards'
 app.config.from_object(Config)
+
+# 启动定时
+scheduler = APScheduler()
+scheduler.init_app(app)
+try:
+    scheduler.start()
+    LOGGER.info(u"定时刷新session任务启动，%min运行一次", RUN_MIN)
+except (KeyboardInterrupt, SystemExit):
+    pass
 
 
 @app.route('/order')
@@ -258,15 +269,5 @@ def build_res(data=None, error=None):
 
 
 if __name__ == '__main__':
-
-    # 启动定时
-    scheduler = APScheduler()
-    scheduler.init_app(app)
-    try:
-        scheduler.start()
-        LOGGER.info(u"定时刷新session任务启动，5min运行一次")
-    except (KeyboardInterrupt, SystemExit):
-        pass
-
     # app.run(hostport=8888)
     app.run(host='0.0.0.0', port=8888)
