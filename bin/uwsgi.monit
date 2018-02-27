@@ -1,0 +1,11 @@
+check process uwsgi with pidfile /home/playcard/top1playcards/pid/uwsgi.pid
+
+        start program = "/bin/bash /home/playcard/top1playcards/bin/uwsgi.sh start"
+
+        stop program = "/bin/bash /home/playcard/top1playcards/bin/uwsgi.sh stop"
+
+        if 5 restarts within 5 cycles then unmonitor
+
+        if 3 restarts within 3 cycle then
+                exec /opt/o365/node/license/bin/server_notify.sh
+

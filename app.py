@@ -1,4 +1,9 @@
 # coding:utf-8
+"""
+Flask应用
+
+Author: karl(i@karlzhou.com)
+"""
 
 import sys
 from urllib import quote
