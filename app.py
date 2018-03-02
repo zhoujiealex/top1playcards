@@ -5,6 +5,7 @@ Flask应用
 Author: karl(i@karlzhou.com)
 """
 
+import platform
 import sys
 from urllib import quote
 
@@ -21,7 +22,7 @@ from server.utils import get_merchant_login_cfg
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-RUN_MIN = 5
+RUN_TIME = int(get_merchant_login_cfg('refresh_time'))
 
 
 class Config(object):
@@ -31,7 +32,7 @@ class Config(object):
             'func': 'server.batch_order:refresh_merchant_config',
             'args': (),
             'trigger': 'interval',
-            'seconds': RUN_MIN * 60
+            'seconds': RUN_TIME
         }
     ]
 
@@ -41,17 +42,19 @@ app = Flask(
     template_folder='templates',
     static_folder='static'
 )
-app.secret_key = 'top_1_play_cards'
+app.secret_key = get_merchant_login_cfg('secret_key')
 app.config.from_object(Config)
-
-# 启动定时
 scheduler = APScheduler()
 scheduler.init_app(app)
-try:
-    scheduler.start()
-    LOGGER.info(u"定时刷新session任务启动，%min运行一次", RUN_MIN)
-except (KeyboardInterrupt, SystemExit):
-    pass
+
+# if 'Windows' == platform.system():
+if 'Windows' == platform.system():
+    # windows下用这个启动定时，linux用uwsgi部署，用mule模块启动
+    try:
+        scheduler.start()
+        LOGGER.info(u"定时刷新session任务启动，%ss运行一次", RUN_TIME)
+    except (KeyboardInterrupt, SystemExit):
+        pass
 
 
 @app.route('/order')

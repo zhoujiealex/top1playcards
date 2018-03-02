@@ -28,6 +28,7 @@ def refresh_merchant_config():
     刷新商户状态和配置等
     :return:
     """
+    LOGGER.info(u"获取商户配置数据")
     cfgs = get_merchant_config()
     check_status(cfgs)
     res = list()
