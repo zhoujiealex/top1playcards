@@ -12,6 +12,8 @@ import gevent
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.proxy import Proxy, ProxyType
+from selenium.webdriver.ie import options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -55,6 +57,73 @@ def login(merchant_info):
     return True
 
 
+def get_ie_driver_bak2():
+    """
+    https://docs.seleniumhq.org/docs/04_webdriver_advanced.jsp#using-a-proxy
+    :return:
+    """
+    PROXY = "47.96.0.157:4444"
+    # Create a copy of desired capabilities object.
+    desired_capabilities = webdriver.DesiredCapabilities.INTERNETEXPLORER.copy()
+    # Change the proxy properties of that copy.
+    desired_capabilities['proxy'] = {
+        "httpProxy": PROXY,
+        "ftpProxy": PROXY,
+        "sslProxy": PROXY,
+        "noProxy": None,
+        "proxyType": "MANUAL",
+        "class": "org.openqa.selenium.Proxy",
+        "autodetect": False
+    }
+    LOGGER.info("try to use proxy: %s", PROXY)
+    # you have to use remote, otherwise you'll have to code it yourself in python to
+    # dynamically changing the system proxy preferences
+    driver = webdriver.Remote("http://localhost:4444/wd/hub", desired_capabilities)
+    return driver
+
+
+def get_ie_driver():
+    """
+    https://docs.seleniumhq.org/docs/04_webdriver_advanced.jsp#using-a-proxy
+    https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities#proxy-json-object
+    使用方式：先用正常页面不带代理的，启动多个窗口登录。登录成功后，再切换回代理。
+    TODO: 需要设置刷新的时候也走代理，本地模式。 服务模式不需要。
+    :return:
+    """
+    proxy = get_proxy()
+    driver = None
+    if proxy:
+        prox = Proxy()
+        prox.proxy_type = ProxyType.MANUAL
+        prox.http_proxy = proxy
+        prox.socks_proxy = proxy
+        prox.ssl_proxy = proxy
+        prox.ftp_proxy = proxy
+
+        LOGGER.info("try to use proxy: %s", proxy)
+        caps = webdriver.DesiredCapabilities.INTERNETEXPLORER.copy()
+        # caps['proxy'] = {
+        #     "httpProxy": proxy,
+        #     "ftpProxy": proxy,
+        #     "sslProxy": proxy,
+        #     "socks_proxy": proxy,
+        #     "noProxy": None,
+        #     "proxyType": "MANUAL",
+        #     "autodetect": False
+        # }
+
+        prox.add_to_capabilities(caps)
+        # caps["proxy"] = {"proxyType": "manual", "httpProxy": proxy}
+
+        opt = options.Options()
+        opt.use_per_process_proxy = True
+
+        driver = webdriver.Ie(capabilities=caps, options=opt)
+    else:
+        driver = webdriver.Ie()
+    return driver
+
+
 def fresh_login(logon_id):
     """
     全新登录，返回新打开页面的sessionId
@@ -65,14 +134,15 @@ def fresh_login(logon_id):
         return None
 
     if is_ie():
-        driver = webdriver.Ie()
+        # driver = webdriver.Ie()
+        driver = get_ie_driver()
     else:
         driver = webdriver.Chrome()
     gevent.sleep(0)
     driver.implicitly_wait(10)
     DRIVERS.append(driver)
     driver.get(_get_login_url())
-    loaded = wait_element_loaded(driver, 3, _get_input_id())
+    loaded = wait_element_loaded(driver, 10, _get_input_id())
     if not loaded:
         # 如果显示等待还未成功，再尝试sleep一会
         time.sleep(3)
@@ -230,3 +300,11 @@ def get_browser_type():
     except Exception:
         pass
     return browser
+
+
+def get_proxy():
+    try:
+        return utils.get_merchant_login_cfg('proxy')
+    except Exception:
+        pass
+    return None
