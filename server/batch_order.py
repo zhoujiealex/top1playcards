@@ -158,7 +158,7 @@ def download_all_orders(order_download_date):
             continue
         if is_no_data(job_error):
             warnings.append("商户[%s]%s无数据，跳过" % (merchant.alias, order_download_date))
-        if job_error:
+        elif job_error:
             errors.append(job_error)
             # 有一个状态失败，则都失败
             res['status'] = False

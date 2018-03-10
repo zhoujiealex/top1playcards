@@ -424,15 +424,11 @@
                   'orderDownloadDate': orderDownloadDate
               },
               success: function (data) {
-                  if (data.status) {
-                      if (data.summary) {
-                          reloadSummaryData(data.summary);
-                      }
-                      if (data.orders) {
-                          reloadOrdersData(data.orders);
-                      }
-                  } else {
-                      showError(data.error);
+                  if (data.summary) {
+                      reloadSummaryData(data.summary);
+                  }
+                  if (data.orders) {
+                      reloadOrdersData(data.orders);
                   }
 
                   if (data.warnings.length > 0) {
