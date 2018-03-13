@@ -1,12 +1,12 @@
 [
   {
     "status": true, 
-    "logonId": "160572980095001", 
+    "logonId": "160579970011001", 
     "storeName": null, 
-    "mcc": "7298", 
+    "mcc": "7997", 
     "shopId": null, 
-    "alias": "美甲店B ", 
-    "sessionId": "0000lqf5mc_JegsV6WdhBiXMzM-:-1"
+    "alias": "豪华台球馆", 
+    "sessionId": "0000iqKqxDnTmjxclyKNeuAxexz:-1"
   }, 
   {
     "status": true, 
@@ -15,7 +15,7 @@
     "mcc": "7011", 
     "shopId": null, 
     "alias": "盛隆旅馆", 
-    "sessionId": "0000hf2MWlnzDB7VOiXU2sm7qmQ:-1"
+    "sessionId": "0000DKvXSxknrtZsxupE5QmF4ct:-1"
   }, 
   {
     "status": true, 
@@ -24,295 +24,7 @@
     "mcc": "7911", 
     "shopId": null, 
     "alias": "金色年代", 
-    "sessionId": "0000k5FkBVrRTo7LHAO7EEhrOUj:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160509010007001", 
-    "storeName": null, 
-    "mcc": "7911", 
-    "shopId": null, 
-    "alias": "国际娱乐会所", 
-    "sessionId": "00002McMTJujc86OPZ-oCDyuVs0:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160558010005001", 
-    "storeName": null, 
-    "mcc": "7832", 
-    "shopId": null, 
-    "alias": "太平洋电影", 
-    "sessionId": "0000HHIUBIPxw4mEdfEr7f5b1sM:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160576290012001", 
-    "storeName": null, 
-    "mcc": "", 
-    "shopId": null, 
-    "alias": "飞亚电器", 
-    "sessionId": "000093jnUlH3Ue4vP3S89_PkeCy:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504990136001", 
-    "storeName": null, 
-    "mcc": "5411", 
-    "shopId": null, 
-    "alias": "飞飞超市", 
-    "sessionId": "0000-u-iXiITUdru2NqwC9uPOi0:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160506010092001", 
-    "storeName": "枣庄市薛城区光大特色鱼馆", 
-    "mcc": "5814", 
-    "shopId": "16050002503", 
-    "alias": "光大鱼馆", 
-    "sessionId": "0000iT9Q9x5l6WuWD_EiEq5yiiL:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160506020160001", 
-    "storeName": "薛城区无饿不坐土菜馆", 
-    "mcc": "5812", 
-    "shopId": "16050006989", 
-    "alias": "无饿不坐土菜馆", 
-    "sessionId": "0000JQxYStZaf-T_3tdD2BN7x9O:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504040275001", 
-    "storeName": null, 
-    "mcc": "5311", 
-    "shopId": null, 
-    "alias": "如意百货", 
-    "sessionId": "0000UqfGz0DDgiKtE98D3W79_Q4:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504070052001", 
-    "storeName": "东升百货超市", 
-    "mcc": "5399", 
-    "shopId": "16050001067", 
-    "alias": "东升百货A", 
-    "sessionId": "0000fSYUrj908b8XXenAQhZUlBi:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160559320005001", 
-    "storeName": null, 
-    "mcc": "5932", 
-    "shopId": null, 
-    "alias": "东升珠宝", 
-    "sessionId": "0000BGaobrC_Jkh4ziFiyrTabR4:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504040274001", 
-    "storeName": null, 
-    "mcc": "5311", 
-    "shopId": null, 
-    "alias": "东升百货C", 
-    "sessionId": "0000gegaXFnk3kzWXhyTrGfon5I:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160507010098001", 
-    "storeName": null, 
-    "mcc": "7011", 
-    "shopId": null, 
-    "alias": "度假村", 
-    "sessionId": "0000m9H-EfwbankMu_wLAJp4lJh:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160506020040001", 
-    "storeName": "枣庄市薛城区陶庄镇宪良全羊馆", 
-    "mcc": "5812", 
-    "shopId": "16050000050", 
-    "alias": "全羊馆", 
-    "sessionId": "0000Ih88_QZ5GkoLkUeYbNzjIZe:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "16050003114001", 
-    "storeName": null, 
-    "mcc": "5814", 
-    "shopId": null, 
-    "alias": "飞亚餐馆", 
-    "sessionId": "0000U0nTrTB9Be3FMyWNVaRDaat:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "16050004354001", 
-    "storeName": "薛城区尚得利家用电器经营部", 
-    "mcc": "5722", 
-    "shopId": "16050004354", 
-    "alias": "得利家用A", 
-    "sessionId": "0000GgORnHd-SOu7QJM3P_21lsb:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160557320063001", 
-    "storeName": null, 
-    "mcc": "5732", 
-    "shopId": null, 
-    "alias": "亚欧电器", 
-    "sessionId": "0000FIH1vJ9uPn7UsJpwPOyAyCM:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160501160091001", 
-    "storeName": null, 
-    "mcc": "5998", 
-    "shopId": null, 
-    "alias": "方芳家电", 
-    "sessionId": "0000OqOGyzJDJBzxQGf11KpMIRY:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "16050000055001", 
-    "storeName": null, 
-    "mcc": "5940", 
-    "shopId": null, 
-    "alias": "通盛摩托", 
-    "sessionId": "0000k-8XsWECKA--nU8wGL00X-4:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504990124001", 
-    "storeName": null, 
-    "mcc": "5411", 
-    "shopId": null, 
-    "alias": "那年那月百货", 
-    "sessionId": "0000F62043uV6J4_HybgCKL_Dct:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160572980072001", 
-    "storeName": "薛城区陶庄镇手足情深美甲店", 
-    "mcc": "7298", 
-    "shopId": "16050004355", 
-    "alias": "美甲店（A）", 
-    "sessionId": "0000IaB4xlYoTLT8BC-T5fylMPL:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160579970011001", 
-    "storeName": null, 
-    "mcc": "7997", 
-    "shopId": null, 
-    "alias": "豪华台球馆", 
-    "sessionId": "0000DhuhGgM91jXaHgfQbqX2N48:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160507010102001", 
-    "storeName": null, 
-    "mcc": "7011", 
-    "shopId": null, 
-    "alias": "惠佳旅馆", 
-    "sessionId": "0000ha6uPBBKoMtRw4z61cOHb6M:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504990179001", 
-    "storeName": null, 
-    "mcc": "5411", 
-    "shopId": null, 
-    "alias": "心梦超市", 
-    "sessionId": "0000k1cw4LAJrHumgox2RP85TO5:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160507010101001", 
-    "storeName": null, 
-    "mcc": "7011", 
-    "shopId": null, 
-    "alias": "聚客旅馆", 
-    "sessionId": "0000DWssQLvVY0Kz38mFJSQIRhU:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504040273001", 
-    "storeName": null, 
-    "mcc": "5311", 
-    "shopId": null, 
-    "alias": "那年那月", 
-    "sessionId": "0000gLpVvlvDiaDzkTGeyEzo1P2:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160570320002001", 
-    "storeName": null, 
-    "mcc": "7032", 
-    "shopId": null, 
-    "alias": "通盛摩托（新）B ", 
-    "sessionId": "0000nTwpcU3iSPPkfox-OEqRnKt:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160576220002001", 
-    "storeName": null, 
-    "mcc": "7629", 
-    "shopId": null, 
-    "alias": "个体户", 
-    "sessionId": "0000npLGEI_Ul9CstHqYirXOVCR:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160559620008001", 
-    "storeName": null, 
-    "mcc": "5962", 
-    "shopId": null, 
-    "alias": "青年旅行社", 
-    "sessionId": "0000oE_yj9QikEGN9bOynMTNd6R:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160511030002001", 
-    "storeName": null, 
-    "mcc": "4411", 
-    "shopId": null, 
-    "alias": "远航商务服务中心", 
-    "sessionId": "0000ZbYYddkjMf6wPHI42iV2AJY:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160550940049001", 
-    "storeName": null, 
-    "mcc": "5094", 
-    "shopId": null, 
-    "alias": "如意金店", 
-    "sessionId": "0000EaX3bPkDdMP1tYRr_DTaIvu:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160507010084001", 
-    "storeName": "枣庄高新区宾客来旅馆", 
-    "mcc": "701", 
-    "shopId": "16050005980", 
-    "alias": "宾客来旅馆", 
-    "sessionId": "0000lftfxGxAQVikDHgkP-ylMGx:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504990186001", 
-    "storeName": null, 
-    "mcc": "5411", 
-    "shopId": null, 
-    "alias": "百隆超市", 
-    "sessionId": "0000PHmi3k_yrPPvJZtG6c5U-pu:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160506020125001", 
-    "storeName": null, 
-    "mcc": "5812", 
-    "shopId": null, 
-    "alias": "美如家酒店", 
-    "sessionId": "0000K1hh7mUpze3RpzlyurQRnvp:-1"
+    "sessionId": "0000WC4nt0RvKuVv5SSCGLTWv37:-1"
   }, 
   {
     "status": true, 
@@ -321,79 +33,34 @@
     "mcc": "-", 
     "shopId": null, 
     "alias": "任何芳方百货", 
-    "sessionId": "00004ZjeK_SslFWCGLpfijbwDwO:-1"
+    "sessionId": "00002G-_sHJlHUY_jIiwpbF3Vx1:-1"
   }, 
   {
     "status": true, 
-    "logonId": "160526990102001", 
+    "logonId": "160509010007001", 
     "storeName": null, 
-    "mcc": "4215", 
+    "mcc": "7911", 
     "shopId": null, 
-    "alias": "宇翔航空票务", 
-    "sessionId": "00002mrz3wljqYStpl3zzqJG4vI:-1"
+    "alias": "国际娱乐会所", 
+    "sessionId": "0000AtKKoSKUF8IN0RNz_KOw9vO:-1"
   }, 
   {
     "status": true, 
-    "logonId": "16050004741001", 
+    "logonId": "160576290012001", 
     "storeName": null, 
-    "mcc": "5542", 
+    "mcc": "", 
     "shopId": null, 
-    "alias": "加油站", 
-    "sessionId": "0000Fxum_A_mvS-0EUWPNIfJplT:-1"
+    "alias": "飞亚电器", 
+    "sessionId": "0000LLqf5rKtE7DD2Ej4a9FT-_f:-1"
   }, 
   {
     "status": true, 
-    "logonId": "160559620006001", 
-    "storeName": null, 
-    "mcc": "5962", 
-    "shopId": null, 
-    "alias": "四方旅行社", 
-    "sessionId": "0000LlvlZJF46iSuI1vvHcNu9zV:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160526990109001", 
-    "storeName": null, 
-    "mcc": "4215", 
-    "shopId": null, 
-    "alias": "迅达代理", 
-    "sessionId": "0000CJzA1ZvcYE52Jx15Ci1HMh3:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160555410007001", 
-    "storeName": null, 
-    "mcc": "5541", 
-    "shopId": null, 
-    "alias": "三环里加油站", 
-    "sessionId": "0000PTXJo1adzduLAwkKfNatyst:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504040325001", 
-    "storeName": null, 
-    "mcc": "5311", 
-    "shopId": null, 
-    "alias": "东升百货B", 
-    "sessionId": "0000bVDHGbBOFIgDozdalEdEvqk:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160504990139001", 
-    "storeName": null, 
-    "mcc": "5411", 
-    "shopId": null, 
-    "alias": "尚卫三A ", 
-    "sessionId": "0000Y6v5Wt_RSQSMaQ24XlHnwHC:-1"
-  }, 
-  {
-    "status": true, 
-    "logonId": "160559620007001", 
-    "storeName": "枣庄高新区八达旅行社", 
-    "mcc": "5962", 
-    "shopId": "16050005841", 
-    "alias": "旅行社", 
-    "sessionId": "00002Vpl_4j2-c3c76wQdJZP3UM:-1"
+    "logonId": "160504070052001", 
+    "storeName": "东升百货超市", 
+    "mcc": "5399", 
+    "shopId": "16050001067", 
+    "alias": "东升百货A", 
+    "sessionId": "0000UxZvF6pv4hRiPAbVD9dYurI:-1"
   }, 
   {
     "status": true, 
@@ -402,16 +69,214 @@
     "mcc": "5311", 
     "shopId": null, 
     "alias": "心梦超市", 
-    "sessionId": "0000IEjPYqBZuNcOG7O2l6vNELt:-1"
+    "sessionId": "0000U7aDJohDSYE25j_0TAB9Bkf:-1"
   }, 
   {
     "status": true, 
-    "logonId": "160559770088001", 
+    "logonId": "160504040275001", 
     "storeName": null, 
-    "mcc": "5977", 
+    "mcc": "5311", 
     "shopId": null, 
-    "alias": "青春别墅", 
-    "sessionId": "0000diN1eaBw86tmHIGpz-tdxEH:-1"
+    "alias": "如意百货", 
+    "sessionId": "0000mYjHIa04fK_RKnh2P4r7dmV:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504990139001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "尚卫三A ", 
+    "sessionId": "0000zPA3-mNRAUZbJJTHgGRarlr:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160506010092001", 
+    "storeName": "枣庄市薛城区光大特色鱼馆", 
+    "mcc": "5814", 
+    "shopId": "16050002503", 
+    "alias": "光大鱼馆", 
+    "sessionId": "0000OFomKbckTXtfshFKcSOp7Nx:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504990136001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "飞飞超市", 
+    "sessionId": "0000E8xmB76PLK1fC4WL5Msjata:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504040274001", 
+    "storeName": null, 
+    "mcc": "5311", 
+    "shopId": null, 
+    "alias": "东升百货C", 
+    "sessionId": "0000y8ruDysNhEXjKezCm4Crnbv:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160507010098001", 
+    "storeName": null, 
+    "mcc": "7011", 
+    "shopId": null, 
+    "alias": "度假村", 
+    "sessionId": "000046ltQjRqcYFe-PAFQlAe3OM:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160506020040001", 
+    "storeName": "枣庄市薛城区陶庄镇宪良全羊馆", 
+    "mcc": "5812", 
+    "shopId": "16050000050", 
+    "alias": "全羊馆", 
+    "sessionId": "0000RcuyMBb-9l2h1-CPPEpAlmq:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "16050003114001", 
+    "storeName": null, 
+    "mcc": "5814", 
+    "shopId": null, 
+    "alias": "飞亚餐馆", 
+    "sessionId": "0000IU8xUXDAmarqJ8jo0cjBimf:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "16050004354001", 
+    "storeName": "薛城区尚得利家用电器经营部", 
+    "mcc": "5722", 
+    "shopId": "16050004354", 
+    "alias": "得利家用A", 
+    "sessionId": "0000JQUHOe2RRQ_Uq4tm62aZ7ay:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160557320063001", 
+    "storeName": null, 
+    "mcc": "5732", 
+    "shopId": null, 
+    "alias": "亚欧电器", 
+    "sessionId": "0000KVWt0gfS5745hu5DsvQRf0E:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160501160091001", 
+    "storeName": null, 
+    "mcc": "5998", 
+    "shopId": null, 
+    "alias": "方芳家电", 
+    "sessionId": "0000EPd3CoIHTahKNzpjHeZ8ZLs:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "16050000055001", 
+    "storeName": null, 
+    "mcc": "5940", 
+    "shopId": null, 
+    "alias": "通盛摩托", 
+    "sessionId": "0000lg-ns69vxwo05EI-5eagBRN:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160506020125001", 
+    "storeName": null, 
+    "mcc": "5812", 
+    "shopId": null, 
+    "alias": "美如家酒店", 
+    "sessionId": "0000_6OCol2CkTFCW0GT6T3_41c:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504990124001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "那年那月百货", 
+    "sessionId": "0000DjykbgAlU8DgGCD7MBARdIS:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160572980072001", 
+    "storeName": "薛城区陶庄镇手足情深美甲店", 
+    "mcc": "7298", 
+    "shopId": "16050004355", 
+    "alias": "美甲店（A）", 
+    "sessionId": "000032aw0fkQngZ4z5W-PgWUt8l:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160572980095001", 
+    "storeName": null, 
+    "mcc": "7298", 
+    "shopId": null, 
+    "alias": "美甲店B ", 
+    "sessionId": "0000Qrh8dzIXDlXCbyQQOPTQrUE:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160507010102001", 
+    "storeName": null, 
+    "mcc": "7011", 
+    "shopId": null, 
+    "alias": "惠佳旅馆", 
+    "sessionId": "00002p2vTz0KueeOhJFKoUfQjIz:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504990179001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "心梦超市", 
+    "sessionId": "00000qx_POqjC0UMqtSi4dBUVrX:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504040273001", 
+    "storeName": null, 
+    "mcc": "5311", 
+    "shopId": null, 
+    "alias": "那年那月", 
+    "sessionId": "0000Gd_Bvi67udg_7M5I9N4dnyq:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160570320002001", 
+    "storeName": null, 
+    "mcc": "7032", 
+    "shopId": null, 
+    "alias": "通盛摩托（新）B ", 
+    "sessionId": "0000JPyt5mO9c3Pqg2-ZWafiu4h:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160576220002001", 
+    "storeName": null, 
+    "mcc": "7629", 
+    "shopId": null, 
+    "alias": "个体户", 
+    "sessionId": "0000t7IDnYZtSESNxOgfrpXxPeb:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160559620008001", 
+    "storeName": null, 
+    "mcc": "5962", 
+    "shopId": null, 
+    "alias": "青年旅行社", 
+    "sessionId": "0000a2FP5LDNu0beNJzDINo3L_6:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160511030002001", 
+    "storeName": null, 
+    "mcc": "4411", 
+    "shopId": null, 
+    "alias": "远航商务服务中心", 
+    "sessionId": "0000idAzCIIjC_C2ey1C9DCL3c3:-1"
   }, 
   {
     "status": true, 
@@ -420,6 +285,141 @@
     "mcc": "5732", 
     "shopId": null, 
     "alias": "得利家用B", 
-    "sessionId": "0000u7qMhGIvRaPcgnAKGoXqIDN:-1"
+    "sessionId": "0000u41XrFeqLH3pqdOwPHIrEFE:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160550940049001", 
+    "storeName": null, 
+    "mcc": "5094", 
+    "shopId": null, 
+    "alias": "如意金店", 
+    "sessionId": "0000n7QSSTu25MWcgaTNLpdHgHn:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504990186001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "百隆超市", 
+    "sessionId": "00004rrnX29hMJZ9XMTA05_u3BC:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160507010084001", 
+    "storeName": "枣庄高新区宾客来旅馆", 
+    "mcc": "701", 
+    "shopId": "16050005980", 
+    "alias": "宾客来旅馆", 
+    "sessionId": "0000IUaD7KsGZsjmWmCvGvI2cny:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160507010101001", 
+    "storeName": null, 
+    "mcc": "7011", 
+    "shopId": null, 
+    "alias": "聚客旅馆", 
+    "sessionId": "0000S6_Brl5ThiYA988i5aoK8Sk:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160526990102001", 
+    "storeName": null, 
+    "mcc": "4215", 
+    "shopId": null, 
+    "alias": "宇翔航空票务", 
+    "sessionId": "0000sdd9Ice_jXN9Lzl2SiOTxWl:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "16050004741001", 
+    "storeName": null, 
+    "mcc": "5542", 
+    "shopId": null, 
+    "alias": "加油站", 
+    "sessionId": "0000vDBk0A7DSH3bAk3VPMkV97H:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160559620006001", 
+    "storeName": null, 
+    "mcc": "5962", 
+    "shopId": null, 
+    "alias": "四方旅行社", 
+    "sessionId": "0000RzH6yLnrk_0LA2ZZWAdlgsA:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160526990109001", 
+    "storeName": null, 
+    "mcc": "4215", 
+    "shopId": null, 
+    "alias": "迅达代理", 
+    "sessionId": "0000PU8FltIHZ4EARO3qAy9PQSB:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160559770088001", 
+    "storeName": null, 
+    "mcc": "5977", 
+    "shopId": null, 
+    "alias": "青春别墅", 
+    "sessionId": "0000-EUGHWiLZrZ0CEYqNc1Jfpj:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160504040325001", 
+    "storeName": null, 
+    "mcc": "5311", 
+    "shopId": null, 
+    "alias": "东升百货B", 
+    "sessionId": "00002-06Fhk91hQ_iflUoUzXxQt:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160558010005001", 
+    "storeName": null, 
+    "mcc": "7832", 
+    "shopId": null, 
+    "alias": "太平洋电影", 
+    "sessionId": "0000PvGAvuczEzRczhjZIFZSqyD:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160559620007001", 
+    "storeName": "枣庄高新区八达旅行社", 
+    "mcc": "5962", 
+    "shopId": "16050005841", 
+    "alias": "旅行社", 
+    "sessionId": "0000DAh6q87uPwFjqoyqtcknYOk:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160559320005001", 
+    "storeName": null, 
+    "mcc": "5932", 
+    "shopId": null, 
+    "alias": "东升珠宝", 
+    "sessionId": "0000lr0EecopUmRZUWX3FIy5N_b:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160555410007001", 
+    "storeName": null, 
+    "mcc": "5541", 
+    "shopId": null, 
+    "alias": "三环里加油站", 
+    "sessionId": "0000dOIy6aCzkaVDEmX8ZKFdpEh:-1"
+  }, 
+  {
+    "status": true, 
+    "logonId": "160506020160001", 
+    "storeName": "薛城区无饿不坐土菜馆", 
+    "mcc": "5812", 
+    "shopId": "16050006989", 
+    "alias": "无饿不坐土菜馆", 
+    "sessionId": "0000F-lwjq3xz4etnc0ndG76DEg:-1"
   }
 ]
