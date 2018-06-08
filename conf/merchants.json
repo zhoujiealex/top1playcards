@@ -117,7 +117,7 @@
     "sessionId": "00002iC2XjtRM0NT__jaMFG9OGI:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040274001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -189,7 +189,7 @@
     "sessionId": "0000xHxprXnNNLX1GOYlmivS2l3:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160506020125001", 
     "storeName": null, 
     "mcc": "5812", 
@@ -198,7 +198,7 @@
     "sessionId": "0000FeS9hdkylCFkHdXE5d1nh43:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504990124001", 
     "storeName": null, 
     "mcc": "5411", 
@@ -243,7 +243,7 @@
     "sessionId": "0000y3OUiEpdk-GfdmhhiDnXrKd:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040273001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -252,13 +252,13 @@
     "sessionId": "0000OgWt-NxZuf7HQJWk44FNwDM:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160570320002001", 
     "storeName": null, 
     "mcc": "7032", 
     "shopId": null, 
     "alias": "通盛摩托（新）B ", 
-    "sessionId": "0000EEUkRy5iIIZoWyfGLrjTunM:-1"
+    "sessionId": "0000sAXZ3sHK2Dem5NXYRBLUn6Y:-1"
   }, 
   {
     "status": false, 
@@ -315,7 +315,7 @@
     "sessionId": "0000IptFmAQ1iOR8RGG7JfNiTJl:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160507010084001", 
     "storeName": "枣庄高新区宾客来旅馆", 
     "mcc": "701", 
@@ -396,7 +396,7 @@
     "sessionId": "0000IsiQ5DuT2U4RYzkR1VupE8c:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160559620007001", 
     "storeName": "枣庄高新区八达旅行社", 
     "mcc": "5962", 
