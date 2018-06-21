@@ -36,13 +36,13 @@
     "sessionId": "0000dSC5BH-0RrLvVF5Q-CK4TEd:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050004717001", 
     "storeName": null, 
     "mcc": "5812", 
     "shopId": null, 
     "alias": "全能家电", 
-    "sessionId": "0000Nqw-xkIFKpv_asupapWRunw:-1"
+    "sessionId": "00008g53Igs1NbCN21v-9iYNjDn:-1"
   }, 
   {
     "status": false, 
@@ -52,6 +52,15 @@
     "shopId": null, 
     "alias": "国际娱乐会所", 
     "sessionId": "0000QcBzFqyMzS_uyAVehDlTMKR:-1"
+  }, 
+  {
+    "status": false, 
+    "logonId": "160558010005001", 
+    "storeName": null, 
+    "mcc": "7832", 
+    "shopId": null, 
+    "alias": "太平洋电影", 
+    "sessionId": "0000QGmdKDPOWkAbDENKq-h6IGR:-1"
   }, 
   {
     "status": false, 
@@ -88,15 +97,6 @@
     "shopId": null, 
     "alias": "如意百货", 
     "sessionId": "0000EAd3hGS3xjjOcaOlhktqHWx:-1"
-  }, 
-  {
-    "status": false, 
-    "logonId": "160504990139001", 
-    "storeName": null, 
-    "mcc": "5411", 
-    "shopId": null, 
-    "alias": "尚卫三A ", 
-    "sessionId": "0000lIrZ9pRGuqvJqcvSFMWiHHo:-1"
   }, 
   {
     "status": false, 
@@ -153,13 +153,13 @@
     "sessionId": "0000pez-abe21W0ls13mIlHKxKW:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050004354001", 
     "storeName": "薛城区尚得利家用电器经营部", 
     "mcc": "5722", 
     "shopId": "16050004354", 
     "alias": "得利家用A", 
-    "sessionId": "0000k0js8TWYiWtHpF8RVblhCbi:-1"
+    "sessionId": "0000n1pyTPNnu5ir-KsH7pIdjfk:-1"
   }, 
   {
     "status": false, 
@@ -171,13 +171,13 @@
     "sessionId": "0000Tw_Ea6GurqoZsBV-oLZ1cYp:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160501160091001", 
     "storeName": null, 
     "mcc": "5998", 
     "shopId": null, 
     "alias": "方芳家电", 
-    "sessionId": "0000DFuVzFdeKQ6Lq1hTpydDsxp:-1"
+    "sessionId": "0000DiuEl29lK_00LLu0j5SFgWf:-1"
   }, 
   {
     "status": false, 
@@ -208,12 +208,12 @@
   }, 
   {
     "status": false, 
-    "logonId": "160558010005001", 
-    "storeName": null, 
-    "mcc": "7832", 
-    "shopId": null, 
-    "alias": "太平洋电影", 
-    "sessionId": "0000QGmdKDPOWkAbDENKq-h6IGR:-1"
+    "logonId": "160572980072001", 
+    "storeName": "薛城区陶庄镇手足情深美甲店", 
+    "mcc": "7298", 
+    "shopId": "16050004355", 
+    "alias": "美甲店（A）", 
+    "sessionId": "0000IsiQ5DuT2U4RYzkR1VupE8c:-1"
   }, 
   {
     "status": false, 
@@ -388,12 +388,12 @@
   }, 
   {
     "status": false, 
-    "logonId": "160572980072001", 
-    "storeName": "薛城区陶庄镇手足情深美甲店", 
-    "mcc": "7298", 
-    "shopId": "16050004355", 
-    "alias": "美甲店（A）", 
-    "sessionId": "0000IsiQ5DuT2U4RYzkR1VupE8c:-1"
+    "logonId": "160504990139001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "尚卫三A ", 
+    "sessionId": "0000lIrZ9pRGuqvJqcvSFMWiHHo:-1"
   }, 
   {
     "status": true, 
