@@ -117,7 +117,7 @@
     "sessionId": "00002iC2XjtRM0NT__jaMFG9OGI:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040274001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -153,13 +153,13 @@
     "sessionId": "0000pez-abe21W0ls13mIlHKxKW:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050004354001", 
     "storeName": "薛城区尚得利家用电器经营部", 
     "mcc": "5722", 
     "shopId": "16050004354", 
     "alias": "得利家用A", 
-    "sessionId": "0000n1pyTPNnu5ir-KsH7pIdjfk:-1"
+    "sessionId": "0000W0mprDX-epfiRw7e95iNiru:-1"
   }, 
   {
     "status": false, 
@@ -189,7 +189,7 @@
     "sessionId": "0000xHxprXnNNLX1GOYlmivS2l3:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504990124001", 
     "storeName": null, 
     "mcc": "5411", 
@@ -243,7 +243,7 @@
     "sessionId": "0000rYdXjS28hP_3T6-3RsRnZPd:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040273001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -252,7 +252,7 @@
     "sessionId": "0000QXrclUqabko3dZ2UaBSP4O3:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160570320002001", 
     "storeName": null, 
     "mcc": "7032", 
@@ -297,7 +297,7 @@
     "sessionId": "0000qAyIi-_eMuK4QC0aNEcnWuZ:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160507010084001", 
     "storeName": "枣庄高新区宾客来旅馆", 
     "mcc": "701", 
