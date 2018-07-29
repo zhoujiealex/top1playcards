@@ -27,7 +27,7 @@
     "sessionId": "000005KXwj_fDh8uszEATkY-w7Z:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160504040266001", 
     "storeName": null, 
     "mcc": "-", 
@@ -36,7 +36,7 @@
     "sessionId": "0000qu6hrWdMwsMazrvvmFnauoD:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "16050004717001", 
     "storeName": null, 
     "mcc": "5812", 
@@ -117,7 +117,7 @@
     "sessionId": "00002iC2XjtRM0NT__jaMFG9OGI:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160504040274001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -153,7 +153,7 @@
     "sessionId": "0000pez-abe21W0ls13mIlHKxKW:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "16050004354001", 
     "storeName": "薛城区尚得利家用电器经营部", 
     "mcc": "5722", 
@@ -171,7 +171,7 @@
     "sessionId": "0000Tw_Ea6GurqoZsBV-oLZ1cYp:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160501160091001", 
     "storeName": null, 
     "mcc": "5998", 
@@ -189,7 +189,7 @@
     "sessionId": "0000xHxprXnNNLX1GOYlmivS2l3:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160506020125001", 
     "storeName": null, 
     "mcc": "5812", 
@@ -198,7 +198,7 @@
     "sessionId": "0000Ex7ry8W-2rBVDLm-_MC9uF_:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160504990124001", 
     "storeName": null, 
     "mcc": "5411", 
@@ -243,7 +243,7 @@
     "sessionId": "0000y3OUiEpdk-GfdmhhiDnXrKd:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160504040273001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -252,7 +252,7 @@
     "sessionId": "000030cb8awhhva_fINAuB0wfAX:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160570320002001", 
     "storeName": null, 
     "mcc": "7032", 
@@ -315,7 +315,7 @@
     "sessionId": "0000IptFmAQ1iOR8RGG7JfNiTJl:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160507010084001", 
     "storeName": "枣庄高新区宾客来旅馆", 
     "mcc": "701", 
@@ -348,7 +348,7 @@
     "mcc": "5542", 
     "shopId": null, 
     "alias": "加油站", 
-    "sessionId": "0000BmpTqtOo2RyK-H_CDzcy6d7:-1"
+    "sessionId": "0000KtqwDHSKT7xcLLRCiqIa3H_:-1"
   }, 
   {
     "status": false, 
@@ -396,7 +396,7 @@
     "sessionId": "0000QGmdKDPOWkAbDENKq-h6IGR:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160559620007001", 
     "storeName": "枣庄高新区八达旅行社", 
     "mcc": "5962", 
@@ -405,7 +405,7 @@
     "sessionId": "0000bcz_yE2jDj9nd_ryH5nreZ7:-1"
   }, 
   {
-    "status": true, 
+    "status": false, 
     "logonId": "160504990136001", 
     "storeName": null, 
     "mcc": "5411", 
