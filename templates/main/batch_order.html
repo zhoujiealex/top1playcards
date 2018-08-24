@@ -4,6 +4,7 @@
 
   <div class="body-content">
 
+
     <div id="error" class="row"></div>
     <div id="warning" class="row"></div>
     <div id="tip" class="row"></div>
@@ -16,11 +17,13 @@
 
       <div id="merchantCfgDataToolbar">
         <div class="form-inline" role="form">
-          <button id="batchLogin" type="button" class="btn btn-info" data-toggle="tooltip"
-                  onclick="batchLogin()"
-                  title="为了避免电脑卡顿，默认一次打开若干个新页面，自动选择未登录的账号，请完成登录后，刷新并重新点击再次打开剩余账号">
-            <span class="glyphicon glyphicon-user"></span>批量登录
-          </button>
+          {% if current_user.is_authenticated and current_user.id|int <=1 %}
+            <button id="batchLogin" type="button" class="btn btn-info" data-toggle="tooltip"
+                    onclick="batchLogin()"
+                    title="为了避免电脑卡顿，默认一次打开若干个新页面，自动选择未登录的账号，请完成登录后，刷新并重新点击再次打开剩余账号">
+              <span class="glyphicon glyphicon-user"></span>批量登录
+            </button>
+          {% endif %}
           <button id="closeAll" type="button" class="btn btn-danger" onclick="closeAll()" data-toggle="tooltip"
                   title="用来关闭selenium打开的页面，也可以清除页面上的提示框">
             <span class="glyphicon glyphicon-trash"></span>批量清除
@@ -54,23 +57,27 @@
           {#          </div>#}
         </div>
       </div>
-
-      <table id="merchantCfgData" data-toggle="table" data-mobile-responsive="true">
-        <thead>
-        <tr>
-          <th data-sortable="true">简称</th>
-          <th data-sortable="false">登录账户</th>
-          <th data-sortable="true">MCC</th>
-          <th data-sortable="false">全称</th>
-          <th data-sortable="false">SessionId</th>
-          <th data-sortable="true">状态</th>
-          <th data-sortable="false">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+      {% if current_user.is_authenticated and current_user.id|int <=1 %}
+        <table id="merchantCfgData" data-toggle="table" data-mobile-responsive="true">
+          <thead>
+          <tr>
+            <th data-sortable="true">简称</th>
+            {% if current_user.is_authenticated and current_user.id|int ==0 %}
+              <th data-sortable="false">登录账户</th>
+            {% endif %}
+            <th data-sortable="true">MCC</th>
+            <th data-sortable="false">全称</th>
+            <th data-sortable="false">SessionId</th>
+            <th data-sortable="true">状态</th>
+            <th data-sortable="false">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      {% endif %}
     </div>
+
 
     <div class="row">
       <h2>统计数据</h2>
@@ -191,31 +198,35 @@
               columns: [{
                   field: 'alias',
                   cellStyle: thinTdStyle
-              }, {
-                  field: 'logonId',
-                  cellStyle: thinTdStyle
-              }, {
-                  field: 'mcc',
-                  align: 'center',
-                  cellStyle: thinTdStyle
-              }, {
-                  field: 'storeName',
-                  cellStyle: thinTdStyle
-              }, {
-                  field: 'sessionId',
-                  cellStyle: thinTdStyle
-              }, {
-                  field: 'status',
-                  align: 'center',
-                  formatter: statusFormatter,
-                  cellStyle: thinTdStyle
-              }, {
-                  field: 'operate',
-                  align: 'center',
-                  valign: 'middle',
-                  formatter: operateFormatter,
-                  events: window.operateEvents
-              }],
+              },
+                  {% if current_user.is_authenticated and current_user.id|int ==0 %}
+                      {
+                          field: 'logonId',
+                          cellStyle: thinTdStyle
+                      },
+                  {% endif %}
+                  {
+                      field: 'mcc',
+                      align: 'center',
+                      cellStyle: thinTdStyle
+                  }, {
+                      field: 'storeName',
+                      cellStyle: thinTdStyle
+                  }, {
+                      field: 'sessionId',
+                      cellStyle: thinTdStyle
+                  }, {
+                      field: 'status',
+                      align: 'center',
+                      formatter: statusFormatter,
+                      cellStyle: thinTdStyle
+                  }, {
+                      field: 'operate',
+                      align: 'center',
+                      valign: 'middle',
+                      formatter: operateFormatter,
+                      events: window.operateEvents
+                  }],
               onLoadSuccess: function (data) {
                   console.info("加载商户配置数据成功" + JSON.stringify(data));
                   $("[data-toggle='tooltip']").tooltip();
@@ -438,7 +449,7 @@
                       showTip(data.tip);
                   }
                   if (data.errors.length > 0) {
-                      showError(data.errors.join('；<br>'));
+                      showError(data.errors[0]);
                   }
               },
               error: function (e) {

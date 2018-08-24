@@ -15,9 +15,9 @@ from flask_apscheduler import APScheduler
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from werkzeug import exceptions
 
+import server.browser as browser
 from server.batch_order import refresh_merchant_config, get_merchant, download_order_by_logon_id, download_all_orders
 from server.browser import *
-import server.browser as browser
 from server.excel import save_order_data_to_excel, merge_excel_helper, get_excel_path
 from server.order import *
 from server.utils import get_merchant_login_cfg
@@ -77,21 +77,29 @@ class User(UserMixin):
         self.id = id
         name = None
         password = None
-        if id == 1:
+        if id == 2:
+            name = 'normal'
+            password = get_merchant_login_cfg('normal_password')
+        elif id == 1:
             name = 'admin'
             password = get_merchant_login_cfg('password')
         elif id == 0:
             name = 'root'
             password = get_merchant_login_cfg('password') + 'root'
 
-        self.name = name
-        self.password = password
+        self._name = name
+        self._password = password
 
-    def __repr__(self):
-        return "%d/%s/%s" % (self.id, self.name, self.password)
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def password(self):
+        return self._password
 
 
-supported_users = {'admin': User(1), 'root': User(0)}
+supported_users = {'normal': User(2), 'admin': User(1), 'root': User(0)}
 
 
 # callback to reload the user object

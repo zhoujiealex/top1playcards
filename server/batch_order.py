@@ -236,7 +236,7 @@ def _download_order_by_logon_id_helper(logon_id, order_download_date):
     # 检查session有效性
     session_validation = check_status_merchant(merchant)
     if not session_validation:
-        error = "商户%s的session无效，请检查后or重新登录" % logon_id
+        error = "有部分商户未登录无法下载（已自动忽略），请检查后重新登录该部分商户"
         return error, None, None
 
     # 开始下载数据
