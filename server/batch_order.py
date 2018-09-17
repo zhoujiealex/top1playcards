@@ -32,8 +32,12 @@ def refresh_merchant_config():
     cfgs = get_merchant_config()
     check_status(cfgs)
     res = list()
+    count = 0
     for d in cfgs:
         res.append(d.to_dict())
+        if d.status:
+            count += 1
+    LOGGER.info(u"在线商户:" + count)
     return res
 
 
