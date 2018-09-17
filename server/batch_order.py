@@ -37,7 +37,7 @@ def refresh_merchant_config():
         res.append(d.to_dict())
         if d.status:
             count += 1
-    LOGGER.info(u"在线商户:" + count)
+    LOGGER.info(u"在线商户:%s", count)
     return res
 
 
