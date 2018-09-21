@@ -33,7 +33,7 @@
     "mcc": "5812", 
     "shopId": null, 
     "alias": "全能家电", 
-    "sessionId": "0000vuucLaRpISkaGfSdjKqnd4y:-1"
+    "sessionId": "0000I3qnit_8bfMtBG4KhHOJ1-L:-1"
   }, 
   {
     "status": true, 
@@ -42,7 +42,7 @@
     "mcc": "7911", 
     "shopId": null, 
     "alias": "国际娱乐会所", 
-    "sessionId": "0000VuYyJINsF8GxO_T2J7Ycb23:-1"
+    "sessionId": "0000OehJE2gh8Y2BT7xpKJRYZ2H:-1"
   }, 
   {
     "status": false, 
@@ -82,12 +82,21 @@
   }, 
   {
     "status": true, 
+    "logonId": "160504990057001", 
+    "storeName": null, 
+    "mcc": "5411", 
+    "shopId": null, 
+    "alias": "东升百货（5411）", 
+    "sessionId": "00000vTO9QfUwH-LA87bWrU9O-i:-1"
+  }, 
+  {
+    "status": true, 
     "logonId": "160506020160001", 
     "storeName": "薛城区无饿不坐土菜馆", 
     "mcc": "5812", 
     "shopId": "16050006989", 
     "alias": "无饿不坐土菜馆", 
-    "sessionId": "00009Kogzt6buHkTh3QRUuB_jOk:-1"
+    "sessionId": "0000cfwGcqa64odRK2n-fu2PLyQ:-1"
   }, 
   {
     "status": false, 
@@ -105,7 +114,7 @@
     "mcc": "7011", 
     "shopId": null, 
     "alias": "立恒商务宾馆", 
-    "sessionId": "0000PFoInbhftRMXBQhJx_ZhdBk:-1"
+    "sessionId": "00000hEh1alLDFXI5tCdfYDvOco:-1"
   }, 
   {
     "status": false, 
@@ -132,7 +141,7 @@
     "mcc": "5311", 
     "shopId": null, 
     "alias": "东升百货C", 
-    "sessionId": "000087VZRNcwOsTEIsmBS1dI-_z:-1"
+    "sessionId": "0000wkxfhGUvb8_-e8sL8IsyTd6:-1"
   }, 
   {
     "status": false, 
@@ -150,7 +159,7 @@
     "mcc": "5812", 
     "shopId": "16050000050", 
     "alias": "全羊馆", 
-    "sessionId": "0000SeH9q6ZoK7RW-3-wcROU-D3:-1"
+    "sessionId": "0000sLI6R-r_5-Zt6wnrofchrzv:-1"
   }, 
   {
     "status": false, 
@@ -168,7 +177,7 @@
     "mcc": "5722", 
     "shopId": "16050004354", 
     "alias": "得利家用A", 
-    "sessionId": "0000ul85j_zl-QNCzLbojCxysiz:-1"
+    "sessionId": "000081HTR9qZH_ERaPbRJeLQ-Il:-1"
   }, 
   {
     "status": false, 
@@ -186,7 +195,7 @@
     "mcc": "5998", 
     "shopId": null, 
     "alias": "方芳家电", 
-    "sessionId": "00002g9QG7rHoxs8pxunYY9S5cc:-1"
+    "sessionId": "0000dZXdP3ka0JPKn5qnW9w0Uh0:-1"
   }, 
   {
     "status": false, 
@@ -204,7 +213,7 @@
     "mcc": "5411", 
     "shopId": null, 
     "alias": "那年那月百货", 
-    "sessionId": "000057Q7En056KoHhpkjb6Uhy3H:-1"
+    "sessionId": "0000TmVUwPkmx8FreTlgLGHGplG:-1"
   }, 
   {
     "status": true, 
@@ -213,7 +222,7 @@
     "mcc": "xxxx", 
     "shopId": "16050006135", 
     "alias": "三农农资", 
-    "sessionId": "0000YUAYjV6Gd5PeRruS0p80Khj:-1"
+    "sessionId": "0000EZOKSMLA2B9OCKJw19Libkd:-1"
   }, 
   {
     "status": false, 
@@ -267,7 +276,7 @@
     "mcc": "5311", 
     "shopId": null, 
     "alias": "那年那月", 
-    "sessionId": "0000IpML_n9Ufdtz5-tFvPX8KXi:-1"
+    "sessionId": "0000h9xrUQLlxNgBlNlYDW2Y2R4:-1"
   }, 
   {
     "status": true, 
@@ -276,7 +285,7 @@
     "mcc": "7032", 
     "shopId": null, 
     "alias": "通盛摩托（新）B ", 
-    "sessionId": "0000QoGjNdG4QU6PJv5bQWZuiL9:-1"
+    "sessionId": "0000PaV_Km-g7bK4Eoi3JK8Du6D:-1"
   }, 
   {
     "status": true, 
@@ -285,7 +294,7 @@
     "mcc": "7629", 
     "shopId": null, 
     "alias": "个体户", 
-    "sessionId": "0000C2G-72UJVRvrf_qc3sde8bH:-1"
+    "sessionId": "0000N6edBkv7m9Ux2KDLzcfVQ06:-1"
   }, 
   {
     "status": false, 
@@ -321,7 +330,7 @@
     "mcc": "701", 
     "shopId": "16050005980", 
     "alias": "宾客来旅馆", 
-    "sessionId": "00006dZHu6Fi-6CQBAVmrgz3SBT:-1"
+    "sessionId": "00000C-4JR_mz1gGtJ4I-OlqHlV:-1"
   }, 
   {
     "status": false, 
@@ -339,7 +348,7 @@
     "mcc": "5812", 
     "shopId": null, 
     "alias": "美如家酒店", 
-    "sessionId": "0000tY8D0oGZepNnQy5ppPGkMUL:-1"
+    "sessionId": "0000dIsAUE6KGpjqNJR3Cd2G5Na:-1"
   }, 
   {
     "status": true, 
@@ -348,7 +357,7 @@
     "mcc": "-", 
     "shopId": null, 
     "alias": "任何芳方百货", 
-    "sessionId": "0000JRUiTvwtUmIYZq8aEsmBDel:-1"
+    "sessionId": "0000EJSbqSrC_cTzDFLomwqUUnL:-1"
   }, 
   {
     "status": false, 
@@ -366,7 +375,7 @@
     "mcc": "5542", 
     "shopId": null, 
     "alias": "加油站", 
-    "sessionId": "0000k7akkecxA30IpNZwbIdo7yg:-1"
+    "sessionId": "0000iDT0wJAVxoGrknH-03SLY7M:-1"
   }, 
   {
     "status": false, 
@@ -420,7 +429,7 @@
     "mcc": "5962", 
     "shopId": "16050005841", 
     "alias": "旅行社", 
-    "sessionId": "0000y-jrR50Gdt5esfcyYQA6h8N:-1"
+    "sessionId": "0000lQUdzDUgP15JWEHD-WrZKxP:-1"
   }, 
   {
     "status": false, 
