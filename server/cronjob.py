@@ -36,8 +36,9 @@ s1 = BlockingScheduler()
 
 def refresh_session_job():
     # s1 = BackgroundScheduler()
-    LOGGER.info(u"定时刷新session任务启动，%ss运行一次", RUN_TIME)
+    LOGGER.info(u"开始：定时刷新session任务启动，%ss运行一次", RUN_TIME)
     refresh_merchant_config()
+    LOGGER.info(u"完成：定时刷新session任务")
 
 
 def refresh_merchant_data_job():
@@ -49,8 +50,9 @@ def refresh_merchant_data_job():
     :return:
     """
     order_date = get_now_date_str()
-    LOGGER.info(u"定时刷新商户数据缓存,date=%ss", order_date)
-    download_all_orders(order_date)
+    LOGGER.info(u"开始：定时刷新商户数据缓存,date=%s", order_date)
+    res = download_all_orders(order_date)
+    LOGGER.info(u"完成：定时刷新商户数据缓存，详情：%s", res.get('tip'))
 
 
 def start_scheduler():
