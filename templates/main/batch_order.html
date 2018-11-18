@@ -662,6 +662,14 @@
               success: function (data) {
                   console.info(data);
                   var msg = "当前商户数据总数：" + data['totalMerchant'] + ",已登录商户数：" + data['totalValidMerchant'];
+                  var online_time = data['online_time'];
+                  var offline_time = data['offline_time'];
+                  if (online_time) {
+                      msg += "最近上线时间：" + online_time
+                  }
+                  if (offline_time) {
+                      msg += "离线时间：" + offline_time
+                  }
                   showSummary(msg);
               },
               error: function (e) {

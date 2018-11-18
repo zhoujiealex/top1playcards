@@ -6,6 +6,7 @@ ICBC批量订单下载
 Author: karl(i@karlzhou.com)
 """
 import random
+from datetime import datetime
 
 import gevent
 from gevent import monkey
@@ -42,7 +43,58 @@ def refresh_merchant_config(from_front=False):
         if d.status:
             count += 1
     LOGGER.info(u"在线商户:%s", count)
+    record_offline_time(count)
     return res
+
+
+def record_offline_time(count):
+    """
+    尝试记录商户全部掉线时间
+    :param count: 当前在线商户个数
+    :return:
+    """
+    global SUMMARY_INFO
+    SUMMARY_INFO["last_valid_count"] = SUMMARY_INFO.get("current_valid_count", None)
+    SUMMARY_INFO["current_valid_count"] = count
+
+    if SUMMARY_INFO["last_valid_count"] and count <= 0:
+        # 最近一次不同，且有非0->0，说明下线了
+        SUMMARY_INFO['offline_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    if not SUMMARY_INFO["last_valid_count"] and count:
+        SUMMARY_INFO['online_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def can_refresh(from_front):
+    """
+    是否可以刷新，前台需要满足随机数百分比，后台定时总是要刷新
+    :param from_front:
+    :return:
+    """
+    if from_front and not frontend_need_refresh():
+        return False
+    return True
+
+
+def frontend_need_refresh():
+    """
+    利用随机数来控制前台是否要强制刷新
+    :return:
+    """
+    magic = random.randint(0, 100)
+    threshold = get_refresh_threshold()
+    return magic <= threshold
+
+
+def get_merchant_config():
+    global MERCHANTS_DATA
+    merchant_cfg_datas = read_merchant_cfg()
+    res = list()
+    for merchant in merchant_cfg_datas:
+        logon_id = merchant.get('logonId')
+        merchant_info = MerchantInfo()
+    record_offline_time(1)
+    print(SUMMARY_INFO)
 
 
 def can_refresh(from_front):
