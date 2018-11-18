@@ -33,6 +33,11 @@
             <span class="glyphicon glyphicon-trash"></span>批量清除
           </button>
 
+          <span data-toggle="tooltip" title="若商户全掉线了，可以打开该开关，尝试用缓存数据。默认1小时刷新一次缓存数据。">
+            <input type="checkbox" name="swith-cache">
+          </span>
+
+
           <div class="form-group input-group" style="padding-left: 150px">
             <span>下载日期：</span>
             <div class="input-group">
@@ -369,11 +374,13 @@
           'click .download': function (e, value, row, index) {
               var logonId = row['logonId'];
               var orderDownloadDate = getDownloadDate();
+              var enableCache = getEnableCache();
               $.ajax({
                   type: 'POST',
                   data: {
                       'orderDownloadDate': orderDownloadDate,
-                      'logonId': logonId
+                      'logonId': logonId,
+                      'enableCache': enableCache
                   },
                   url: '/batch_order/download_order',
                   success: function (data) {
@@ -445,11 +452,13 @@
       function batchDownload() {
           console.info("一键下载，只会下载session生效的");
           var orderDownloadDate = getDownloadDate();
+          var enableCache = getEnableCache();
           $.ajax({
               type: 'POST',
               url: '/batch_order/download_all',
               data: {
-                  'orderDownloadDate': orderDownloadDate
+                  'orderDownloadDate': orderDownloadDate,
+                  'enableCache': enableCache
               },
               success: function (data) {
                   if (data.summary) {
@@ -678,11 +687,26 @@
           });
       }
 
+      function initSwitchCache() {
+          var switchCache = $("[name='swith-cache']");
+          switchCache.bootstrapSwitch('state', 'true');
+          switchCache.bootstrapSwitch('size', 'normal');
+          switchCache.bootstrapSwitch('onColor', 'success');
+          switchCache.bootstrapSwitch('offColor', 'warning');
+          switchCache.bootstrapSwitch('onText', '实时');
+          switchCache.bootstrapSwitch('offText', '缓存');
+          {#switchCache.bootstrapSwitch('labelText', '实时数据');#}
+      }
+
+      function getEnableCache() {
+          return !$("[name='swith-cache']").bootstrapSwitch('state');
+      }
+
       $(document).ready(function () {
           $.ajaxSetup({
               cache: false //关闭AJAX缓存
           });
-
+          initSwitchCache();
           initMerchantCfgData();
           summaryCurrentMerchantData();
           initSummaryData();

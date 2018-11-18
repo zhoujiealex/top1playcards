@@ -17,6 +17,8 @@
         media="screen">
   <link href="{{ url_for('static', filename='bootstrap-table/bootstrap-table.min.css') }}" rel="stylesheet"
         media="screen">
+  <link href="{{ url_for('static', filename='bootstrap-switch/bootstrap-switch.min.css') }}" rel="stylesheet"
+        media="screen">
   <script src="{{ url_for('static', filename='jquery.min.js') }}" type="text/javascript" media="screen"></script>
   {% block css %}{% endblock %}
 
@@ -79,7 +81,8 @@
 <script src="{{ url_for('static', filename='bootstrap-table/extensions/export/bootstrap-table-export.min.js') }}"
         type="text/javascript" media="screen"></script>
 <script src="{{ url_for('static', filename='tableExport.js') }}" type="text/javascript" media="screen"></script>
-
+<script src="{{ url_for('static', filename='bootstrap-switch/bootstrap-switch.min.js') }}" type="text/javascript"
+        media="screen"></script>
 {% block js %}{% endblock %}
 
 </body>
