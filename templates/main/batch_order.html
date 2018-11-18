@@ -461,6 +461,10 @@
                   'enableCache': enableCache
               },
               success: function (data) {
+                  if (data == null) {
+                      showWarning("无有效缓存数据");
+                  }
+
                   if (data.summary) {
                       reloadSummaryData(data.summary);
                   }
