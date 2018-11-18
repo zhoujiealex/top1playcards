@@ -66,3 +66,10 @@ def get_specific_merchant_ids():
     logon_ids = read_cfg("merchant_ids", "specific_ids", "config.ini")
     return [id.strip() for id in logon_ids.split("|")]
 
+
+def get_refresh_threshold():
+    """
+    前台是否要加载的阈值，默认30%
+    :return:
+    """
+    return int(get_merchant_login_cfg("force_refresh_threshold"))

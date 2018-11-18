@@ -266,7 +266,7 @@ def merge_orders():
 @app.route('/merchant_info')
 @login_required
 def get_merchant_info():
-    res = refresh_merchant_config()
+    res = refresh_merchant_config(True)
     return jsonify(res)
 
 

@@ -5,13 +5,15 @@ ICBC批量订单下载
 
 Author: karl(i@karlzhou.com)
 """
+import random
+
 import gevent
 from gevent import monkey
 
 from log4cas import LOGGER
 from model import MerchantInfo, TradeDetail, TradeSummary
 from model import NoDataException
-from utils import read_merchant_cfg
+from utils import read_merchant_cfg, get_refresh_threshold
 
 monkey.patch_all()
 from gevent.pool import Pool
@@ -24,14 +26,15 @@ MERCHANTS_DATA_REFRESH_POOL = Pool(20)
 SUMMARY_INFO = dict()
 
 
-def refresh_merchant_config():
+def refresh_merchant_config(from_front=False):
     """
     刷新商户状态和配置等
     :return:
     """
     LOGGER.info(u"获取商户配置数据")
     cfgs = get_merchant_config()
-    check_status(cfgs)
+    if can_refresh(from_front):
+        check_status(cfgs)
     res = list()
     count = 0
     for d in cfgs:
@@ -40,6 +43,27 @@ def refresh_merchant_config():
             count += 1
     LOGGER.info(u"在线商户:%s", count)
     return res
+
+
+def can_refresh(from_front):
+    """
+    是否可以刷新，前台需要满足随机数百分比，后台定时总是要刷新
+    :param from_front:
+    :return:
+    """
+    if from_front and not frontend_need_refresh():
+        return False
+    return True
+
+
+def frontend_need_refresh():
+    """
+    利用随机数来控制前台是否要强制刷新
+    :return:
+    """
+    magic = random.randint(0, 100)
+    threshold = get_refresh_threshold()
+    return magic <= threshold
 
 
 def get_merchant_config():
