@@ -4,6 +4,7 @@ import ConfigParser
 import codecs
 import json
 import os
+from datetime import datetime
 
 from log4cas import LOGGER
 
@@ -81,3 +82,15 @@ def convert_str_to_bool(bool_str):
     :return:
     """
     return bool_str == "true"
+
+
+def get_now_str():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def get_now_date_str():
+    """
+    获取当天时间
+    :return:
+    """
+    return datetime.now().strftime("%Y-%m-%d")

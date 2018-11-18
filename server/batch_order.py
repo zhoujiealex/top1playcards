@@ -6,7 +6,6 @@ ICBC批量订单下载
 Author: karl(i@karlzhou.com)
 """
 import random
-from datetime import datetime
 
 import gevent
 from gevent import monkey
@@ -14,7 +13,7 @@ from gevent import monkey
 from log4cas import LOGGER
 from model import MerchantInfo, TradeDetail, TradeSummary
 from model import NoDataException
-from utils import read_merchant_cfg, get_refresh_threshold
+from utils import read_merchant_cfg, get_refresh_threshold, get_now_str, get_now_date_str
 
 monkey.patch_all()
 from gevent.pool import Pool
@@ -234,13 +233,16 @@ def check_status_merchant(merchant_info):
     return res
 
 
-def download_all_orders(order_download_date, enable_cache=False):
+def download_all_orders(order_download_date=None, enable_cache=False):
     """
     下载所有的商户，过滤session无效的
     :param order_download_date:
     :return:
     res = {'status': False, 'summary': summary, 'orders': orders, 'errors': errors, 'warnings': warnings, 'tip': ''}
     """
+    if not order_download_date:
+        order_download_date = get_now_date_str()
+
     if enable_cache:
         return get_all_data_from_cache(order_download_date)
 
@@ -420,10 +422,6 @@ def _format_merchant_data(error, summary, orders, tip=None):
     return res
 
 
-def get_now_str():
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-
 def get_specific_data_from_cache(logon_id, order_download_date):
     """
     从缓存中读取指定商户数据
@@ -440,8 +438,9 @@ def save_specific_data_to_cache(logon_id, order_download_date, res):
     :param res:
     :return:
     """
-    SPECIFIC_MERCHANT_DATA_CACHE[logon_id + "_" + order_download_date] = res
-    SPECIFIC_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
+    if res.get('status'):
+        SPECIFIC_MERCHANT_DATA_CACHE[logon_id + "_" + order_download_date] = res
+        SPECIFIC_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
 
 
 def get_all_data_from_cache(order_download_date):
@@ -457,5 +456,6 @@ def save_all_data_to_cache(order_download_date, res):
     保存所有信息到缓存
     :return:
     """
-    ALL_MERCHANT_DATA_CACHE[order_download_date] = res
-    ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
+    if res.get('status'):
+        ALL_MERCHANT_DATA_CACHE[order_download_date] = res
+        ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
