@@ -34,7 +34,7 @@
           </button>
 
           <span data-toggle="tooltip" title="若商户全掉线了，可以打开该开关，尝试用缓存数据。默认1小时刷新一次缓存数据。">
-            <input type="checkbox" name="swith-cache" checked>
+            <input type="checkbox" name="swith-cache">
           </span>
 
 
@@ -384,6 +384,10 @@
                   },
                   url: '/batch_order/download_order',
                   success: function (data) {
+                      if (data == null) {
+                          showWarning("商户：" + logonId + "在当前日期" + orderDownloadDate + "无有效缓存数据。请切换为实时强制刷新模式后重新下载！");
+                          return;
+                      }
                       {#console.info("商户数据下载成功logonId" + logonId + "，data=" + JSON.stringify(data));#}
                       if (data.status) {
                           if (data.summary) {
@@ -462,7 +466,8 @@
               },
               success: function (data) {
                   if (data == null) {
-                      showWarning("无有效缓存数据");
+                      showWarning("当前日期" + orderDownloadDate + "无有效缓存数据。请切换为实时强制刷新模式后重新下载！");
+                      return;
                   }
 
                   if (data.summary) {
@@ -698,7 +703,7 @@
 
       function initSwitchCache() {
           var switchCache = $("[name='swith-cache']");
-          switchCache.bootstrapSwitch('state', true);
+          switchCache.bootstrapSwitch('state', false);
           switchCache.bootstrapSwitch('size', 'normal');
           {#switchCache.bootstrapSwitch('inverse', true);#}
           switchCache.bootstrapSwitch('onColor', 'success');
@@ -727,7 +732,7 @@
           initSwitchCache();
           // 启用tooltip
           $("[data-toggle='tooltip']").tooltip();
-          $("[name='swith-cache']").bootstrapSwitch('state', true);
+          $("[name='swith-cache']").bootstrapSwitch('state', false);
       });
 
   </script>

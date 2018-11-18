@@ -438,7 +438,7 @@ def save_specific_data_to_cache(logon_id, order_download_date, res):
     :param res:
     :return:
     """
-    if res.get('status'):
+    if is_valid_data(res):
         SPECIFIC_MERCHANT_DATA_CACHE[logon_id + "_" + order_download_date] = res
         SPECIFIC_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
 
@@ -456,6 +456,30 @@ def save_all_data_to_cache(order_download_date, res):
     保存所有信息到缓存
     :return:
     """
-    if res.get('status'):
+    if is_valid_data(res):
         ALL_MERCHANT_DATA_CACHE[order_download_date] = res
         ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
+
+
+def is_valid_data(data):
+    """
+    判断是否有效数据，有效则尝试缓存
+    :param datas:
+    :return:
+    """
+    if data.get('status'):
+        return True
+
+    if len(data.get('orders', [])) > 0:
+        return True
+
+    if len(data.get('summary', [])) > 0:
+        return True
+
+    if not data.get('errors'):
+        return True
+
+    if "无数据，请重新选择日期下载" in data.get('errors'):
+        return True
+
+    return False

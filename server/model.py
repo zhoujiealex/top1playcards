@@ -399,6 +399,10 @@ def convert_cent_to_yuan(cent):
 
 
 def format_date(timestamp, format_str):
+    if isinstance(timestamp, unicode):
+        return timestamp
+    if isinstance(timestamp, str):
+        return unicode(timestamp)
     try:
         date_obj = datetime.datetime.fromtimestamp(timestamp / 1e3)
         return datetime.datetime.strftime(date_obj, unicode(format_str))
