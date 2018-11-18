@@ -25,6 +25,10 @@ from excel import save_order_data_to_excel, batch_save_order_data_to_excel
 MERCHANTS_DATA = dict()
 MERCHANTS_DATA_REFRESH_POOL = Pool(20)
 SUMMARY_INFO = dict()
+# 单个商户的cache
+SPECIFIC_MERCHANT_DATA_CACHE = dict()
+# 所有的cache
+ALL_MERCHANT_DATA_CACHE = dict()
 
 
 def refresh_merchant_config(from_front=False):
@@ -44,7 +48,25 @@ def refresh_merchant_config(from_front=False):
             count += 1
     LOGGER.info(u"在线商户:%s", count)
     record_offline_time(count)
-    return res
+    return sort_merchant(res)
+
+
+def sort_merchant(merchant_list):
+    """
+    排序，已登录的排在前面
+    :param merchant_list:
+    :return:
+    """
+    valid_merchants = list()
+    invalid_merchants = list()
+    for m in merchant_list:
+        if m['status']:
+            valid_merchants.append(m)
+        else:
+            invalid_merchants.append(m)
+    valid_merchants.sort()
+    invalid_merchants.sort()
+    return valid_merchants + invalid_merchants
 
 
 def record_offline_time(count):
@@ -59,10 +81,10 @@ def record_offline_time(count):
 
     if SUMMARY_INFO["last_valid_count"] and count <= 0:
         # 最近一次不同，且有非0->0，说明下线了
-        SUMMARY_INFO['offline_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        SUMMARY_INFO['offline_time'] = get_now_str()
 
     if not SUMMARY_INFO["last_valid_count"] and count:
-        SUMMARY_INFO['online_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        SUMMARY_INFO['online_time'] = get_now_str()
 
 
 def can_refresh(from_front):
@@ -94,7 +116,6 @@ def get_merchant_config():
         logon_id = merchant.get('logonId')
         merchant_info = MerchantInfo()
     record_offline_time(1)
-    print(SUMMARY_INFO)
 
 
 def can_refresh(from_front):
@@ -199,6 +220,7 @@ def summary_merchant_status():
     for m in MERCHANTS_DATA:
         if MERCHANTS_DATA.get(m).status:
             SUMMARY_INFO['totalValidMerchant'] += 1
+    SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
     return SUMMARY_INFO
 
 
@@ -212,13 +234,16 @@ def check_status_merchant(merchant_info):
     return res
 
 
-def download_all_orders(order_download_date):
+def download_all_orders(order_download_date, enable_cache=False):
     """
     下载所有的商户，过滤session无效的
     :param order_download_date:
     :return:
     res = {'status': False, 'summary': summary, 'orders': orders, 'errors': errors, 'warnings': warnings, 'tip': ''}
     """
+    if enable_cache:
+        return get_all_data_from_cache(order_download_date)
+
     jobs = list()
     jobs_dict = dict()
     for key in MERCHANTS_DATA:
@@ -271,6 +296,7 @@ def download_all_orders(order_download_date):
     except Exception as ex:
         LOGGER.exception("批量保存邮件异常：%s", ex)
         errors.append("保存excel异常%s" % ex.message)
+    save_all_data_to_cache(order_download_date, res)
     return res
 
 
@@ -295,7 +321,10 @@ def get_merchants_logon_ids():
     return logon_ids
 
 
-def download_order_by_logon_id(logon_id, order_download_date, need_save=False):
+def download_order_by_logon_id(logon_id, order_download_date, need_save=False, enable_cache=False):
+    if enable_cache:
+        return get_specific_data_from_cache(logon_id, order_download_date)
+
     error, summary, orders = None, None, None
     try:
         error, summary, orders = _download_order_by_logon_id_helper(logon_id, order_download_date)
@@ -309,6 +338,7 @@ def download_order_by_logon_id(logon_id, order_download_date, need_save=False):
             res['tip'] = "数据保存成功，文件路径：%s" % file_path
         except Exception as ex:
             res['error'] += "; %s" % ex.message
+    save_specific_data_to_cache(logon_id, order_download_date, res)
     return res
 
 
@@ -388,3 +418,44 @@ def _format_merchant_data(error, summary, orders, tip=None):
         LOGGER.exception("下载商户订单数据异常")
         res['error'] = "下载商户订单数据发生异常:%s" % ex.message
     return res
+
+
+def get_now_str():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def get_specific_data_from_cache(logon_id, order_download_date):
+    """
+    从缓存中读取指定商户数据
+    :return:
+    """
+    return SPECIFIC_MERCHANT_DATA_CACHE.get(logon_id + "_" + order_download_date)
+
+
+def save_specific_data_to_cache(logon_id, order_download_date, res):
+    """
+    更新数据到缓存，key=logon_id+'_'+order_download_date
+    :param logon_id:
+    :param order_download_date:
+    :param res:
+    :return:
+    """
+    SPECIFIC_MERCHANT_DATA_CACHE[logon_id + "_" + order_download_date] = res
+    SPECIFIC_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
+
+
+def get_all_data_from_cache(order_download_date):
+    """
+    从缓存中获取所有商户信息数据
+    :return:
+    """
+    return ALL_MERCHANT_DATA_CACHE.get(order_download_date)
+
+
+def save_all_data_to_cache(order_download_date, res):
+    """
+    保存所有信息到缓存
+    :return:
+    """
+    ALL_MERCHANT_DATA_CACHE[order_download_date] = res
+    ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()

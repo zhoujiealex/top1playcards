@@ -73,3 +73,11 @@ def get_refresh_threshold():
     :return:
     """
     return int(get_merchant_login_cfg("force_refresh_threshold"))
+
+
+def convert_str_to_bool(bool_str):
+    """
+    把前台的json的布尔值转换为python的bool
+    :return:
+    """
+    return bool_str == "true"

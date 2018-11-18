@@ -21,7 +21,7 @@ from server.batch_order import refresh_merchant_config, get_merchant, download_o
 from server.browser import *
 from server.excel import save_order_data_to_excel, merge_excel_helper, get_excel_path
 from server.order import *
-from server.utils import get_merchant_login_cfg
+from server.utils import get_merchant_login_cfg, convert_str_to_bool
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -285,7 +285,8 @@ def summary_info():
 def download_order():
     logon_id = request.form.get('logonId')
     order_download_date = request.form.get('orderDownloadDate')
-    res = download_order_by_logon_id(logon_id, order_download_date, True)
+    enable_cache = convert_str_to_bool(request.form.get('enableCache'))
+    res = download_order_by_logon_id(logon_id, order_download_date, True, enable_cache)
     return jsonify(res)
 
 
@@ -293,7 +294,8 @@ def download_order():
 @login_required
 def download_all():
     order_download_date = request.form.get('orderDownloadDate')
-    res = download_all_orders(order_download_date)
+    enable_cache = convert_str_to_bool(request.form.get('enableCache'))
+    res = download_all_orders(order_download_date, enable_cache)
     return jsonify(res)
 
 
