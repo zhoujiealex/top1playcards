@@ -34,7 +34,7 @@
           </button>
 
           <span data-toggle="tooltip" title="若商户全掉线了，可以打开该开关，尝试用缓存数据。默认1小时刷新一次缓存数据。">
-            <input type="checkbox" name="swith-cache">
+            <input type="checkbox" name="swith-cache" checked>
           </span>
 
 
@@ -694,10 +694,13 @@
 
       function initSwitchCache() {
           var switchCache = $("[name='swith-cache']");
-          switchCache.bootstrapSwitch('state', 'true');
+          switchCache.bootstrapSwitch('state', true);
           switchCache.bootstrapSwitch('size', 'normal');
+          {#switchCache.bootstrapSwitch('inverse', true);#}
           switchCache.bootstrapSwitch('onColor', 'success');
           switchCache.bootstrapSwitch('offColor', 'warning');
+          switchCache.bootstrapSwitch('onText', 'Real');
+          switchCache.bootstrapSwitch('offText', '缓存');
           {#switchCache.bootstrapSwitch('onText', '实时');#}
           {#switchCache.bootstrapSwitch('offText', '缓存');#}
           {#switchCache.bootstrapSwitch('labelText', '实时数据');#}
@@ -711,15 +714,16 @@
           $.ajaxSetup({
               cache: false //关闭AJAX缓存
           });
-          initSwitchCache();
           initMerchantCfgData();
           summaryCurrentMerchantData();
           initSummaryData();
           initOrdersData();
           initMergeResTable();
           initDataPicker();
+          initSwitchCache();
           // 启用tooltip
           $("[data-toggle='tooltip']").tooltip();
+          $("[name='swith-cache']").bootstrapSwitch('state', true);
       });
 
   </script>
