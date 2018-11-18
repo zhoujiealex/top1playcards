@@ -21,6 +21,7 @@ from excel import save_order_data_to_excel, batch_save_order_data_to_excel
 # 商户缓存数据，以登录账户为key
 MERCHANTS_DATA = dict()
 MERCHANTS_DATA_REFRESH_POOL = Pool(20)
+SUMMARY_INFO = dict()
 
 
 def refresh_merchant_config():
@@ -109,6 +110,20 @@ def check_status(cfgs):
         if isinstance(cfg, MerchantInfo):
             merchants.append(cfg)
     MERCHANTS_DATA_REFRESH_POOL.map(check_status_merchant, merchants)
+
+
+def summary_merchant_status():
+    """
+    统计当前商户的各种信息，如登录数，总数，缓存刷新时间等。
+    :return:
+    """
+    global SUMMARY_INFO
+    SUMMARY_INFO['totalMerchant'] = len(MERCHANTS_DATA)
+    SUMMARY_INFO['totalValidMerchant'] = 0
+    for m in MERCHANTS_DATA:
+        if MERCHANTS_DATA.get(m).status:
+            SUMMARY_INFO['totalValidMerchant'] += 1
+    return SUMMARY_INFO
 
 
 def check_status_merchant(merchant_info):

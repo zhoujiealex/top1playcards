@@ -16,7 +16,8 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, log
 from werkzeug import exceptions
 
 import server.browser as browser
-from server.batch_order import refresh_merchant_config, get_merchant, download_order_by_logon_id, download_all_orders
+from server.batch_order import refresh_merchant_config, get_merchant, download_order_by_logon_id, download_all_orders, \
+    summary_merchant_status
 from server.browser import *
 from server.excel import save_order_data_to_excel, merge_excel_helper, get_excel_path
 from server.order import *
@@ -267,6 +268,16 @@ def merge_orders():
 def get_merchant_info():
     res = refresh_merchant_config()
     return jsonify(res)
+
+
+@app.route('/summary_info')
+@login_required
+def summary_info():
+    """
+    返回内部各种统计信息，如最后成功刷新商户时间；缓存时间等
+    :return:
+    """
+    return jsonify(summary_merchant_status())
 
 
 @app.route('/batch_order/download_order', methods=['POST'])

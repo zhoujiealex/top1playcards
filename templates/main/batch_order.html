@@ -8,6 +8,10 @@
     <div id="error" class="row"></div>
     <div id="warning" class="row"></div>
     <div id="tip" class="row"></div>
+    <div id="summary" class="row">
+
+
+    </div>
 
     <div class="row">
 
@@ -306,7 +310,6 @@
                   closeAlert();
               }
           }
-
       }
 
       function showTip(tip, close) {
@@ -322,7 +325,21 @@
                   closeAlert();
               }
           }
+      }
 
+      function showSummary(msg, close) {
+          if (msg) {
+              var ele = $('#tip');
+              var eleHtml = ele.html() +
+                  ['<div class="alert alert-success alert-dismissable">',
+                      '<button type="button" class="close" title="Close" href="#" data-dismiss="alert">&times;</button>',
+                      msg,
+                      '</div>'].join('');
+              ele.html(eleHtml);
+              if (close) {
+                  closeAlert();
+              }
+          }
       }
 
       window.operateEvents = {
@@ -635,12 +652,31 @@
           mergeResData.bootstrapTable("load", data.datas);
       }
 
+      /**
+       * 统计当前已登录商户数据等
+       */
+      function summaryCurrentMerchantData() {
+          $.ajax({
+              type: 'GET',
+              url: '/summary_info',
+              success: function (data) {
+                  console.info(data);
+                  var msg = "当前商户数据总数：" + data['totalMerchant'] + ",已登录商户数：" + data['totalValidMerchant'];
+                  showSummary(msg);
+              },
+              error: function (e) {
+                  showError("获取统计信息异常" + JSON.stringify(e));
+              }
+          });
+      }
+
       $(document).ready(function () {
           $.ajaxSetup({
               cache: false //关闭AJAX缓存
           });
 
           initMerchantCfgData();
+          summaryCurrentMerchantData();
           initSummaryData();
           initOrdersData();
           initMergeResTable();
