@@ -4,6 +4,7 @@ from apscheduler.schedulers.background import BlockingScheduler
 from app import RUN_TIME
 from server.batch_order import refresh_merchant_config, download_all_orders
 from server.log4cas import LOGGER
+from server.utils import get_now_date_str
 
 #
 # LOGGER.info("try to run...")
@@ -33,13 +34,13 @@ from server.log4cas import LOGGER
 s1 = BlockingScheduler()
 
 
-def start_refresh_session_jon():
+def refresh_session_job():
     # s1 = BackgroundScheduler()
-    s1.add_job(refresh_merchant_config, 'interval', seconds=10)
     LOGGER.info(u"定时刷新session任务启动，%ss运行一次", RUN_TIME)
+    refresh_merchant_config()
 
 
-def start_refresh_merchant_data_job():
+def refresh_merchant_data_job():
     """
     0 1,31 0-1,7-23 * * ? *
     每分钟的1，31； 小时0~1;7~23
@@ -47,12 +48,15 @@ def start_refresh_merchant_data_job():
     http://cron.qqe2.com/
     :return:
     """
-    s1.add_job(download_all_orders, 'cron', minute="1,31", hour="0,1,7-23")
-    LOGGER.info(u"定时刷新商户数据缓存")
+    order_date = get_now_date_str()
+    LOGGER.info(u"定时刷新商户数据缓存,date=%ss", order_date)
+    download_all_orders(order_date)
 
 
 def start_scheduler():
     try:
+        s1.add_job(refresh_session_job, 'interval', seconds=10)
+        s1.add_job(refresh_merchant_data_job, 'cron', minute="1,31", hour="0,1,7-23")
         s1.start()
     except (KeyboardInterrupt, SystemExit):
         pass
