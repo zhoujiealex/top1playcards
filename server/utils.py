@@ -56,3 +56,13 @@ def get_merchant_cfg_file():
 
 def get_merchant_login_cfg(key):
     return read_cfg("merchant_login", key, "config.ini")
+
+
+def get_specific_merchant_ids():
+    """
+    获取指定要登录的商户ids
+    :return:
+    """
+    logon_ids = read_cfg("merchant_ids", "specific_ids", "config.ini")
+    return [id.strip() for id in logon_ids.split("|")]
+

@@ -243,11 +243,12 @@ def batch_fresh_login():
 
     login_count = 5
     try:
-        login_count = utils.get_merchant_login_cfg('batch_login_count')
+        login_count = int(utils.get_merchant_login_cfg('batch_login_count'))
     except Exception:
         pass
 
-    for key in MERCHANTS_DATA:
+    specific_ids = utils.get_specific_merchant_ids()
+    for key in specific_ids:
         merchant = MERCHANTS_DATA.get(key)
         if isinstance(merchant, MerchantInfo) and not merchant.status:
             # fresh_login(merchant.logon_id)
@@ -256,8 +257,8 @@ def batch_fresh_login():
                 alias.append(merchant.alias)
             else:
                 alias.append(merchant.store_name)
-            if len(jobs) >= login_count:
-                break
+        if len(jobs) >= login_count:
+            break
     gevent.joinall(jobs)
     return alias
 
