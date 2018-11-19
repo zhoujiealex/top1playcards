@@ -441,6 +441,7 @@ def save_specific_data_to_cache(logon_id, order_download_date, res):
     if is_valid_data(res):
         SPECIFIC_MERCHANT_DATA_CACHE[logon_id + "_" + order_download_date] = res
         SPECIFIC_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
+        LOGGER.info("刷新指定商户数据缓存成功")
 
 
 def get_all_data_from_cache(order_download_date):
@@ -459,6 +460,7 @@ def save_all_data_to_cache(order_download_date, res):
     if is_valid_data(res):
         ALL_MERCHANT_DATA_CACHE[order_download_date] = res
         ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
+        LOGGER.info("刷新商户数据缓存成功")
 
 
 def is_valid_data(data):
