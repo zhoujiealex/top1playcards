@@ -374,20 +374,14 @@
           'click .download': function (e, value, row, index) {
               var logonId = row['logonId'];
               var orderDownloadDate = getDownloadDate();
-              var enableCache = getEnableCache();
               $.ajax({
                   type: 'POST',
                   data: {
                       'orderDownloadDate': orderDownloadDate,
-                      'logonId': logonId,
-                      'enableCache': enableCache
+                      'logonId': logonId
                   },
                   url: '/batch_order/download_order',
                   success: function (data) {
-                      if (data == null) {
-                          showWarning("商户：" + logonId + "在当前日期" + orderDownloadDate + "无有效缓存数据。请切换为实时强制刷新模式后重新下载！");
-                          return;
-                      }
                       {#console.info("商户数据下载成功logonId" + logonId + "，data=" + JSON.stringify(data));#}
                       if (data.status) {
                           if (data.summary) {

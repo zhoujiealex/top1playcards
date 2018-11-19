@@ -285,8 +285,7 @@ def summary_info():
 def download_order():
     logon_id = request.form.get('logonId')
     order_download_date = request.form.get('orderDownloadDate')
-    enable_cache = convert_str_to_bool(request.form.get('enableCache'))
-    res = download_order_by_logon_id(logon_id, order_download_date, True, enable_cache)
+    res = download_order_by_logon_id(logon_id, order_download_date, True)
     return jsonify(res)
 
 
