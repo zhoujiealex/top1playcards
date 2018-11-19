@@ -224,6 +224,8 @@ def summary_merchant_status():
     if ALL_MERCHANT_DATA_CACHE.get("updateAt"):
         SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
     res = copy.deepcopy(SUMMARY_INFO)
+    LOGGER.info("缓存-统计信息：%s, id=%s", SUMMARY_INFO, id(SUMMARY_INFO))
+    LOGGER.info("缓存-商户数据：%s,id=%s", ALL_MERCHANT_DATA_CACHE, id(ALL_MERCHANT_DATA_CACHE))
     return res
 
 
@@ -457,6 +459,8 @@ def get_all_data_from_cache(order_download_date):
     """
     global ALL_MERCHANT_DATA_CACHE
     LOGGER.info("缓存数据%s", ALL_MERCHANT_DATA_CACHE.keys())
+    LOGGER.info("缓存id：%s", id(ALL_MERCHANT_DATA_CACHE))
+    LOGGER.info("缓存suumary-id：%s", id(SUMMARY_INFO))
     return ALL_MERCHANT_DATA_CACHE.get(order_download_date)
 
 
