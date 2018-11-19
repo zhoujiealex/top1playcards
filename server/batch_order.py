@@ -221,7 +221,8 @@ def summary_merchant_status():
     for m in MERCHANTS_DATA:
         if MERCHANTS_DATA.get(m).status:
             SUMMARY_INFO['totalValidMerchant'] += 1
-    SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
+    if ALL_MERCHANT_DATA_CACHE.get("updateAt"):
+        SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
     res = copy.deepcopy(SUMMARY_INFO)
     return res
 
