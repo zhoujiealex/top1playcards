@@ -693,14 +693,14 @@
                   var offline_time = data['offline_time'];
                   var allDataUpdateAt = data[orderDownloadDate];
                   if (online_time) {
-                      msg += "， 最近上线时间：" + online_time
+                      msg += "， [最近上线时间：" + online_time + "]"
                   }
                   if (offline_time) {
-                      msg += "， 离线时间：" + offline_time
+                      msg += "， [离线时间：" + offline_time + "]"
                   }
 
                   if (allDataUpdateAt) {
-                      msg += "， 日期：" + orderDownloadDate + "的缓存数据最后更新时间：" + allDataUpdateAt;
+                      msg += "， [日期：" + orderDownloadDate + "的缓存数据最后更新：" + allDataUpdateAt + "]";
                   }
                   showSummary(msg);
               },
