@@ -440,7 +440,7 @@ def save_all_data_to_cache(order_download_date, res):
     :return:
     """
     if not is_valid_data(res):
-        LOGGER.warn("跳过刷新商户数据缓存，无效的缓存。res=%s", res)
+        LOGGER.warn("跳过刷新商户数据缓存，无效的缓存。tip=%s", res.get('tip'))
         return None
 
     try:
