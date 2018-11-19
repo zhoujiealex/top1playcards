@@ -214,6 +214,7 @@ def summary_merchant_status():
     :return:
     """
     global SUMMARY_INFO
+    global ALL_MERCHANT_DATA_CACHE
     SUMMARY_INFO['totalMerchant'] = len(MERCHANTS_DATA)
     SUMMARY_INFO['totalValidMerchant'] = 0
     for m in MERCHANTS_DATA:
@@ -452,7 +453,7 @@ def get_all_data_from_cache(order_download_date):
     :return:
     """
     global ALL_MERCHANT_DATA_CACHE
-    LOGGER.info("缓存数据%s", ALL_MERCHANT_DATA_CACHE)
+    LOGGER.info("缓存数据%s", ALL_MERCHANT_DATA_CACHE.keys())
     return ALL_MERCHANT_DATA_CACHE.get(order_download_date)
 
 
