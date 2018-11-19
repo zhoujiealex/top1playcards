@@ -475,6 +475,9 @@ def save_all_data_to_cache(order_download_date, res):
         ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
         LOGGER.info("刷新商户数据缓存成功,updateAt:%s. keys:%s", ALL_MERCHANT_DATA_CACHE.get('updateAt'),
                     ALL_MERCHANT_DATA_CACHE.keys())
+        LOGGER.info("1缓存数据%s", ALL_MERCHANT_DATA_CACHE.keys())
+        LOGGER.info("1缓存id：%s", id(ALL_MERCHANT_DATA_CACHE))
+        LOGGER.info("1缓存suumary-id：%s", id(SUMMARY_INFO))
 
 
 def is_valid_data(data):
