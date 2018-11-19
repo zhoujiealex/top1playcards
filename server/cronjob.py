@@ -57,7 +57,7 @@ def refresh_merchant_data_job():
 
 def start_scheduler():
     try:
-        s1.add_job(refresh_session_job, 'interval', seconds=10)
+        s1.add_job(refresh_session_job, 'interval', seconds=RUN_TIME)
         s1.add_job(refresh_merchant_data_job, 'cron', minute="1,31", hour="0,1,7-23")
         s1.start()
     except (KeyboardInterrupt, SystemExit):
