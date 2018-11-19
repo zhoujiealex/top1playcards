@@ -449,6 +449,7 @@ def get_all_data_from_cache(order_download_date):
     从缓存中获取所有商户信息数据
     :return:
     """
+    LOGGER.info(ALL_MERCHANT_DATA_CACHE)
     return ALL_MERCHANT_DATA_CACHE.get(order_download_date)
 
 

@@ -469,7 +469,6 @@
                       showWarning("当前日期" + orderDownloadDate + "无有效缓存数据。请切换为实时强制刷新模式后重新下载！");
                       return;
                   }
-
                   if (data.summary) {
                       reloadSummaryData(data.summary);
                   }
@@ -486,6 +485,7 @@
                   if (data.errors.length > 0) {
                       showError(data.errors[0]);
                   }
+                  summaryCurrentMerchantData();
               },
               error: function (e) {
                   showError("合并商户数据异常" + JSON.stringify(e));
