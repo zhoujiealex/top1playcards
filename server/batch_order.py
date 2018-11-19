@@ -427,6 +427,7 @@ def get_specific_data_from_cache(logon_id, order_download_date):
     从缓存中读取指定商户数据
     :return:
     """
+    global SPECIFIC_MERCHANT_DATA_CACHE
     return SPECIFIC_MERCHANT_DATA_CACHE.get(logon_id + "_" + order_download_date)
 
 
@@ -438,6 +439,7 @@ def save_specific_data_to_cache(logon_id, order_download_date, res):
     :param res:
     :return:
     """
+    global SPECIFIC_MERCHANT_DATA_CACHE
     if is_valid_data(res):
         SPECIFIC_MERCHANT_DATA_CACHE[logon_id + "_" + order_download_date] = res
         SPECIFIC_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
@@ -449,7 +451,8 @@ def get_all_data_from_cache(order_download_date):
     从缓存中获取所有商户信息数据
     :return:
     """
-    LOGGER.info(ALL_MERCHANT_DATA_CACHE)
+    global ALL_MERCHANT_DATA_CACHE
+    LOGGER.info("缓存数据%s", ALL_MERCHANT_DATA_CACHE)
     return ALL_MERCHANT_DATA_CACHE.get(order_download_date)
 
 
@@ -458,6 +461,7 @@ def save_all_data_to_cache(order_download_date, res):
     保存所有信息到缓存
     :return:
     """
+    global ALL_MERCHANT_DATA_CACHE
     if is_valid_data(res):
         ALL_MERCHANT_DATA_CACHE[order_download_date] = res
         ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
