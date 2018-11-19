@@ -469,7 +469,8 @@ def save_all_data_to_cache(order_download_date, res):
     if is_valid_data(res):
         ALL_MERCHANT_DATA_CACHE[order_download_date] = res
         ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
-        LOGGER.info("刷新商户数据缓存成功:%s", ALL_MERCHANT_DATA_CACHE)
+        LOGGER.info("刷新商户数据缓存成功,updateAt:%s. keys:%s", ALL_MERCHANT_DATA_CACHE.get('updateAt'),
+                    ALL_MERCHANT_DATA_CACHE.keys())
 
 
 def is_valid_data(data):
