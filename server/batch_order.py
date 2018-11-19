@@ -5,6 +5,7 @@ ICBC批量订单下载
 
 Author: karl(i@karlzhou.com)
 """
+import copy
 import random
 
 import gevent
@@ -221,7 +222,8 @@ def summary_merchant_status():
         if MERCHANTS_DATA.get(m).status:
             SUMMARY_INFO['totalValidMerchant'] += 1
     SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
-    return SUMMARY_INFO
+    res = copy.deepcopy(SUMMARY_INFO)
+    return res
 
 
 def check_status_merchant(merchant_info):
