@@ -6,6 +6,8 @@ ICBC批量订单下载
 Author: karl(i@karlzhou.com)
 """
 import copy
+import os
+import pickle
 import random
 
 import gevent
@@ -25,10 +27,6 @@ from excel import save_order_data_to_excel, batch_save_order_data_to_excel
 MERCHANTS_DATA = dict()
 MERCHANTS_DATA_REFRESH_POOL = Pool(20)
 SUMMARY_INFO = dict()
-# 单个商户的cache
-SPECIFIC_MERCHANT_DATA_CACHE = dict()
-# 所有的cache
-ALL_MERCHANT_DATA_CACHE = dict()
 
 
 def refresh_merchant_config(from_front=False):
@@ -215,18 +213,14 @@ def summary_merchant_status():
     :return:
     """
     global SUMMARY_INFO
-    global ALL_MERCHANT_DATA_CACHE
     SUMMARY_INFO['totalMerchant'] = len(MERCHANTS_DATA)
     SUMMARY_INFO['totalValidMerchant'] = 0
     for m in MERCHANTS_DATA:
         if MERCHANTS_DATA.get(m).status:
             SUMMARY_INFO['totalValidMerchant'] += 1
-    if ALL_MERCHANT_DATA_CACHE.get("updateAt"):
-        SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
-    res = copy.deepcopy(SUMMARY_INFO)
-    LOGGER.info("缓存-统计信息：%s, id=%s", SUMMARY_INFO, id(SUMMARY_INFO))
-    LOGGER.info("缓存-商户数据：%s,id=%s", ALL_MERCHANT_DATA_CACHE, id(ALL_MERCHANT_DATA_CACHE))
-    return res
+    # if ALL_MERCHANT_DATA_CACHE.get("updateAt"):
+    #     SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
+    return SUMMARY_INFO
 
 
 def check_status_merchant(merchant_info):
@@ -419,7 +413,7 @@ def _format_merchant_data(error, summary, orders, tip=None):
             res['summary'].append(summary_data)
             res['orders'] = orders_data
     except Exception as ex:
-        LOGGER.exception("下载商户订单数据异常")
+        LOGGER.exception("下载商户订单数据异常%s", ex)
         res['error'] = "下载商户订单数据发生异常:%s" % ex.message
     return res
 
@@ -429,8 +423,12 @@ def get_all_data_from_cache(order_download_date):
     从缓存中获取所有商户信息数据
     :return:
     """
-    global ALL_MERCHANT_DATA_CACHE
-    return ALL_MERCHANT_DATA_CACHE.get(order_download_date)
+    try:
+        cache_file_full_path = get_cache_full_path(order_download_date)
+        with open(cache_file_full_path, 'rb') as cache_file:
+            return pickle.load(cache_file)
+    except Exception as ex:
+        LOGGER.error("加载商户缓存数据异常，Exception=%s", ex)
 
 
 def save_all_data_to_cache(order_download_date, res):
@@ -438,12 +436,17 @@ def save_all_data_to_cache(order_download_date, res):
     保存所有信息到缓存
     :return:
     """
-    global ALL_MERCHANT_DATA_CACHE
-    if is_valid_data(res):
-        ALL_MERCHANT_DATA_CACHE[order_download_date] = res
-        ALL_MERCHANT_DATA_CACHE['updateAt'] = get_now_str()
-        LOGGER.info("刷新商户数据缓存成功,updateAt:%s. keys:%s", ALL_MERCHANT_DATA_CACHE.get('updateAt'),
-                    ALL_MERCHANT_DATA_CACHE.keys())
+    if not is_valid_data(res):
+        LOGGER.warn("跳过刷新商户数据缓存，无效的缓存。res=%s", res)
+        return None
+
+    try:
+        cache_file_full_path = get_cache_full_path(order_download_date)
+        with open(cache_file_full_path, 'wb') as cache_file:
+            pickle.dump(res, cache_file)
+            LOGGER.info("刷新商户数据缓存成功,tip=%s", res.get('tip'))
+    except Exception as ex:
+        LOGGER.error("刷新商户数据缓存异常，%s", ex)
 
 
 def is_valid_data(data):
@@ -468,3 +471,29 @@ def is_valid_data(data):
         return True
 
     return False
+
+
+def get_cache_path():
+    """
+    获取缓存存放全路径，相对于当前文件
+    :return:
+    """
+    cache_path = os.path.join(os.path.dirname(__file__), '../', 'cache')
+    if not os.path.exists(cache_path):
+        os.mkdir(cache_path)
+    return cache_path
+
+
+def get_cache_full_path(file_name):
+    return os.path.normpath(os.path.join(get_cache_path(), file_name))
+
+
+if __name__ == '__main__':
+    p = get_cache_path()
+    print(p)
+
+    print(get_cache_full_path("2018-10-12"))
+
+    a = {'s': 1}
+    # out = open(p, 'wb')
+    # pickle.dump(a)

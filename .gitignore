@@ -63,3 +63,4 @@ target/
 
 venv/
 excels/
+cache/
