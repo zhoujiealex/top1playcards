@@ -491,7 +491,8 @@ def get_cache_full_path(file_name):
     return os.path.normpath(os.path.join(get_cache_path(), file_name))
 
 
-def get_file_modified_time(file_path):
+def get_file_modified_time(order_download_date):
+    file_path = get_cache_full_path(order_download_date)
     if os.path.exists(file_path):
         modify_time = datetime.datetime.fromtimestamp(os.path.getmtime(file_path))
         return modify_time.strftime('%Y-%m-%d %H:%M:%S')
