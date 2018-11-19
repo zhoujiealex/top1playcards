@@ -634,7 +634,18 @@
       }
 
       function getDownloadDate() {
-          return $('#orderDownloadDate').val();
+          var eDate = $('#orderDownloadDate').val();
+          if (eDate) {
+              return eDate;
+          } else {
+              return getYestodayDate();
+          }
+      }
+
+      function getYestodayDate() {
+          var nowDate = new Date();
+          nowDate.setTime(nowDate.getTime() - 24 * 3600 * 1000);
+          return nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) + "-" + nowDate.getDate();
       }
 
       function reloadSummaryData(data) {
@@ -668,15 +679,19 @@
        * 统计当前已登录商户数据等
        */
       function summaryCurrentMerchantData() {
+          var orderDownloadDate = getDownloadDate();
           $.ajax({
-              type: 'GET',
+              type: 'POST',
               url: '/summary_info',
+              data: {
+                  'orderDownloadDate': orderDownloadDate
+              },
               success: function (data) {
                   console.info(data);
                   var msg = "当前商户数据总数：" + data['totalMerchant'] + ",已登录商户数：" + data['totalValidMerchant'];
                   var online_time = data['online_time'];
                   var offline_time = data['offline_time'];
-                  var allDataUpdateAt = data['allDataUpdateAt'];
+                  var allDataUpdateAt = data[orderDownloadDate];
                   if (online_time) {
                       msg += "， 最近上线时间：" + online_time
                   }
@@ -685,7 +700,7 @@
                   }
 
                   if (allDataUpdateAt) {
-                      msg += ", 缓存数据最后更新时间：" + allDataUpdateAt;
+                      msg += "， 日期：" + orderDownloadDate + "的缓存数据最后更新时间：" + allDataUpdateAt;
                   }
                   showSummary(msg);
               },

@@ -270,14 +270,16 @@ def get_merchant_info():
     return jsonify(res)
 
 
-@app.route('/summary_info')
+@app.route('/summary_info', methods=['POST'])
 @login_required
 def summary_info():
     """
     返回内部各种统计信息，如最后成功刷新商户时间；缓存时间等
     :return:
     """
-    return jsonify(summary_merchant_status())
+    order_download_date = request.form.get('orderDownloadDate')
+    res = summary_merchant_status(order_download_date)
+    return jsonify(res)
 
 
 @app.route('/batch_order/download_order', methods=['POST'])

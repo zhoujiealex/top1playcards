@@ -5,7 +5,7 @@ ICBC批量订单下载
 
 Author: karl(i@karlzhou.com)
 """
-import copy
+import datetime
 import os
 import pickle
 import random
@@ -207,7 +207,7 @@ def check_status(cfgs):
     MERCHANTS_DATA_REFRESH_POOL.map(check_status_merchant, merchants)
 
 
-def summary_merchant_status():
+def summary_merchant_status(order_download_date):
     """
     统计当前商户的各种信息，如登录数，总数，缓存刷新时间等。
     :return:
@@ -220,6 +220,7 @@ def summary_merchant_status():
             SUMMARY_INFO['totalValidMerchant'] += 1
     # if ALL_MERCHANT_DATA_CACHE.get("updateAt"):
     #     SUMMARY_INFO["allDataUpdateAt"] = ALL_MERCHANT_DATA_CACHE.get("updateAt")
+    SUMMARY_INFO[order_download_date] = get_file_modified_time(order_download_date)
     return SUMMARY_INFO
 
 
@@ -426,7 +427,9 @@ def get_all_data_from_cache(order_download_date):
     try:
         cache_file_full_path = get_cache_full_path(order_download_date)
         with open(cache_file_full_path, 'rb') as cache_file:
-            return pickle.load(cache_file)
+            res = pickle.load(cache_file)
+            LOGGER.info("加载商户缓存数据成功")
+            return res
     except Exception as ex:
         LOGGER.error("加载商户缓存数据异常，Exception=%s", ex)
 
@@ -488,12 +491,8 @@ def get_cache_full_path(file_name):
     return os.path.normpath(os.path.join(get_cache_path(), file_name))
 
 
-if __name__ == '__main__':
-    p = get_cache_path()
-    print(p)
-
-    print(get_cache_full_path("2018-10-12"))
-
-    a = {'s': 1}
-    # out = open(p, 'wb')
-    # pickle.dump(a)
+def get_file_modified_time(file_path):
+    if os.path.exists(file_path):
+        modify_time = datetime.datetime.fromtimestamp(os.path.getmtime(file_path))
+        return modify_time.strftime('%Y-%m-%d %H:%M:%S')
+    return "-"
