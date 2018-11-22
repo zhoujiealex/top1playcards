@@ -36,7 +36,7 @@
     "sessionId": "00004WnLkFxTyNxJkrwjbn9piqb:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160509010007001", 
     "storeName": null, 
     "mcc": "7911", 
@@ -45,7 +45,7 @@
     "sessionId": "0000hK2mmQ9WnCW3cXY2oxeE2bd:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160576290013002", 
     "storeName": null, 
     "mcc": "7629", 
@@ -72,7 +72,7 @@
     "sessionId": "00004fMnOV4YE-wzQMl68nDplNM:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160506010092001", 
     "storeName": "枣庄市薛城区光大特色鱼馆", 
     "mcc": "5814", 
@@ -99,7 +99,7 @@
     "sessionId": "0000AnNJ4IQigyRPimL8wndBteh:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160506020160001", 
     "storeName": "薛城区无饿不坐土菜馆", 
     "mcc": "5812", 
@@ -126,7 +126,7 @@
     "sessionId": "0000lIrZ9pRGuqvJqcvSFMWiHHo:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "liheng701101", 
     "storeName": null, 
     "mcc": "7011", 
@@ -153,7 +153,7 @@
     "sessionId": "00002iC2XjtRM0NT__jaMFG9OGI:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040274001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -171,7 +171,7 @@
     "sessionId": "0000LKVAj5RGmjR3wWf3cD4UMYa:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160506020040001", 
     "storeName": "枣庄市薛城区陶庄镇宪良全羊馆", 
     "mcc": "5812", 
@@ -189,7 +189,7 @@
     "sessionId": "0000pez-abe21W0ls13mIlHKxKW:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050004354001", 
     "storeName": "薛城区尚得利家用电器经营部", 
     "mcc": "5722", 
@@ -225,7 +225,7 @@
     "sessionId": "0000xHxprXnNNLX1GOYlmivS2l3:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504990124001", 
     "storeName": null, 
     "mcc": "5411", 
@@ -240,7 +240,7 @@
     "mcc": "xxxx", 
     "shopId": "16050006135", 
     "alias": "三农农资", 
-    "sessionId": "0000TPRmb9tr_140yw3jGKP_ZX2:-1"
+    "sessionId": "0000E86n1iyurgMNv0k905_Gq3d:-1"
   }, 
   {
     "status": false, 
@@ -288,7 +288,7 @@
     "sessionId": "0000rYdXjS28hP_3T6-3RsRnZPd:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040273001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -297,7 +297,7 @@
     "sessionId": "0000NzjgMFWkmt6EKR2roZI3G1B:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160570320002001", 
     "storeName": null, 
     "mcc": "7032", 
@@ -306,7 +306,7 @@
     "sessionId": "0000OkG3zNMORZW5ntDJaxe5O7e:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160576220002001", 
     "storeName": null, 
     "mcc": "7629", 
@@ -369,7 +369,7 @@
     "sessionId": "0000TZT8RKPHvzHALkj86kQa9-n:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040266001", 
     "storeName": null, 
     "mcc": "-", 
@@ -387,7 +387,7 @@
     "sessionId": "00000Vhze2MHPEw38pwBDFxWHjw:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050004741001", 
     "storeName": null, 
     "mcc": "5542", 
@@ -405,7 +405,7 @@
     "sessionId": "0000D2g-YRrtXskMpKJS0D9qlgq:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160508020002002", 
     "storeName": null, 
     "mcc": "7996", 
@@ -414,7 +414,7 @@
     "sessionId": "0000FEy_wWu4-WweCRgKofP3aya:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040175001", 
     "storeName": null, 
     "mcc": "-", 
@@ -441,7 +441,7 @@
     "sessionId": "0000cQpmtFLFbY6uEtR2-PeX2Ng:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160572980072001", 
     "storeName": "薛城区陶庄镇手足情深美甲店", 
     "mcc": "7298", 
@@ -459,7 +459,7 @@
     "sessionId": "0000lQUdzDUgP15JWEHD-WrZKxP:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050005836001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -468,7 +468,7 @@
     "sessionId": "0000udRZhMHAGOBfsHK8ugZjYnh:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160559770088001", 
     "storeName": null, 
     "mcc": "5977", 
