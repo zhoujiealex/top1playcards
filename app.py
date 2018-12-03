@@ -78,7 +78,10 @@ class User(UserMixin):
         self.id = id
         name = None
         password = None
-        if id == 2:
+        if id == 3:
+            name = 'guest'
+            password = get_merchant_login_cfg('guest_password')
+        elif id == 2:
             name = 'normal'
             password = get_merchant_login_cfg('normal_password')
         elif id == 1:
@@ -100,7 +103,7 @@ class User(UserMixin):
         return self._password
 
 
-supported_users = {'normal': User(2), 'admin': User(1), 'root': User(0)}
+supported_users = {'guest': User(3), 'normal': User(2), 'admin': User(1), 'root': User(0)}
 
 
 # callback to reload the user object
