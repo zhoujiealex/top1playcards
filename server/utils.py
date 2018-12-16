@@ -4,7 +4,7 @@ import ConfigParser
 import codecs
 import json
 import os
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 from log4cas import LOGGER
 
@@ -93,4 +93,13 @@ def get_now_date_str():
     获取当天时间
     :return:
     """
-    return datetime.now().strftime("%Y-%m-%d")
+    return date.today().strftime("%Y-%m-%d")
+
+
+def get_yesterday_date_str():
+    """
+    获取昨天的日期
+    :return:
+    """
+    yesterday = date.today() + timedelta(days=-1)
+    return yesterday.strftime("%Y-%m-%d")

@@ -4,7 +4,7 @@ from apscheduler.schedulers.background import BlockingScheduler
 from app import RUN_TIME
 from server.batch_order import refresh_merchant_config, download_all_orders
 from server.log4cas import LOGGER
-from server.utils import get_now_date_str
+from server.utils import get_now_date_str, get_yesterday_date_str
 
 #
 # LOGGER.info("try to run...")
@@ -41,7 +41,7 @@ def refresh_session_job():
     LOGGER.info(u"完成：定时刷新session任务")
 
 
-def refresh_merchant_data_job():
+def refresh_merchant_data_job_helper(order_date):
     """
     0 1,31 0-1,7-23 * * ? *
     每分钟的1，31； 小时0~1;7~23
@@ -49,16 +49,34 @@ def refresh_merchant_data_job():
     http://cron.qqe2.com/
     :return:
     """
-    order_date = get_now_date_str()
     LOGGER.info(u"开始：定时刷新商户数据缓存,date=%s", order_date)
     res = download_all_orders(order_date)
     LOGGER.info(u"完成：定时刷新商户数据缓存，详情：%s", res.get('tip'))
 
 
+def refresh_today_merchant_data_job():
+    """
+    刷新当日商户数据
+    :return:
+    """
+    order_date = get_now_date_str()
+    refresh_merchant_data_job_helper(order_date)
+
+
+def refresh_yesterday_merchant_data_job():
+    """
+    凌晨再跑2次，刷新昨日所有数据
+    :return:
+    """
+    order_date = get_yesterday_date_str()
+    refresh_merchant_data_job_helper(order_date)
+
+
 def start_scheduler():
     try:
         s1.add_job(refresh_session_job, 'interval', seconds=RUN_TIME)
-        s1.add_job(refresh_merchant_data_job, 'cron', minute="08,35,59", hour="0,1,7-23")
+        s1.add_job(refresh_today_merchant_data_job, 'cron', minute="08,35,59", hour="0,1,6-23")
+        s1.add_job(refresh_yesterday_merchant_data_job, 'cron', minute="01,04,15", hour="0")
         # s1.add_job(refresh_merchant_data_job, 'cron', minute="*/1", hour="0,1,7-23")
         s1.start()
     except (KeyboardInterrupt, SystemExit):
