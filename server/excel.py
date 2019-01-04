@@ -251,7 +251,7 @@ def get_file_name(merchant_trade_summary):
 
 
 def merge_excel_helper(date):
-    src, dst, dst_file_name, excel_saved_path = get_excel_path(date)
+    src, dst, src_file_name, dst_file_name, excel_saved_path = get_excel_path(date)
     return merge_excel(src, dst, read_excel_cfg("merged_sheet_name"))
 
 
