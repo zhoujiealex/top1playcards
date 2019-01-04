@@ -367,7 +367,10 @@ def replace_merchant_name(logon_id, summary, orders):
     :return:
     """
     merchant = get_merchant(logon_id)
-    merchant_name = merchant.get(logon_id, logon_id)
+    if not isinstance(merchant, MerchantInfo):
+        return None
+    
+    merchant_name = merchant.alias
 
     if isinstance(summary, TradeSummary):
         summary.store_name += "-" + merchant_name
