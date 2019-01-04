@@ -66,7 +66,6 @@ def query_order_detail(session_id, order_download_date):
     trade_details = list()
     for order_detail in order_detail_datas:
         trade_details.append(convert_raw_detail_order_to_model(order_detail))
-
     return error, merchant_trade_summary, trade_details
 
 
@@ -367,7 +366,7 @@ def convert_raw_detail_order_to_model(order_detail):
 
     trade_deatil_model = TradeDetail()
     # FIXME: 有两个mername和mercname
-    trade_deatil_model.store_name = order_detail.get('mercname')
+    trade_deatil_model.store_name = order_detail.get('storename')
     trade_deatil_model.order_date = order_detail.get('orderDate')
     # FIXME: time和excel里下载的交易日期对不上，感觉是icbc的bug，先不管了，保持和excel一致
     # trade_deatil_model.order_time = order_detail.get('orderTime')

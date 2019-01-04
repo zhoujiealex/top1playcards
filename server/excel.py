@@ -228,7 +228,8 @@ def get_sheet_name(merchant_trade_summary):
     :return:
     """
     if isinstance(merchant_trade_summary, TradeSummary):
-        return unicode(merchant_trade_summary.store_name + merchant_trade_summary.shop_id)
+        # sheet名称不能超过31
+        return unicode(merchant_trade_summary.store_name[0:31])
     else:
         # sheetname不能重复，加上时间
         now = datetime.datetime.now()

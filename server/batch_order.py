@@ -262,7 +262,6 @@ def download_all_orders(order_download_date=None, enable_cache=False):
             orders_dict[logon_id] = job_orders
             valid_logon_ids.append(logon_id)
 
-    LOGGER.info("orders_dict=%s", orders_dict)
     try:
         file_path = batch_save_order_data_to_excel(order_download_date, valid_logon_ids, summary_dict, orders_dict)
         res['tip'] = "成功处理了%s个商户,%s条订单，文件路径：%s" % (len(valid_logon_ids), len(orders), file_path)
