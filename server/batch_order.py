@@ -369,7 +369,7 @@ def replace_merchant_name(logon_id, summary, orders):
     merchant = get_merchant(logon_id)
     if not isinstance(merchant, MerchantInfo):
         return None
-    
+
     merchant_name = merchant.alias
 
     if isinstance(summary, TradeSummary):
