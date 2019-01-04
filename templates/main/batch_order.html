@@ -163,6 +163,10 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button class="btn btn-info" type="button" style="width: auto; margin-left: 5px"
+                    data-toggle="tooltip" title="单独的商户文件，一个商户一个sheet"
+                    onclick="exportOriginExcel()"><span class="glyphicon glyphicon-export"></span>导出单独商户文件
+            </button>
             <button class="btn btn-success" type="button" style="width: auto; margin-left: 5px"
                     data-toggle="tooltip" title="检查没问题后，再按需导出已合并好的excel文件"
                     onclick="exportExcel()"><span class="glyphicon glyphicon-export"></span>导出合并后的文件
@@ -516,6 +520,14 @@
           var orderDownloadDate = getDownloadDate();
           var exportTmpForm = $("<form method='get'></form>");
           exportTmpForm.attr("action", "/batch_order/export/" + orderDownloadDate);
+          $(document.body).append(exportTmpForm);
+          exportTmpForm.submit();
+      }
+
+      function exportOriginExcel() {
+          var orderDownloadDate = getDownloadDate();
+          var exportTmpForm = $("<form method='get'></form>");
+          exportTmpForm.attr("action", "/batch_order/export_origin/" + orderDownloadDate);
           $(document.body).append(exportTmpForm);
           exportTmpForm.submit();
       }

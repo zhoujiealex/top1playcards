@@ -314,10 +314,33 @@ def export_file(date):
     :param date:
     :return:
     """
-    src, dst, dst_file_name, excel_saved_path = get_excel_path(date)
+    src, dst, src_file_name, dst_file_name, excel_saved_path = get_excel_path(date)
     filename = quote(dst_file_name.encode('utf-8'))
     try:
         res = send_from_directory(excel_saved_path, dst_file_name, as_attachment=True, attachment_filename=filename)
+        res.headers['Content-Disposition'] += "; filename*=utf-8''{}".format(filename)
+        return res
+        # return send_from_directory(excel_saved_path, dst_file_name, as_attachment=True)
+    except exceptions.NotFound as ex:
+        return "%s的文件不存在，请检查日期" % date
+    except Exception as ex:
+        LOGGER.exception("导出文件异常%s", ex)
+        return "导出失败: %s" % ex.message
+
+
+@app.route('/batch_order/export_origin/<date>')
+@login_required
+def export_origin_file(date):
+    """
+    下载合并前文件
+
+    :param date:
+    :return:
+    """
+    src, dst, src_file_name, dst_file_name, excel_saved_path = get_excel_path(date)
+    filename = quote(src_file_name.encode('utf-8'))
+    try:
+        res = send_from_directory(excel_saved_path, src_file_name, as_attachment=True, attachment_filename=filename)
         res.headers['Content-Disposition'] += "; filename*=utf-8''{}".format(filename)
         return res
         # return send_from_directory(excel_saved_path, dst_file_name, as_attachment=True)

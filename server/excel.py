@@ -261,7 +261,7 @@ def get_excel_path(date):
     dst_file_name = read_excel_cfg("file_name") + date + "-合并.xls"
     src = os.path.realpath(os.path.join(excel_saved_path, src_file_name))
     dst = os.path.realpath(os.path.join(excel_saved_path, dst_file_name))
-    return src, dst, dst_file_name, excel_saved_path
+    return src, dst, src_file_name, dst_file_name, excel_saved_path
 
 
 def merge_excel(src, dst, merged_sheet_name):
