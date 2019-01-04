@@ -113,37 +113,6 @@ def get_merchant_config():
     for merchant in merchant_cfg_datas:
         logon_id = merchant.get('logonId')
         merchant_info = MerchantInfo()
-    record_offline_time(1)
-
-
-def can_refresh(from_front):
-    """
-    是否可以刷新，前台需要满足随机数百分比，后台定时总是要刷新
-    :param from_front:
-    :return:
-    """
-    if from_front and not frontend_need_refresh():
-        return False
-    return True
-
-
-def frontend_need_refresh():
-    """
-    利用随机数来控制前台是否要强制刷新
-    :return:
-    """
-    magic = random.randint(0, 100)
-    threshold = get_refresh_threshold()
-    return magic <= threshold
-
-
-def get_merchant_config():
-    global MERCHANTS_DATA
-    merchant_cfg_datas = read_merchant_cfg()
-    res = list()
-    for merchant in merchant_cfg_datas:
-        logon_id = merchant.get('logonId')
-        merchant_info = MerchantInfo()
         merchant_info.alias = merchant.get("alias")
         merchant_info.logon_id = logon_id
         merchant_info.mcc = merchant.get("mcc")
@@ -384,7 +353,30 @@ def _download_order_by_logon_id_helper(logon_id, order_download_date):
     except Exception as ex:
         LOGGER.exception("更新缓存商户%s数据发送异常，不影响业务，忽略。 Exception:%s", logon_id, ex)
 
+    # 替换掉商户名称，加上alias名称，解决同名商户不同mcc问题
+    replace_merchant_name(logon_id, summary, orders)
     return error, summary, orders
+
+
+def replace_merchant_name(logon_id, summary, orders):
+    """
+    替换商户名称
+    :param logon_id:
+    :param summary:
+    :param orders:
+    :return:
+    """
+    merchant = get_merchant(logon_id)
+    merchant_name = merchant.get(logon_id, logon_id)
+
+    if isinstance(summary, TradeSummary):
+        summary.store_name += "-" + merchant_name
+
+    if isinstance(orders, list):
+        for order in orders:
+            if not isinstance(order, TradeDetail):
+                continue
+            order.store_name += "-" + merchant_name
 
 
 def _format_merchant_data(error, summary, orders, tip=None):
