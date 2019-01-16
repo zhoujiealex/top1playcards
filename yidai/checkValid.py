@@ -122,9 +122,8 @@ def process_contracts(file_name):
             i += 1
             if i % 20 == 1:
                 time.sleep(SLEEP_TIME * 20)
-
-            print(get_now_time_str() + u"开始处理第" + str(i) + u"个数据：")
             contract_no = contract_no.strip()
+            print(get_now_time_str() + u"开始处理第" + str(i) + u"个数据：no=" + contract_no)
             try:
                 res = check_contract(contract_no)
                 check_res[res].append(contract_no)
