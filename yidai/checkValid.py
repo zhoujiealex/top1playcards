@@ -25,7 +25,7 @@ CONTRACT_STATUS_FINISHED = 2
 CONTRACT_STATUS_INVALID = 3
 
 POOL_SIZE = 100
-SLEEP_TIME = 0.05
+SLEEP_TIME = 0.1
 
 CHECK_CONTRACT_POOL = Pool(POOL_SIZE)
 
@@ -176,5 +176,5 @@ if __name__ == '__main__':
     # process_contracts("sample.txt")
     process_contracts("供链贷103.txt")
     process_contracts("车贷3682.txt")
-    # process_contracts("房贷13506.txt")
+    process_contracts("房贷13506.txt")
     # save_single_file(1, "testFang", ["1", "2", "3", "4", "5"])
