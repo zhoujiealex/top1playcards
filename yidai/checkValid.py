@@ -25,7 +25,7 @@ CONTRACT_STATUS_FINISHED = 2
 CONTRACT_STATUS_INVALID = 3
 
 POOL_SIZE = 100
-SLEEP_TIME = 0.001
+SLEEP_TIME = 0.05
 
 CHECK_CONTRACT_POOL = Pool(POOL_SIZE)
 
@@ -136,24 +136,13 @@ def process_contracts(file_name):
 
     time_end = time.time()
     print('totally cost', time_end - time_start)
-    save_check_result(check_res, file_name)
-
-
-def save_check_result(check_res, file_name):
-    """
-    保存结果到对应的文件夹下
-    :param check_res: {0:[1,2],1:[],2:[33,ss]}
-    :param file_name: 原始数据文件名称
-    :return:
-    """
     if not check_res or not file_name:
         return
-
     for key in check_res:
-        save_single_file(key, file_name, check_res.get(key, []))
+        save_single_file(key, file_name, check_res.get(key, []), time_start, time_end)
 
 
-def save_single_file(res_code, file_name, check_res_data):
+def save_single_file(res_code, file_name, check_res_data, start, end):
     if not check_res_data or len(check_res_data) <= 0:
         return
     save_res_file = get_save_file_path(file_name, res_code)
@@ -161,6 +150,7 @@ def save_single_file(res_code, file_name, check_res_data):
         f.write("                                \n")
         f.write("                                \n")
         f.write(get_now_time_str() + "开始刷新保存文件， 共" + str(len(check_res_data)) + "条数据\n")
+        f.write("start=" + str(start) + ",end=" + str(end) + ",totally cost=" + str(end - start))
         f.write("==================================\n")
         for data in check_res_data:
             f.write(str(data) + "\n")
