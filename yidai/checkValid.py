@@ -131,7 +131,7 @@ def process_contracts(file_name):
                 gevent.sleep(SLEEP_TIME)
                 print(u"第" + str(i) + u"个数据：no=" + contract_no + u",resCode=" + str(res))
             except Exception as ex:
-                print(u"处理出现异常，no=" + contract_no + ",num=" + str(i) + ex.message)
+                print(u"处理出现异常，no=" + contract_no + ",num=" + str(i) + str(ex.message))
                 check_res[CONTRACT_STATUS_INVALID].append(contract_no)
 
     time_end = time.time()
