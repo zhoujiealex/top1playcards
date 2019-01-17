@@ -173,7 +173,7 @@ def check_status(cfgs):
     for cfg in cfgs:
         if isinstance(cfg, MerchantInfo):
             merchants.append(cfg)
-    MERCHANTS_DATA_REFRESH_POOL.map(check_status_merchant, merchants)
+    MERCHANTS_DATA_REFRESH_POOL.imap_unordered(check_status_merchant, merchants)
 
 
 def summary_merchant_status(order_download_date):
