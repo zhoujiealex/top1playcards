@@ -37,6 +37,7 @@ def refresh_merchant_config(from_front=False):
     LOGGER.info(u"获取商户配置数据")
     cfgs = get_merchant_config()
     if can_refresh(from_front):
+        LOGGER.info(u"实时刷新商户状态")
         check_status(cfgs)
     res = list()
     count = 0
