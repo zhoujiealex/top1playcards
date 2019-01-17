@@ -114,7 +114,7 @@ def check_session_validation(session):
 
     res = session.post(build_icbc_url("storeUserInfo/pageStreamList.action"))
 
-    LOGGER.info(u"session=%s" % res.text)
+    LOGGER.info(u"session=%s, res=%s" % (session, res.text))
 
     if not res.ok or res.status_code != 200:
         error = "检查session是否有效请求发送失败,status_code=%s, reason=%s" % (res.status_code, res.reason)
