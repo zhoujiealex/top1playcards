@@ -55,7 +55,7 @@
                     data-toggle="tooltip" title="下载当前已登录的所有商户数据，自动跳过session无效的">
               <span class="glyphicon glyphicon-download-alt"></span> 一键下载
             </button>
-            {% if current_user.is_authenticated and current_user.id|int <=2 %}
+            {% if current_user.is_authenticated and current_user.id|int <=3 %}
               <button class="btn btn-success" type="button" style="width: auto; margin-left: 5px"
                       data-toggle="tooltip" title="请下载完需要的商户数据后，再点击合并"
                       onclick="mergeOrderDatas()"><span class="glyphicon glyphicon-screenshot"></span>合并商户订单
