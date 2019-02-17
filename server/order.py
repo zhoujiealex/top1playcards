@@ -125,6 +125,8 @@ def check_session_validation(session):
     if u'由于您长时间未做任何操作，请重新登录' in res.text:
         return u"session过期or输入错误，请重新输入"
 
+    LOGGER.warn(res.text);
+
     return None
 
 
