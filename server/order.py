@@ -147,7 +147,7 @@ def get_merchant_shop_id(session):
         return error, shop_id
     except Exception as ex:
         LOGGER.error("shop_id获取非法, Exception", ex)
-        return "shop_id获取非法,请检查html网页格式", None
+        return "shop_id获取非法,请检查html网页格式" + ex.message, None
 
 
 def get_operator_id(session):
