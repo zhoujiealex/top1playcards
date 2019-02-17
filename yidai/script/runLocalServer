@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#BASE_PATH=$(cd `dirname $0`;pwd)
+#echo "base_path is $BASE_PATH"
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+echo $DIR
+cd $DIR
+
+python -m SimpleHTTPServer 4450  > $DIR/out.log  2>&1  &
+#python -m SimpleHTTPServer 4450  > $DIR/out.log 
+
+
