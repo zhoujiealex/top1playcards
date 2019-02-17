@@ -126,7 +126,7 @@ def check_session_validation(session):
     if u'登录成功' in res.text or u'退出成功' in res.text:
         return None
 
-    LOGGER.info(u"session=%s, res=%s" % (session, res.text))
+    LOGGER.info(u"登录失效，格式有变化, session=%s, res=%s" % (session, res.text))
     return "登录失效，格式有变化，res=" + res.text
 
 
