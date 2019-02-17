@@ -114,8 +114,6 @@ def check_session_validation(session):
 
     res = session.post(build_icbc_url("storeUserInfo/pageStreamList.action"))
 
-    LOGGER.info(u"session=%s, res=%s" % (session, res.text))
-
     if not res.ok or res.status_code != 200:
         error = "检查session是否有效请求发送失败,status_code=%s, reason=%s" % (res.status_code, res.reason)
         LOGGER.error(error)
@@ -125,9 +123,11 @@ def check_session_validation(session):
     if u'由于您长时间未做任何操作，请重新登录' in res.text:
         return u"session过期or输入错误，请重新输入"
 
-    LOGGER.warn(res.text);
+    if u'登录成功' in res.text or u'退出成功' in res.text:
+        return None
 
-    return None
+    LOGGER.info(u"session=%s, res=%s" % (session, res.text))
+    return "登录失效，格式有变化，res=" + res.text
 
 
 def get_merchant_shop_id(session):
