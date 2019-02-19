@@ -1,6 +1,6 @@
 [
   {
-    "status": false, 
+    "status": true, 
     "logonId": "meirujia70111", 
     "storeName": null, 
     "mcc": "7011", 
@@ -33,10 +33,10 @@
     "mcc": "5311", 
     "shopId": null, 
     "alias": "英皇国际", 
-    "sessionId": "0000LubxKkb1aiKHQOCBPfQRdIV:-1"
+    "sessionId": "0000DJ6cfNEBt4x-4VD9weZn-SW:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "sifang47221", 
     "storeName": null, 
     "mcc": "4722", 
@@ -63,7 +63,7 @@
     "sessionId": "0000bq98UvpjwFIz-vW-87ZOpRj:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160558010005001", 
     "storeName": null, 
     "mcc": "7832", 
@@ -108,7 +108,7 @@
     "sessionId": "0000Qd_SiN_gTjDIDCrPj9TRDp1:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504070052001", 
     "storeName": "东升百货超市", 
     "mcc": "5399", 
@@ -117,7 +117,7 @@
     "sessionId": "0000aocyXUrNKbF2nD37B33QUpj:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "lingling47221", 
     "storeName": null, 
     "mcc": "4722", 
@@ -135,7 +135,7 @@
     "sessionId": "000060UW8ZNA76eUSGaSNShzjOY:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050005836001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -144,7 +144,7 @@
     "sessionId": "0000Igfd_QdloDgLb_D4xWFUsUx:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504040275001", 
     "storeName": null, 
     "mcc": "5311", 
@@ -153,7 +153,7 @@
     "sessionId": "0000MbbWp2wvsvj93w-Am4jKCYR:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "tiancheng70111", 
     "storeName": null, 
     "mcc": "7011", 
@@ -207,7 +207,7 @@
     "sessionId": "0000H6xbeSaooK-PXrvNTJ96a0p:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "16050003114001", 
     "storeName": null, 
     "mcc": "5814", 
@@ -252,7 +252,7 @@
     "sessionId": "0000xHxprXnNNLX1GOYlmivS2l3:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "2huijia70111", 
     "storeName": null, 
     "mcc": "7011", 
@@ -288,7 +288,7 @@
     "sessionId": "0000BmXiFr05hlr-e4QVAxZU3aU:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160572980072001", 
     "storeName": "薛城区陶庄镇手足情深美甲店", 
     "mcc": "7298", 
@@ -297,7 +297,7 @@
     "sessionId": "0000Tcc12kox4ZxZpxOCTZifKjM:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160572980095001", 
     "storeName": null, 
     "mcc": "7298", 
@@ -315,7 +315,7 @@
     "sessionId": "0000-ZJGyYCgSq2NaSM0xo3K-CM:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "yuxiang45111", 
     "storeName": null, 
     "mcc": "4511", 
@@ -378,7 +378,7 @@
     "sessionId": "0000N7nJRXwj5cK16f-dB1YgqD0:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160557320082001", 
     "storeName": null, 
     "mcc": "5732", 
@@ -387,7 +387,7 @@
     "sessionId": "0000V4r5DrLJTrSRThzw2_Ggyrc:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160550940049001", 
     "storeName": null, 
     "mcc": "5094", 
@@ -402,7 +402,7 @@
     "mcc": "5399", 
     "shopId": "16050001067", 
     "alias": "东升百货5399dongsheng", 
-    "sessionId": "0000AjOOc9xuhFbzLNF9Net6rLR:-1"
+    "sessionId": "00008ftIf7kyb-EFqOvXTMnEMXB:-1"
   }, 
   {
     "status": false, 
@@ -420,7 +420,7 @@
     "mcc": "5411", 
     "shopId": null, 
     "alias": "尚未三农5411", 
-    "sessionId": "0000S_TslReG_eU7tFGnaBK0_yz:-1"
+    "sessionId": "0000rhxbMqlJ3igae93P35q6v-R:-1"
   }, 
   {
     "status": true, 
@@ -441,7 +441,7 @@
     "sessionId": "0000ChHDs8aJ3fp-1owalBxioQq:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160507010101001", 
     "storeName": null, 
     "mcc": "7011", 
@@ -459,7 +459,7 @@
     "sessionId": "00000Vhze2MHPEw38pwBDFxWHjw:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160507010129001", 
     "storeName": null, 
     "mcc": "7011", 
@@ -468,7 +468,7 @@
     "sessionId": "00009j9DgZpFrLjta0CfdX5aKf5:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "bada47221", 
     "storeName": null, 
     "mcc": "4722", 
@@ -483,10 +483,10 @@
     "mcc": "7629", 
     "shopId": null, 
     "alias": "全能家电(7629)", 
-    "sessionId": "0000utYEEufhH7VGjWO5qosOPyI:-1"
+    "sessionId": "0000v3sGiRLzdQM-z3-JRDsYHCQ:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160559620006001", 
     "storeName": null, 
     "mcc": "5962", 
@@ -501,7 +501,7 @@
     "mcc": "7996", 
     "shopId": null, 
     "alias": "通盛摩托(7996)", 
-    "sessionId": "0000JWMEOQs5Xz0IVJpdeszZc8F:-1"
+    "sessionId": "0000ps1hMtNqGQl0ZovRFnvyazK:-1"
   }, 
   {
     "status": false, 
@@ -522,7 +522,7 @@
     "sessionId": "0000ftH3U5NEZynsFIDrZ9KVwFD:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160559770088001", 
     "storeName": null, 
     "mcc": "5977", 
@@ -537,7 +537,7 @@
     "mcc": "5311", 
     "shopId": null, 
     "alias": "志远百货", 
-    "sessionId": "0000c-0HG7Xhz3tvsSr4sGFCqAP:-1"
+    "sessionId": "0000jKR57QHyvO4Dbr5jVYE7lP1:-1"
   }, 
   {
     "status": false, 
@@ -549,7 +549,7 @@
     "sessionId": "0000cQpmtFLFbY6uEtR2-PeX2Ng:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160504990139001", 
     "storeName": null, 
     "mcc": "5411", 
@@ -558,7 +558,7 @@
     "sessionId": "0000lWOgCVPQ9a-1MOhMLKy01M2:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160559620007001", 
     "storeName": "枣庄高新区八达旅行社", 
     "mcc": "5962", 
@@ -576,7 +576,7 @@
     "sessionId": "00004fMnOV4YE-wzQMl68nDplNM:-1"
   }, 
   {
-    "status": false, 
+    "status": true, 
     "logonId": "160555410007001", 
     "storeName": null, 
     "mcc": "5541", 
