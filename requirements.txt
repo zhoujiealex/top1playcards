@@ -20,7 +20,7 @@ requests==2.18.4
 selenium==3.9.0
 six==1.11.0
 tzlocal==1.5.1
-urllib3==1.22
+urllib3==1.26.5
 Werkzeug==0.14.1
 xlrd==1.1.0
 xlutils==2.0.0
